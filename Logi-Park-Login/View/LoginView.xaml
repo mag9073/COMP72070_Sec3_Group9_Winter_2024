@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="LoginView" Height="768" Width="1024"
         WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize"
         >
 
     <Window.Resources>
@@ -40,6 +41,22 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!--Custom TextBox Style-->
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border BorderBrush="Gray" 
+                                BorderThickness="0,0,0,1"
+                                >
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
 
     <Grid>
@@ -54,7 +71,8 @@
                     VerticalAlignment="Top" 
                     HorizontalAlignment="Center" 
                     Width="376"
-                    Height="405" Margin="0,139,0,0"
+                    Height="405" 
+                    Margin="0,139,0,0"
 
                     >
 
@@ -72,23 +90,26 @@
             <TextBox x:Name="usernameTextBox"
                  Width="208"
                  Height="28"
+                 Padding="3,4,3,4"
                  GotFocus="UsernameTextBox_GotFocus"
                  LostFocus="UsernameTextBox_LostFocus"
                  Foreground="Gray"
-                 Text="Username or email"
+                 Text="Username or email" 
+                 Style="{StaticResource TextBoxStyle}"
                   />
 
             <TextBox x:Name="passwordTextBox" 
                  Width="208"
                  Height="28"
+                 VerticalAlignment="Center"
                  HorizontalAlignment="Center"
-                 Padding="3"
+                 Padding="3,4,3,4"
+                 Margin="0,20,0,20"
                  GotFocus="PasswordTextBox_GotFocus"
                  LostFocus="PasswordTextBox_LostFocus"
                  Foreground="Gray"
                  Text="Password"
-                 Margin="0,20,0,20" 
-                 TextChanged="passwordTextBox_TextChanged"
+                 Style="{StaticResource TextBoxStyle}"
                   />
 
             <!-- Grid for Remember Me and Forgot Password -->
