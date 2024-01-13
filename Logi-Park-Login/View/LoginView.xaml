@@ -95,7 +95,7 @@
                  LostFocus="UsernameTextBox_LostFocus"
                  Foreground="Gray"
                  Text="Username or email" 
-                 Style="{StaticResource TextBoxStyle}"
+                 Style="{StaticResource TextBoxStyle}" AutomationProperties.IsRequiredForForm="True"
                   />
 
             <TextBox x:Name="passwordTextBox" 
@@ -131,12 +131,30 @@
 
             <Button x:Name="loginButton" 
                 Content="Login" 
-                Style="{StaticResource LoginButtonStyle}" Height="37" Width="290"/>
-            <TextBlock Text="Don't have an account? Click here" 
+                Style="{StaticResource LoginButtonStyle}" Height="37" Width="290" Click="loginButton_Click"/>
+
+            <Grid Width="220">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Don't have an account?" 
                        Foreground="#7D0DC3" 
-                       Cursor="Hand" 
-                       HorizontalAlignment="Center"
+                       Cursor="Hand" Width="129" 
+                       Grid.Column="0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left" Margin="10,0,0,0"
                        />
+                <Label Content="Sign up"
+                       FontWeight="Bold"
+                       Foreground="#7D0DC3"
+                       Width="66" Margin="137,0,3,0" 
+                       Grid.ColumnSpan="2"
+                       Cursor="Hand"
+                       MouseLeftButtonDown="Signup_Handler"
+                       />
+
+            </Grid>
         </StackPanel>
 
         <!-- Image Placeholder for the side Image -->

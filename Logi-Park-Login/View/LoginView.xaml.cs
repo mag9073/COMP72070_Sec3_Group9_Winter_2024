@@ -63,5 +63,48 @@ namespace Logi_Park_Login.View
                 textBox.Foreground = System.Windows.Media.Brushes.Gray; 
             }
         }
+
+        private void loginButton_Click(object sender, RoutedEventArgs e)
+        {
+            bool isValid = true;
+            StringBuilder sb = new StringBuilder();
+
+            // Verify Username
+            if(string.IsNullOrWhiteSpace(usernameTextBox.Text) || usernameTextBox.Text == "Username or email") {
+                isValid = false;
+                sb.AppendLine("Please enter your username or email");
+            }
+
+            if(string.IsNullOrWhiteSpace(passwordTextBox.Text) || passwordTextBox.Text == "Password")
+            {
+                isValid = false;
+                sb.AppendLine("Please enter your password");
+            }
+
+            if (!isValid)
+            {
+                MessageBox.Show(sb.ToString(), "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            } else
+            {
+                // If valid then open a new window
+                RegistrationView registrationView = new RegistrationView();
+
+                registrationView.Show();
+
+                this.Close();
+            }
+
+        }
+
+        private void Signup_Handler(object sender, MouseButtonEventArgs e)
+        {
+
+            // Handle signup label clicked
+            RegistrationView registrationView = new RegistrationView();
+
+            registrationView.Show();
+
+            this.Close();
+        }
     }
 }
