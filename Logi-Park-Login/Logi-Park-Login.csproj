@@ -55,6 +55,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="View\AdminView.xaml.cs">
+      <DependentUpon>AdminView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -73,6 +79,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\AdminView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -114,6 +128,35 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Shape-Two.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Shape-Four.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Shape-Four.png" />
+    <Resource Include="Images\Shape-One.png" />
+    <Resource Include="Images\Shape-Three.png" />
+    <Resource Include="Images\Shape-Two.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Star-Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Star-Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\img_contact.png" />
+    <Resource Include="Assets\img_home.png" />
+    <Resource Include="Assets\img_map.png" />
+    <Resource Include="Assets\img_message.png" />
+    <Resource Include="Assets\img_setting.png" />
+    <Resource Include="Assets\img_signout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\hamburger-menu.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

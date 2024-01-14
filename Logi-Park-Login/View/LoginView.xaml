@@ -158,11 +158,15 @@
         </StackPanel>
 
         <!-- Image Placeholder for the side Image -->
-        <Border Grid.Column="0" VerticalAlignment="Stretch">
+        <Border Grid.Column="0" Margin="0,109,0,178">
             <Border.Background>
                 <ImageBrush ImageSource="/Images/background.png" Stretch="Uniform"/>
             </Border.Background>
+            <Image Margin="-270,305,42,-240" Source="/Shape-Four.png" Stretch="Fill"/>
         </Border>
+        <Image Margin="311,-106,68,538" Source="/Shape-Two.png" Stretch="Fill" Grid.ColumnSpan="2"/>
+        <Image Margin="10,19,407,648" Source="/Star-Icon.png" Stretch="Fill"/>
+        <Image Margin="318,619,99,48" Source="/Star-Icon.png" Stretch="Fill" Grid.Column="1"/>
     </Grid>
 
 

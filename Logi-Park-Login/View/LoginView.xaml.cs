@@ -86,10 +86,10 @@ namespace Logi_Park_Login.View
                 MessageBox.Show(sb.ToString(), "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
             } else
             {
-                // If valid then open a new window
-                RegistrationView registrationView = new RegistrationView();
+                // If valid then open a home view
+                HomeView homeView = new HomeView();
 
-                registrationView.Show();
+                homeView.Show();
 
                 this.Close();
             }
