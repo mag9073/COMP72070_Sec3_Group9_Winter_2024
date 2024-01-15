@@ -215,7 +215,7 @@
                 <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="719,114,0,0" VerticalAlignment="Top" Width="16"/>
                 <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="685,189,0,0" VerticalAlignment="Top" Width="17"/>
                 <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="702,189,0,0" VerticalAlignment="Top" Width="17"/>
-                <ListBox Margin="115,64,512,366" Background="#00000000" RenderTransformOrigin="1,0" SelectionChanged="ListBox_SelectionChanged" BorderBrush="#00000000" OpacityMask="Black">
+                <ListBox Margin="115,64,512,364" Background="#00000000" RenderTransformOrigin="1,0" SelectionChanged="ListBox_SelectionChanged" BorderBrush="#00000000" OpacityMask="Black">
                     <Image Source="/Images/Waterloo Park.jpg" Height="70" Width="69"/>
                     <Image Source="/Images/Waterloo Playground.png" Height="69" Width="69"/>
                     <Image Source="/Images/Victoria Park.jpg" Height="69" Width="69"/>
@@ -226,13 +226,16 @@
                     <Image Source="/Images/Settlers Grove Park.jpg" Height="69" Width="69"/>
                 </ListBox>
                 <ListBox Margin="115,431,512,0" Background="#00000000" RenderTransformOrigin="1,0" SelectionChanged="ListBox_SelectionChanged" BorderBrush="#00000000" OpacityMask="Black">
-                    <Image Source="/Images/Waterloo Park.jpg" Height="70" Width="69"/>
-                    <Image Source="/Images/Waterloo Playground.png" Height="69" Width="69"/>
+                    <Label Content="Waterloo Park - Gazebo under construction, please do not&#xD;&#xA;book a reservation to use the Gazebo" FontFamily="Calisto MT" Foreground="White" FontSize="14" Width="356" Height="45"/>
+                    <Label Content="Deer Ridge Park - New Swings have been installed into the&#xD;&#xA; park's sand pit, ready for use!" FontFamily="Calisto MT" Foreground="White" FontSize="14" Width="361" Height="45"/>
+                    <Label Content="Logi-Park Update - Added Homepage UI to the application &#xD;&#xA;for a more user friendly interface!" FontFamily="Calisto MT" Foreground="White" FontSize="14" Width="364" Height="47"/>
                 </ListBox>
                 <ListBox Margin="572,430,55,0" Background="#00000000" RenderTransformOrigin="1,0" SelectionChanged="ListBox_SelectionChanged" BorderBrush="#00000000" OpacityMask="Black">
-                    <Image Source="/Images/Waterloo Park.jpg" Height="70" Width="69"/>
-                    <Image Source="/Images/Waterloo Playground.png" Height="69" Width="69"/>
+                    <Image Source="/Images/Activity Feed Icon.png" Height="45" Width="54"/>
+                    <Image Source="/Images/Activity Feed Icon.png" Height="45" Width="54"/>
                 </ListBox>
+                <Label Content="Victoria Park - User234 has replied to your&#xD;&#xA;review, check it out!" FontFamily="Calisto MT" Foreground="White" FontSize="14" Margin="643,435,92,272"/>
+                <Label Content="VIctoria Park - User 234 has liked your review!" FontFamily="Calisto MT" Foreground="White" FontSize="14" Margin="643,489,92,232"/>
 
             </Grid>
 

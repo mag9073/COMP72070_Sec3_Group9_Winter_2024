@@ -185,5 +185,8 @@
   <ItemGroup>
     <Resource Include="Images\Schneider Park.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Activity Feed Icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
