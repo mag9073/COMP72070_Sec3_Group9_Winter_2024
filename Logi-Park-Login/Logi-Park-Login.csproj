@@ -177,9 +177,6 @@
     <Resource Include="Images\Kitchener Playground.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="View\Waterloo Park.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\star rating icon.png" />
   </ItemGroup>
   <ItemGroup>
