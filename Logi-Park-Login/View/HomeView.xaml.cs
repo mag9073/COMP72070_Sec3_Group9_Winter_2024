@@ -50,12 +50,12 @@ namespace Logi_Park_Login.View
 
         private void Tg_Btn_Unchecked(object sender, RoutedEventArgs e)
         {
-            img_bg.Opacity = 0.5;
+            BG.Opacity = 1;
         }
 
         private void Tg_Btn_Checked(object sender, RoutedEventArgs e)
         {
-            img_bg.Opacity = 0.3;
+            BG.Opacity = 0.5;
         }
 
         private void BG_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
