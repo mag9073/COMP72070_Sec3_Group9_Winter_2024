@@ -50,7 +50,7 @@ namespace Logi_Park_Login.View
 
         private void Tg_Btn_Unchecked(object sender, RoutedEventArgs e)
         {
-            img_bg.Opacity = 1;
+            img_bg.Opacity = 0.5;
         }
 
         private void Tg_Btn_Checked(object sender, RoutedEventArgs e)
@@ -66,6 +66,11 @@ namespace Logi_Park_Login.View
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

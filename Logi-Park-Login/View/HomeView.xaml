@@ -103,54 +103,58 @@
 
         <Style x:Key="tb_style" TargetType="{x:Type ToggleButton}">
 
-        <Setter Property="Template">
+            <Setter Property="Template">
 
-            <Setter.Value>
+                <Setter.Value>
 
-                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <ControlTemplate TargetType="{x:Type ToggleButton}">
 
-                    <Border  x:Name="border"
+                        <Border  x:Name="border"
                                  BorderThickness="{TemplateBinding BorderThickness}"
                                  Background="{TemplateBinding Background}"
                                  SnapsToDevicePixels="True">
 
-                    </Border>
+                        </Border>
 
-                    <ControlTemplate.Triggers>
+                        <ControlTemplate.Triggers>
 
-                        <Trigger Property="IsMouseOver" Value="true">
+                            <Trigger Property="IsMouseOver" Value="true">
 
-                            <Setter Property="Background"
+                                <Setter Property="Background"
                                         TargetName="border"
                                         Value="{StaticResource tb_mouse_over}"/>
 
-                            <Setter Property="BorderBrush"
+                                <Setter Property="BorderBrush"
                                         TargetName="border"
                                         Value="{StaticResource tb_mouse_over}"/>
 
-                        </Trigger>
+                            </Trigger>
 
-                        <Trigger Property="IsChecked" Value="true">
+                            <Trigger Property="IsChecked" Value="true">
 
-                            <Setter Property="Background"
+                                <Setter Property="Background"
                                         TargetName="border"
                                         Value="{StaticResource tb_mouse_over}"/>
 
-                            <Setter Property="BorderBrush"
+                                <Setter Property="BorderBrush"
                                         TargetName="border"
                                         Value="{StaticResource tb_mouse_over}"/>
 
-                        </Trigger>
+                            </Trigger>
 
-                    </ControlTemplate.Triggers>
+                        </ControlTemplate.Triggers>
 
-                </ControlTemplate>
+                    </ControlTemplate>
 
-            </Setter.Value>
+                </Setter.Value>
 
-        </Setter>
+            </Setter>
 
-    </Style>
+        </Style>
+        <Style x:Key="RoundedTops" TargetType="{x:Type Rectangle}">
+            <Setter Property="RadiusX" Value="0"/>
+            <Setter Property="RadiusY" Value="15"/>
+        </Style>
 
     </Window.Resources>
 
@@ -162,16 +166,74 @@
 
             <!--// Background Image //-->
 
-            <Grid x:Name="BG" PreviewMouseLeftButtonDown="BG_PreviewMouseLeftButtonDown">
+            <Grid x:Name="BG" PreviewMouseLeftButtonDown="BG_PreviewMouseLeftButtonDown" Opacity="1">
 
                 <Grid.Background>
 
                     <ImageBrush x:Name="img_bg"
-                                ImageSource="/Images/background.png"
+                                ImageSource="/Images/HomeBackground.jpg"
                                 />
 
                 </Grid.Background>
-
+                <Rectangle HorizontalAlignment="Left" Height="360" Margin="115,16,0,0" Stroke="#3F000000" VerticalAlignment="Top" Width="381" Fill="#3F000000" RadiusX="24.9" RadiusY="24.9"/>
+                <Rectangle HorizontalAlignment="Left" Height="360" Margin="572,16,0,0" Stroke="#3F000000" VerticalAlignment="Top" Width="382" Fill="#3F000000" RadiusX="24.9" RadiusY="24.9"/>
+                <Rectangle HorizontalAlignment="Left" Height="356" Margin="115,386,0,0" Stroke="#3F000000" VerticalAlignment="Top" Width="381" Fill="#3F000000" RadiusX="24.9" RadiusY="24.9"/>
+                <Rectangle HorizontalAlignment="Left" Height="356" Margin="572,385,0,0" Stroke="#3F000000" VerticalAlignment="Top" Width="381" Fill="#3F000000" RadiusX="24.9" RadiusY="24.9"/>
+                <Label Content="Recents" HorizontalAlignment="Left" Margin="248,16,0,0" VerticalAlignment="Top" Height="48" Width="136" FontSize="30" FontFamily="Cooper Black" Foreground="White" RenderTransformOrigin="0.399,-0.549"/>
+                <Label Content="New Parks" HorizontalAlignment="Left" Margin="680,16,0,0" VerticalAlignment="Top" Height="48" Width="182" FontSize="30" FontFamily="Cooper Black" Foreground="White"/>
+                <Label Content="Updates" HorizontalAlignment="Left" Margin="248,386,0,0" VerticalAlignment="Top" Height="45" Width="136" FontSize="30" FontFamily="Cooper Black" Foreground="White"/>
+                <Label Content="Notifications" HorizontalAlignment="Left" Margin="664,386,0,0" VerticalAlignment="Top" Height="48" Width="214" FontSize="30" FontFamily="Cooper Black" Foreground="White"/>
+                <Label Content="Waterloo Park" HorizontalAlignment="Left" Margin="222,68,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontSize="18"/>
+                <Label Content="50 Young St W, Waterloo, ON N2L 2Z4" HorizontalAlignment="Left" Margin="222,90,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontStyle="Italic"/>
+                <Label Content="Waterloo Playground" HorizontalAlignment="Left" Margin="222,142,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontSize="18"/>
+                <Label Content="FF89+VJ, Waterloo, ON" HorizontalAlignment="Left" Margin="222,163,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontStyle="Italic"/>
+                <Label Content="Victoria Park" HorizontalAlignment="Left" Margin="222,213,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontSize="18"/>
+                <Label Content="32 Dill St, Kitchener, ON N2G 1L1" HorizontalAlignment="Left" Margin="222,234,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontStyle="Italic"/>
+                <Label Content="Deer Ridge Park" HorizontalAlignment="Left" Margin="222,286,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontSize="18"/>
+                <Label Content="442 Deer Ridge Dr, Kitchener, ON N2P 2T4" HorizontalAlignment="Left" Margin="222,307,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontStyle="Italic"/>
+                <Label Content="Schneider Park" FontFamily="Calisto MT" Foreground="White" FontSize="18" RenderTransformOrigin="1.021,-0.295" Margin="680,69,218,652"/>
+                <Label Content="3595 King St E, Kitchener, ON N2A 2W1" FontFamily="Calisto MT" Foreground="White" FontStyle="Italic" Margin="680,90,139,638"/>
+                <Label Content="Settlers Grove Park" FontFamily="Calisto MT" Foreground="White" FontSize="18" RenderTransformOrigin="1.021,-0.295" Margin="680,144,181,577"/>
+                <Label Content="182 Pioneer Tower Rd, Kitchener, ON N2P 2H8" FontFamily="Calisto MT" Foreground="White" FontStyle="Italic" Margin="680,165,110,563"/>
+                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="228,113,0,0" VerticalAlignment="Top" Width="15"/>
+                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="245,113,0,0" VerticalAlignment="Top" Width="15"/>
+                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="262,113,0,0" VerticalAlignment="Top" Width="15"/>
+                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="279,113,0,0" VerticalAlignment="Top" Width="15"/>
+                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="228,188,0,0" VerticalAlignment="Top" Width="15"/>
+                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="245,188,0,0" VerticalAlignment="Top" Width="15"/>
+                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="262,188,0,0" VerticalAlignment="Top" Width="15"/>
+                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="228,259,0,0" VerticalAlignment="Top" Width="15"/>
+                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="245,259,0,0" VerticalAlignment="Top" Width="15"/>
+                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="262,259,0,0" VerticalAlignment="Top" Width="15"/>
+                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="279,259,0,0" VerticalAlignment="Top" Width="15"/>
+                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="296,259,0,0" VerticalAlignment="Top" Width="15"/>
+                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="228,335,0,0" VerticalAlignment="Top" Width="15"/>
+                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="245,335,0,0" VerticalAlignment="Top" Width="15"/>
+                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="262,335,0,0" VerticalAlignment="Top" Width="15"/>
+                <Image Source="/Images/star rating icon.png" Margin="685,114,324,624"/>
+                <Image Source="/Images/star rating icon.png" Margin="702,114,307,624"/>
+                <Image Source="/Images/star rating icon.png" Margin="719,114,290,624"/>
+                <Image Source="/Images/star rating icon.png" Margin="685,189,324,549"/>
+                <Image Source="/Images/star rating icon.png" Margin="702,189,307,549"/>
+                <ListBox Margin="115,64,512,366" Background="#00000000" RenderTransformOrigin="1,0" SelectionChanged="ListBox_SelectionChanged" BorderBrush="#00000000" OpacityMask="Black">
+                    <Image Source="/Images/Waterloo Park.jpg" Height="70" Width="69"/>
+                    <Image Source="/Images/Waterloo Playground.png" Height="69" Width="69"/>
+                    <Image Source="/Images/Victoria Park.jpg" Height="69" Width="69"/>
+                    <Image Source="/Images/Kitchener Playground.jpg" Height="69" Width="69"/>
+                </ListBox>
+                <ListBox Margin="572,64,54,366" Background="#00000000" RenderTransformOrigin="1,0" SelectionChanged="ListBox_SelectionChanged" BorderBrush="#00000000" OpacityMask="Black">
+                    <Image Source="/Images/Schneider Park.jpg" Height="70" Width="69"/>
+                    <Image Source="/Images/Settlers Grove Park.jpg" Height="69" Width="69"/>
+                </ListBox>
+                <ListBox Margin="115,431,512,0" Background="#00000000" RenderTransformOrigin="1,0" SelectionChanged="ListBox_SelectionChanged" BorderBrush="#00000000" OpacityMask="Black">
+                    <Image Source="/Images/Waterloo Park.jpg" Height="70" Width="69"/>
+                    <Image Source="/Images/Waterloo Playground.png" Height="69" Width="69"/>
+                </ListBox>
+                <ListBox Margin="572,430,55,0" Background="#00000000" RenderTransformOrigin="1,0" SelectionChanged="ListBox_SelectionChanged" BorderBrush="#00000000" OpacityMask="Black">
+                    <Image Source="/Images/Waterloo Park.jpg" Height="70" Width="69"/>
+                    <Image Source="/Images/Waterloo Playground.png" Height="69" Width="69"/>
+                </ListBox>
+                
             </Grid>
 
             <!--// App Close Button //-->

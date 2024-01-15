@@ -158,5 +158,35 @@
   <ItemGroup>
     <Resource Include="Assets\hamburger-menu.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\HomeBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\HomeBackground.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Waterloo Park.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Waterloo Playground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Victoria Park.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Kitchener Playground.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Waterloo Park.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\star rating icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Settlers Grove Park.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Schneider Park.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
