@@ -62,12 +62,13 @@
     <Grid>
         <!-- Define columns into 2 (Login Form and Side Image)-->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="85*"/>
+            <ColumnDefinition Width="171*"/>
+            <ColumnDefinition Width="256*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Login Form -->
-        <StackPanel Grid.Column="1" 
+        <StackPanel Grid.Column="2" 
                     VerticalAlignment="Top" 
                     HorizontalAlignment="Center" 
                     Width="376"
@@ -158,15 +159,15 @@
         </StackPanel>
 
         <!-- Image Placeholder for the side Image -->
-        <Border Grid.Column="0" Margin="0,109,0,178">
+        <Border Grid.Column="0" Margin="0,109,0,178" Grid.ColumnSpan="2">
             <Border.Background>
                 <ImageBrush ImageSource="/Images/background.png" Stretch="Uniform"/>
             </Border.Background>
             <Image Margin="-270,305,42,-240" Source="/Shape-Four.png" Stretch="Fill"/>
         </Border>
-        <Image Margin="311,-106,68,538" Source="/Shape-Two.png" Stretch="Fill" Grid.ColumnSpan="2"/>
-        <Image Margin="10,19,407,648" Source="/Star-Icon.png" Stretch="Fill"/>
-        <Image Margin="318,619,99,48" Source="/Star-Icon.png" Stretch="Fill" Grid.Column="1"/>
+        <Image Margin="141,-106,68,538" Source="/Shape-Two.png" Stretch="Fill" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Image Margin="10,19,65,648" Source="/Star-Icon.png" Stretch="Fill"/>
+        <Image Margin="318,619,99,48" Source="/Star-Icon.png" Stretch="Fill" Grid.Column="2"/>
     </Grid>
 
 
