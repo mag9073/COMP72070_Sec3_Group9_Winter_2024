@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logi-Park-Login", "Logi-Park-Login\Logi-Park-Login.csproj", "{71E949E0-F81E-451E-939A-5CCFD15DE9BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logi-Park", "Logi-Park-Login\Logi-Park.csproj", "{71E949E0-F81E-451E-939A-5CCFD15DE9BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

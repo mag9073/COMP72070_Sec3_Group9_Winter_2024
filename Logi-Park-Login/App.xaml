@@ -1,8 +1,8 @@
-﻿<Application x:Class="Logi_Park_Login.App"
+﻿<Application x:Class="Logi_Park.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Logi_Park_Login"
-             StartupUri="View/HomeView.xaml">
+             xmlns:local="clr-namespace:Logi_Park"
+             StartupUri="View/LoginView.xaml">
     <Application.Resources>
          
     </Application.Resources>

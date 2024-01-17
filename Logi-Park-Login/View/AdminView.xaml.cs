@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Logi_Park_Login.View
+namespace Logi_Park.View
 {
     /// <summary>
     /// Interaction logic for AdminView.xaml

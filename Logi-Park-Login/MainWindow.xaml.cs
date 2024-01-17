@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Logi_Park_Login
+namespace Logi_Park
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
