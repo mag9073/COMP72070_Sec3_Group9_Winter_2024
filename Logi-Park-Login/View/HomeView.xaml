@@ -14,7 +14,7 @@
         <!--// Toggle Button Style Template //-->
 
         <ImageBrush x:Key="tb_mouse_over"
-                    ImageSource="/Assets/hamburger-menu.gif"/>
+                    ImageSource="/Assets/Icons/hamburger-menu.gif"/>
 
         <!--// Text font style //-->
 
@@ -60,7 +60,7 @@
 
         <!--// App Close Button Style Template //-->
 
-        <ImageBrush x:Key="CloseBtn_MouseOver" ImageSource="/Assets/hamburger-menu.gif"/>
+        <ImageBrush x:Key="CloseBtn_MouseOver" ImageSource="/Assets/Icons/hamburger-menu.gif"/>
 
         <Style x:Key="Close_btn" TargetType="{x:Type Button}">
 
@@ -356,7 +356,7 @@
 
                             <ToggleButton.Background>
 
-                                <ImageBrush ImageSource="/Assets/hamburger-menu.gif"
+                                <ImageBrush ImageSource="/Assets/Icons/hamburger-menu.gif"
                                             />
 
                             </ToggleButton.Background>
@@ -432,7 +432,7 @@
                             <StackPanel Orientation="Horizontal"
                                         Width="230">
 
-                                <Image Source="/Assets/img_home.png"
+                                <Image Source="/Assets/Icons/img_home.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>
 
@@ -463,7 +463,7 @@
                             <StackPanel Orientation="Horizontal"
                                         Width="230">
 
-                                <Image Source="/Assets/img_contact.png"
+                                <Image Source="/Assets/Icons/img_contact.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>
 
@@ -494,7 +494,7 @@
                             <StackPanel Orientation="Horizontal"
                                         Width="230">
 
-                                <Image Source="/Assets/img_message.png"
+                                <Image Source="/Assets/Icons/img_message.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>
 
@@ -525,7 +525,7 @@
                             <StackPanel Orientation="Horizontal"
                                         Width="230">
 
-                                <Image Source="/Assets/img_map.png"
+                                <Image Source="/Assets/Icons/img_map.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>
 
@@ -556,7 +556,7 @@
                             <StackPanel Orientation="Horizontal"
                                         Width="230">
 
-                                <Image Source="/Assets/img_setting.png"
+                                <Image Source="/Assets/Icons/img_setting.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>
 
@@ -587,7 +587,7 @@
                             <StackPanel Orientation="Horizontal"
                                         Width="230">
 
-                                <Image Source="/Assets/img_signout.png"
+                                <Image Source="/Assets/Icons/img_signout.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>
 
