@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Logi_Park.View"
         mc:Ignorable="d"
-        Title="HomeView" Height="768" Width="1024"
+        Title="HomeView" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize">
 
@@ -98,6 +98,50 @@
 
         </Style>
 
+        <!-- Styling for Search bar -->
+
+        <Style x:Key="SearchBarStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="645"/>
+            <Setter Property="FontFamily" Value="Fonts/Roboto-Light.ttf #Roboto"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Padding" Value="40,0,0,0"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="25">
+                            <Grid>
+                                <!-- Search Icon -->
+                                <Image Source="/Assets/Icons/search-icon.png"
+                               Width="20"
+                               Height="20"
+                               Margin="10"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left"/>
+
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Center"
+                                      Margin="40,0,0,0"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
 
 
 
@@ -171,134 +215,44 @@
                 <Grid.Background>
 
                     <ImageBrush x:Name="img_bg"
-                                ImageSource="/Images/HomeBackground.jpg"
+                                ImageSource="/Images/Background.png"
                                 />
 
                 </Grid.Background>
-                
+
+                <!-- SEARCH BAR SECTION -->
+
+                <!-- SEARCH BAR SECTION -->
+
+                <!-- Suggested Places -->
+
+                <StackPanel>
+
+                </StackPanel>
+
+                <!-- Suggested Places -->
+
                 <!-- RECENTS HOMEPAGE SECTION -->
-                <Rectangle HorizontalAlignment="Left" Height="360" Margin="115,16,0,0" Stroke="#3F000000" VerticalAlignment="Top" Width="381" Fill="#3F000000" RadiusX="24.9" RadiusY="24.9"/>
 
-                <Label Content="Recents" HorizontalAlignment="Left" Margin="248,16,0,0" VerticalAlignment="Top" Height="48" Width="136" FontSize="30" FontFamily="Cooper Black" Foreground="White" RenderTransformOrigin="0.399,-0.549"/>
-                <Label Content="New Parks" HorizontalAlignment="Left" Margin="680,16,0,0" VerticalAlignment="Top" Height="48" Width="182" FontSize="30" FontFamily="Cooper Black" Foreground="White"/>
-                <Label Content="Updates" HorizontalAlignment="Left" Margin="248,386,0,0" VerticalAlignment="Top" Height="45" Width="136" FontSize="30" FontFamily="Cooper Black" Foreground="White"/>
-                <Label Content="Notifications" HorizontalAlignment="Left" Margin="664,386,0,0" VerticalAlignment="Top" Height="48" Width="214" FontSize="30" FontFamily="Cooper Black" Foreground="White"/>
-                
-                <Label Content="Waterloo Park" HorizontalAlignment="Left" Margin="222,68,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontSize="18"/>
-                <Label Content="50 Young St W, Waterloo, ON N2L 2Z4" HorizontalAlignment="Left" Margin="222,90,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontStyle="Italic"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="228,113,0,0" VerticalAlignment="Top" Width="15"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="245,113,0,0" VerticalAlignment="Top" Width="15"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="262,113,0,0" VerticalAlignment="Top" Width="15"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="279,113,0,0" VerticalAlignment="Top" Width="15"/>   
-                
-                <Label Content="Waterloo Playground" HorizontalAlignment="Left" Margin="222,142,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontSize="18"/>
-                <Label Content="FF89+VJ, Waterloo, ON" HorizontalAlignment="Left" Margin="222,163,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontStyle="Italic"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="228,188,0,0" VerticalAlignment="Top" Width="15"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="245,188,0,0" VerticalAlignment="Top" Width="15"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="262,188,0,0" VerticalAlignment="Top" Width="15"/>
-                
-                <Label Content="Victoria Park" HorizontalAlignment="Left" Margin="222,213,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontSize="18"/>
-                <Label Content="32 Dill St, Kitchener, ON N2G 1L1" HorizontalAlignment="Left" Margin="222,234,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontStyle="Italic"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="228,259,0,0" VerticalAlignment="Top" Width="15"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="245,259,0,0" VerticalAlignment="Top" Width="15"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="262,259,0,0" VerticalAlignment="Top" Width="15"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="279,259,0,0" VerticalAlignment="Top" Width="15"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="296,259,0,0" VerticalAlignment="Top" Width="15"/>
-                
-                <Label Content="Deer Ridge Park" HorizontalAlignment="Left" Margin="222,286,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontSize="18"/>
-                <Label Content="442 Deer Ridge Dr, Kitchener, ON N2P 2T4" HorizontalAlignment="Left" Margin="222,307,0,0" VerticalAlignment="Top" FontFamily="Calisto MT" Foreground="White" FontStyle="Italic"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="228,335,0,0" VerticalAlignment="Top" Width="15"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="245,335,0,0" VerticalAlignment="Top" Width="15"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="262,335,0,0" VerticalAlignment="Top" Width="15"/>
-
-                <ListBox Margin="115,64,512,364" Background="#00000000" RenderTransformOrigin="1,0" BorderBrush="#00000000" OpacityMask="Black">
-                    <Image Source="/Images/Waterloo Park.jpg" Height="70" Width="69"/>
-                    <Image Source="/Images/Waterloo Playground.png" Height="69" Width="69"/>
-                    <Image Source="/Images/Victoria Park.jpg" Height="69" Width="69"/>
-                    <Image Source="/Images/Kitchener Playground.jpg" Height="69" Width="69"/>
-                </ListBox>
                 <!-- RECENTS HOMEPAGE SECTION -->
 
 
                 <!-- NEW PARKS HOMEPAGE SECTION -->
-                <Rectangle HorizontalAlignment="Left" Height="360" Margin="572,16,0,0" Stroke="#3F000000" VerticalAlignment="Top" Width="382" Fill="#3F000000" RadiusX="24.9" RadiusY="24.9"/>
 
-                <Label Content="Schneider Park"  HorizontalAlignment="Left" FontFamily="Calisto MT" Foreground="White" FontSize="18" RenderTransformOrigin="1.021,-0.295" Margin="680,69,0,0" VerticalAlignment="Top" Height="30" Width="205"/>
-                <Label Content="3595 King St E, Kitchener, ON N2A 2W1"  HorizontalAlignment="Left" FontFamily="Calisto MT" Foreground="White" FontStyle="Italic" Margin="680,90,0,0" VerticalAlignment="Top" Width="225"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="685,114,0,0" VerticalAlignment="Top" Width="17"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="702,114,0,0" VerticalAlignment="Top" Width="17"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="719,114,0,0" VerticalAlignment="Top" Width="16"/>
-                
-                <Label Content="Settlers Grove Park"  HorizontalAlignment="Left" FontFamily="Calisto MT" Foreground="White" FontSize="18" RenderTransformOrigin="1.021,-0.295" Margin="680,144,0,0" VerticalAlignment="Top" Height="33" Width="225"/>
-                <Label Content="182 Pioneer Tower Rd, Kitchener, ON N2P 2H8"  HorizontalAlignment="Left" FontFamily="Calisto MT" Foreground="White" FontStyle="Italic" Margin="680,165,0,0" VerticalAlignment="Top" Width="252"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="685,189,0,0" VerticalAlignment="Top" Width="17"/>
-                <Image Source="/Images/star rating icon.png" HorizontalAlignment="Left" Height="14" Margin="702,189,0,0" VerticalAlignment="Top" Width="17"/>
-
-                <ListBox Margin="572,64,54,366" Background="#00000000" RenderTransformOrigin="1,0" BorderBrush="#00000000" OpacityMask="Black">
-                    <Image Source="/Images/Schneider Park.jpg" Height="70" Width="69"/>
-                    <Image Source="/Images/Settlers Grove Park.jpg" Height="69" Width="69"/>
-                </ListBox>
                 <!-- NEW PARKS HOMEPAGE SECTION -->
 
 
                 <!-- UPDATES HOMEPAGE SECTION -->
-                <Rectangle HorizontalAlignment="Left" Height="356" Margin="115,386,0,0" Stroke="#3F000000" VerticalAlignment="Top" Width="381" Fill="#3F000000" RadiusX="24.9" RadiusY="24.9"/>
 
-                <ListBox Margin="115,431,512,0" Background="#00000000" RenderTransformOrigin="1,0" SelectionChanged="ListBox_SelectionChanged" BorderBrush="#00000000" OpacityMask="Black">
-                    <Label Content="Waterloo Park - Gazebo under construction, please do not&#xD;&#xA;book a reservation to use the Gazebo" FontFamily="Calisto MT" Foreground="White" FontSize="14" Width="356" Height="45"/>
-                    <Label Content="Deer Ridge Park - New Swings have been installed into the&#xD;&#xA; park's sand pit, ready for use!" FontFamily="Calisto MT" Foreground="White" FontSize="14" Width="361" Height="45"/>
-                    <Label Content="Logi-Park Update - Added Homepage UI to the application &#xD;&#xA;for a more user friendly interface!" FontFamily="Calisto MT" Foreground="White" FontSize="14" Width="364" Height="47"/>
-                </ListBox>
                 <!-- UPDATES HOMEPAGE SECTION -->
 
 
                 <!-- NOTIFICATIONS HOMEPAGE SECTION -->
-                <Rectangle HorizontalAlignment="Left" Height="356" Margin="572,385,0,0" Stroke="#3F000000" VerticalAlignment="Top" Width="381" Fill="#3F000000" RadiusX="24.9" RadiusY="24.9"/>
 
-                <Label Content="Victoria Park - User234 has replied to your&#xD;&#xA;review, check it out!" FontFamily="Calisto MT" Foreground="White" FontSize="14" Margin="638,435,55,249" RenderTransformOrigin="0.877,0.615"/>
-                <Label Content="VIctoria Park - User 234 has liked your review!" FontFamily="Calisto MT" Foreground="White" FontSize="14" Margin="637,493,60,185"/>
-
-                <ListBox Margin="572,430,55,0" Background="#00000000" RenderTransformOrigin="1,0" SelectionChanged="ListBox_SelectionChanged" BorderBrush="#00000000" OpacityMask="Black">
-                    <Image Source="/Images/Activity Feed Icon.png" Height="45" Width="54"/>
-                    <Image Source="/Images/Activity Feed Icon.png" Height="45" Width="54"/>
-                </ListBox>
                 <!-- NOTIFICATIONS HOMEPAGE SECTION -->
 
             </Grid>
 
-            <!--// App Close Button //-->
-
-            <!--<Grid>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="30"/>
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Button x:Name="CloseBtn"
-                        Grid.Column="1"
-                        Grid.Row="1"
-                        Height="40"
-                        Width="40"
-                        BorderThickness="0"
-                        Style="{StaticResource Close_btn}" Click="CloseBtn_Click">
-
-                    <Button.Background>
-
-                        <ImageBrush ImageSource="/Assets/hamburger-menu.gif"/>
-
-                    </Button.Background>
-
-                </Button>
-
-            </Grid>-->
 
 
             <!--// Navigation Panel //-->
@@ -675,6 +629,13 @@
             </Grid>
 
         </Grid>
+        <StackPanel Margin="298,70,0,585" HorizontalAlignment="Left">
+            <TextBox Style="{StaticResource SearchBarStyle}"/>
+        </StackPanel>
+
+        <StackPanel Margin="298,70,0,585" HorizontalAlignment="Left">
+            <TextBox Style="{StaticResource SearchBarStyle}"/>
+        </StackPanel>
 
     </Grid>
 

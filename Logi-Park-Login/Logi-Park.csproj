@@ -82,6 +82,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Client.cs" />
     <Compile Include="View\AdminView.xaml.cs">
       <DependentUpon>AdminView.xaml</DependentUpon>
     </Compile>
@@ -90,6 +91,9 @@
     </Compile>
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SignupView.xaml.cs">
+      <DependentUpon>SignupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RegistrationView.xaml.cs">
       <DependentUpon>RegistrationView.xaml</DependentUpon>
@@ -115,6 +119,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LoginView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SignupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,7 +159,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +230,11 @@
     <Resource Include="Assets\Icons\Logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Bechtel Park.jpg" />
+    <Resource Include="Images\Bewmeister Green Park.jpg" />
+    <Resource Include="Images\Clair-Lake-Park.jpg" />
+    <Resource Include="Images\Hillside Park.jpg" />
+    <Resource Include="Images\Laurel Creek Conservation Area.jpeg" />
     <Resource Include="Logo.ico" />
     <Resource Include="Assets\Icons\Logo.ico" />
     <Content Include="Assets\Icons\Logo.svg" />

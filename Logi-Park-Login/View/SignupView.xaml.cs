@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Logi_Park.View
 {
     /// <summary>
-    /// Interaction logic for LoginView.xaml
+    /// Interaction logic for SignupView.xaml
     /// </summary>
-    public partial class LoginView : Window
+    public partial class SignupView : Window
     {
-        public LoginView()
+        public SignupView()
         {
             InitializeComponent();
         }
@@ -96,13 +96,14 @@ namespace Logi_Park.View
 
         }
 
-        private void Signup_Handler(object sender, MouseButtonEventArgs e)
+        private void Login_Handler(object sender, MouseButtonEventArgs e)
         {
 
-            // Handle signup label clicked
-            SignupView signupView = new SignupView();
+            // Handle login label clicked
 
-            signupView.Show();
+            LoginView loginView = new LoginView();
+
+            loginView.Show();
 
             this.Close();
         }
