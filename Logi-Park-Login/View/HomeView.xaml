@@ -610,13 +610,15 @@
                        VerticalAlignment="Top" HorizontalAlignment="Left" Canvas.Top="14" Canvas.Left="22"
                        Panel.ZIndex="-1" Margin="16,11,0,0"/>
 
-            <TextBox x:Name="txtInput" VerticalContentAlignment="Center" TextChanged="TextBox_TextChanged_2" FontFamily="Times New Roman" FontSize="28" Height="56" Margin="16,0,46,0" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0"/>
+            <TextBox x:Name="txtInput" VerticalContentAlignment="Center" TextChanged="TextBox_TextChanged_2" 
+                     FontFamily="Times New Roman" FontSize="28" Height="56" Margin="16,0,46,0" VerticalAlignment="Top" 
+                     Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" BorderThickness="0,0,0,0"/>
 
             <Button Background="{x:Null}" BorderBrush="{x:Null}" x:Name="SearchBtn" 
                     HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" 
                     Width="46" Margin="580,0,0,0" Click="SearchBtn_Click">
                 <StackPanel>
-                    <Image Source="/Assets/Icons/Search Icon.png" Height="52" Width="36" IsHitTestVisible="False"/>
+                    <Image Source="/Assets/Icons/Search Icon.png" Height="52" Width="36"/>
                 </StackPanel>
             </Button>
             
