@@ -230,6 +230,7 @@
     <Resource Include="Assets\Icons\Logo.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\Icons\Search Icon.png" />
     <Resource Include="Images\Bechtel Park.jpg" />
     <Resource Include="Images\Bewmeister Green Park.jpg" />
     <Resource Include="Images\Clair-Lake-Park.jpg" />

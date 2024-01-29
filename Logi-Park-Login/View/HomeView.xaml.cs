@@ -73,9 +73,18 @@ namespace Logi_Park.View
 
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e)
         {
+            if (string.IsNullOrEmpty(txtInput.Text))
+                tbPlaceholder.Visibility = Visibility.Visible;
+            else
+                tbPlaceholder.Visibility = Visibility.Hidden;
+        }
 
+        private void SearchBtn_Click(Object sender, RoutedEventArgs e)
+        {
+            txtInput.Clear();
+            tbPlaceholder.Visibility = Visibility.Visible;
         }
     }
 }
