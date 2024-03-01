@@ -60,7 +60,7 @@
                              Foreground="Black"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
-                             IsChecked="False" Checked="RadioButton_Checked"
+                             IsChecked="False" Checked="LogoutRadioButton_Checked"
                              >
 
                 </RadioButton>

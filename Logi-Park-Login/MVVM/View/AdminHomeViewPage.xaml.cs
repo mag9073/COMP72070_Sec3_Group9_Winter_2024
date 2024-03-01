@@ -25,17 +25,14 @@ namespace LogiPark.MVVM.View
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             AdminAddParkView parkView = new AdminAddParkView();
 
             parkView.Show();
 
             Window parentWindow = Window.GetWindow(this);
-            if (parentWindow != null)
-            {
-                parentWindow.Close();
-            }
+            parentWindow?.Close();
         }
 
         private void OnParkImageClick(object sender, RoutedEventArgs e)
@@ -44,10 +41,7 @@ namespace LogiPark.MVVM.View
             parkView.Show();
 
             Window parentWindow = Window.GetWindow(this);
-            if (parentWindow != null)
-            {
-                parentWindow.Close();
-            }
+            parentWindow?.Close();
         }
     }
 }

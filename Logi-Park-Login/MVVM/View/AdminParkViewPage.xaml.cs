@@ -25,16 +25,25 @@ namespace LogiPark.MVVM.View
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             AdminParkEditView parkEditView = new AdminParkEditView();
             parkEditView.Show();
 
             Window parentWindow = Window.GetWindow(this);
-            if (parentWindow != null)
-            {
-                parentWindow.Close();
-            }
+            parentWindow?.Close();
         }
+
+        private void DeleteReviewButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void DeleteParkButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        
     }
 }

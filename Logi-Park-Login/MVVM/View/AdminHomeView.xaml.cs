@@ -29,7 +29,7 @@ namespace LogiPark.MVVM.View
 
         }
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        private void LogoutRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             // Handle back to main menu label clicked
             LoginView loginView = new LoginView();

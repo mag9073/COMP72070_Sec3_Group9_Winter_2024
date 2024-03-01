@@ -25,7 +25,7 @@ namespace LogiPark.MVVM.View
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             AdminHomeView homeView = new AdminHomeView();
 
@@ -34,7 +34,7 @@ namespace LogiPark.MVVM.View
             this.Close();
         }
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        private void HomeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             // Handle back to main menu label clicked
             AdminHomeView homeView = new AdminHomeView();
@@ -44,7 +44,7 @@ namespace LogiPark.MVVM.View
             this.Close();
         }
 
-        private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
+        private void LogoutRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             // Handle back to main menu label clicked
             LoginView loginView = new LoginView();

@@ -133,20 +133,20 @@
             <Label Content="Full Name" Style="{StaticResource LabelStyle}" Foreground="#FF2F3D4C" FontWeight="SemiBold" />
             <TextBox x:Name="usernameTextBox"
                     Style="{StaticResource TextBoxStyle}"
-                    Text="ragnar.lothbrok@viking.com" Width="443" TextChanged="usernameTextBox_TextChanged" />
+                    Text="ragnar.lothbrok@viking.com" Width="443" TextChanged="UsernameTextBox_TextChanged" />
 
             <Label Content="Email" Style="{StaticResource LabelStyle}" Foreground="#FF2F3D4C" FontWeight="SemiBold" Margin="0,10,0,0" />
             <StackPanel Orientation="Horizontal">
                 <TextBox x:Name="emailTextBox" 
                         Style="{StaticResource TextBoxStyle}"
-                        Text="ragnar.lothbrok@viking.com" Width="440" TextChanged="passwordTextBox_TextChanged" />
+                        Text="ragnar.lothbrok@viking.com" Width="440" TextChanged="PasswordTextBox_TextChanged" />
             </StackPanel>
 
             <Label Content="Passsword" Style="{StaticResource LabelStyle}" Foreground="#FF2F3D4C" FontWeight="SemiBold" Margin="0,10,0,0" />
             <StackPanel Orientation="Horizontal">
                 <TextBox x:Name="passwordTextBox" 
                         Style="{StaticResource TextBoxStyle}"
-                        Text="Password" Width="440" TextChanged="passwordTextBox_TextChanged" />
+                        Text="Password" Width="440" TextChanged="PasswordTextBox_TextChanged" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,10,0,20">
@@ -154,7 +154,7 @@
                 <TextBlock Text="Forgot password?" Style="{StaticResource HyperlinkStyle}" Width="112" VerticalAlignment="Center" TextAlignment="Center" RenderTransformOrigin="0.531,-0.072" Height="22" />
             </StackPanel>
 
-            <Button Content="Sign Up" Style="{StaticResource LoginButtonStyle}" Width="436" Click="loginButton_Click" />
+            <Button Content="Sign Up" Style="{StaticResource LoginButtonStyle}" Width="436" Click="LoginButton_Click" />
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Center">
                 <TextBlock Text="Already have an account " Foreground="#FF58745E" VerticalAlignment="Center" Width="134" />

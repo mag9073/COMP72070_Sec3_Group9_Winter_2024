@@ -45,7 +45,7 @@
                 </StackPanel>
 
                 <Border Margin="0,30,0,0">
-                    <Button Background="Green" Content="Save" Click="Button_Click" Width="100" Height="50" FontSize="20">
+                    <Button Background="Green" Content="Save" Click="SaveButton_Click" Width="100" Height="50" FontSize="20">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10"/>
@@ -65,9 +65,9 @@
                     </Grid.ColumnDefinitions>
                 </Grid>
 
-                <Image Source="/Assets/Images/Clair-Lake-Park.jpg" Stretch="Fill" Height="345" Width="466" Margin="0,70,0,0"/>
+                <Image Source="../../Assets/Images/Clair-Lake-Park.jpg" Stretch="Fill" Height="345" Width="466" Margin="0,70,0,0"/>
 
-                <Button Background="#00A3FF" Content="Upload Photo" HorizontalAlignment="Center" Margin="0,20,0,0"  Click="Button_Click" Padding="15" FontSize="20">
+                <Button Background="#00A3FF" Content="Upload Photo" HorizontalAlignment="Center" Margin="0,20,0,0"  Click="UplaodButton_Click" Padding="15" FontSize="20">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="10"/>

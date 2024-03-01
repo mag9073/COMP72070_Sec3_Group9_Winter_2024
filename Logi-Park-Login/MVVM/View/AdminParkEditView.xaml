@@ -45,7 +45,7 @@
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              IsChecked="True"
-                             Command="{Binding HomeViewCommand}" Checked="RadioButton_Checked"
+                             Command="{Binding HomeViewCommand}" Checked="HomeRadioButton_Checked"
                              >
 
                 </RadioButton>
@@ -56,7 +56,7 @@
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              IsChecked="False"
-                             Command="{Binding HomeViewCommand}" Checked="RadioButton_Checked_1"
+                             Command="{Binding HomeViewCommand}" Checked="LogoutRadioButton_Checked"
                              >
 
                 </RadioButton>
@@ -78,7 +78,7 @@
                             />
 
             <Border Grid.Column="2" Margin="210,457,184,89" Grid.Row="1">
-                <Button Background="Green" Content="Save" Click="Button_Click" Width="100" Height="50" FontSize="20">
+                <Button Background="Green" Content="Save" Click="SaveButton_Click" Width="100" Height="50" FontSize="20">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -86,7 +86,7 @@
                     </Button.Resources>
                 </Button>
             </Border>
-            <Button Grid.Column="2" Content="Back" HorizontalAlignment="Left" Margin="38,43,0,0" VerticalAlignment="Top" Click="Button_Click" Width="100" Height="45" FontSize="20">
+            <Button Grid.Column="2" Content="Back" HorizontalAlignment="Left" Margin="38,43,0,0" VerticalAlignment="Top" Click="BackButton_Click" Width="100" Height="45" FontSize="20">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>

@@ -2,7 +2,7 @@
 <Application x:Class="Logi_Park.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:LogiPark"
+             xmlns:local="clr-namespace:Logi_Park"
              xmlns:viewModel="clr-namespace:LogiPark.MVVM.ViewModel"
              xmlns:view="clr-namespace:LogiPark.MVVM.View"
              StartupUri="/MVVM/View/LoginView.xaml">
@@ -13,9 +13,32 @@
                 <ResourceDictionary Source="Theme/SearchBoxTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+
+
+            <DataTemplate DataType="{x:Type viewModel:AdminAddParkViewModel}">
+                <view:AdminAddParkViewPage/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:AdminHomeViewModel}">
+                <view:AdminHomeViewPage/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:AdminParkEditViewModel}">
+                <view:ParkEditViewPage/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:AdminParkViewModel}">
+                <view:AdminParkViewPage/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:MainViewModel}">
+                <view:HomeViewPage/>
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type viewModel:ParkViewModel}">
                 <view:ParkViewPage/>
             </DataTemplate>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

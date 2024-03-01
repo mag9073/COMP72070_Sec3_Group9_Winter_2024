@@ -54,7 +54,7 @@
                              Foreground="Black"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding MapViewCommand}" Checked="RadioButton_Checked"
+                             Command="{Binding MapViewCommand}" Checked="MapRadioButton_Checked"
                              >
 
                 </RadioButton>
@@ -63,7 +63,7 @@
                              Foreground="Black"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding HomeViewCommand}" Checked="RadioButton_Checked_1"
+                             Command="{Binding HomeViewCommand}" Checked="LogoutRadioButton_Checked"
                              >
 
                 </RadioButton>

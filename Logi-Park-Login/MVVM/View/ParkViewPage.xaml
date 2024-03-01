@@ -40,7 +40,7 @@
                     <TextBlock Text="07:00 a.m. - 11:00 p.m" FontSize="14" Width="180"/>
                 </StackPanel>
 
-                <Button Content="Write Review" Margin="0,20" Height="40" Background="Green" Foreground="White" Width="186" HorizontalAlignment="Left" Click="Button_Click">
+                <Button Content="Write Review" Margin="0,20" Height="40" Background="Green" Foreground="White" Width="186" HorizontalAlignment="Left" Click="ReviewButton_Click">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -84,7 +84,7 @@
                 </Grid>
 
                 <!-- Phone number and address -->
-                <Image Source="/Assets/Images/Clair-Lake-Park.jpg" Stretch="UniformToFill" Height="345" Width="466" Margin="0,40,0,0"/>
+                <Image Source="../../Assets/Images/Clair-Lake-Park.jpg" Stretch="UniformToFill" Height="345" Width="466" Margin="0,40,0,0"/>
                 <!-- Phone number and address -->
                 <Border Grid.Column="1" Margin="20,20,20,20" 
                         BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Height="98" Width="318">

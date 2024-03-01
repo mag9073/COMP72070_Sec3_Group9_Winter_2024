@@ -32,7 +32,7 @@
             <Border Grid.Row="0" Grid.Column="0" Width="250" Height="200" Margin="0,50,0,0" CornerRadius="10">
                 <!-- Background Image -->
                 <Border.Background>
-                    <ImageBrush ImageSource="/Assets/Images/Waterloo Park.jpg" Stretch="Fill" />
+                    <ImageBrush ImageSource="../../Assets/Images/Waterloo Park.jpg" Stretch="Fill" />
                 </Border.Background>
 
                 <Grid>
@@ -84,7 +84,7 @@
             <Border Grid.Row="0" Grid.Column="1" Width="250" Height="200" Margin="0,50,0,0" CornerRadius="10">
                 <!-- Background Image -->
                 <Border.Background>
-                    <ImageBrush ImageSource="/Assets/Images/Clair-Lake-Park.jpg" Stretch="Fill" />
+                    <ImageBrush ImageSource="../../Assets/Images/Clair-Lake-Park.jpg" Stretch="Fill" />
                 </Border.Background>
 
                 <Grid>
@@ -136,7 +136,7 @@
             <Border Grid.Row="0" Grid.Column="3" Width="250" Height="200" Margin="0,50,0,0" CornerRadius="10">
                 <!-- Background Image -->
                 <Border.Background>
-                    <ImageBrush ImageSource="/Assets/Images/Hillside Park.jpg" Stretch="Fill" />
+                    <ImageBrush ImageSource="../../Assets/Images/Hillside Park.jpg" Stretch="Fill" />
                 </Border.Background>
 
                 <Grid>
@@ -188,7 +188,7 @@
             <Border Grid.Row="1" Grid.Column="0" Width="250" Height="200" Margin="0" CornerRadius="10">
                 <!-- Background Image -->
                 <Border.Background>
-                    <ImageBrush ImageSource="/Assets/Images/Brewmeister Green Park.jpg" Stretch="Fill" />
+                    <ImageBrush ImageSource="../../Assets/Images/Brewmeister Green Park.jpg" Stretch="Fill" />
                 </Border.Background>
 
                 <Grid>
@@ -240,7 +240,7 @@
             <Border Grid.Row="1" Grid.Column="1" Width="250" Height="200" Margin="0" CornerRadius="10">
                 <!-- Background Image -->
                 <Border.Background>
-                    <ImageBrush ImageSource="/Assets/Images/Bechtel Park.jpg" Stretch="Fill" />
+                    <ImageBrush ImageSource="../../Assets/Images/Bechtel Park.jpg" Stretch="Fill" />
                 </Border.Background>
 
                 <Grid>
@@ -292,7 +292,7 @@
             <Border Grid.Row="1" Grid.Column="2" Width="250" Height="200" Margin="0" CornerRadius="10">
                 <!-- Background Image -->
                 <Border.Background>
-                    <ImageBrush ImageSource="/Assets/Images/Laurel Creek Conservation Area.jpeg" Stretch="Fill" />
+                    <ImageBrush ImageSource="../../Assets/Images/Laurel Creek Conservation Area.jpeg" Stretch="Fill" />
                 </Border.Background>
 
                 <Grid>

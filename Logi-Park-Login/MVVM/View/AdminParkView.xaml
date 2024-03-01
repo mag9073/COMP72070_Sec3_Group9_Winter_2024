@@ -45,7 +45,7 @@
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              IsChecked="True"
-                             Command="{Binding HomeViewCommand}" Checked="RadioButton_Checked"
+                             Command="{Binding HomeViewCommand}" Checked="HomeRadioButton_Checked"
                              >
 
                 </RadioButton>
@@ -56,7 +56,7 @@
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              IsChecked="False"
-                             Command="{Binding HomeViewCommand}" Checked="RadioButton_Checked_1"
+                             Command="{Binding HomeViewCommand}" Checked="LogoutRadioButton_Checked"
                              >
 
                 </RadioButton>
@@ -77,7 +77,7 @@
                             Content="{Binding CurrentView}" Grid.ColumnSpan="2"
                             />
 
-            <Button Grid.Column="2" Content="Back" HorizontalAlignment="Left" Margin="38,43,0,11" Click="Button_Click" Width="100" FontSize="20">
+            <Button Grid.Column="2" Content="Back" HorizontalAlignment="Left" Margin="38,43,0,11" Click="BackButton_Click" Width="100" FontSize="20">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>

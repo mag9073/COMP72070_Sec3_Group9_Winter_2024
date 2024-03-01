@@ -24,7 +24,7 @@ namespace LogiPark.MVVM.View
             InitializeComponent();
         }
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        private void MapRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             // Handle back to main menu label clicked
             MapView mapView = new MapView();
@@ -34,7 +34,7 @@ namespace LogiPark.MVVM.View
             this.Close();
         }
 
-        private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
+        private void LogoutRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             // Handle back to main menu label clicked
             LoginView loginView = new LoginView();

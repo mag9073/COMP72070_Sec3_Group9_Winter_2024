@@ -40,7 +40,7 @@
                     <TextBlock Text="07:00 a.m. - 11:00 p.m" FontSize="14" Width="180"/>
                 </StackPanel>
 
-                <Button Content="Edit Park Info" Margin="0,20" Height="40" Background="#00A3FF" Foreground="White" Width="186" HorizontalAlignment="Left" Click="Button_Click">
+                <Button Content="Edit Park Info" Margin="0,20" Height="40" Background="#00A3FF" Foreground="White" Width="186" HorizontalAlignment="Left" Click="EditButton_Click">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -58,7 +58,7 @@
                                     <TextBlock Text="Tony Stark" FontWeight="Bold"/>
                                     <TextBlock Text="Waterloo, ON" FontStyle="Italic"/>
                                 </StackPanel>
-                                <Button Content="Delete Review" Height="32" Background="#CF0909" Foreground="White" Width="100" Margin="149,0">
+                                <Button Content="Delete Review" Height="32" Background="#CF0909" Foreground="White" Width="100" Margin="149,0" Click="DeleteReviewButton_Click">
                                     <Button.Resources>
                                         <Style TargetType="{x:Type Border}">
                                             <Setter Property="CornerRadius" Value="10"/>
@@ -88,7 +88,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Button Content="Delete Park" Height="40" Background="#CF0909" Foreground="White" Width="122" Grid.Column="1" Margin="0,0,0,20">
+                    <Button Content="Delete Park" Height="40" Background="#CF0909" Foreground="White" Width="122" Grid.Column="1" Margin="0,0,0,20" Click="DeleteParkButton_Click">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10"/>

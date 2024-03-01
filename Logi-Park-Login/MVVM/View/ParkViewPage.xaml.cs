@@ -26,7 +26,7 @@ namespace LogiPark.MVVM.View
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ReviewButton_Click(object sender, RoutedEventArgs e)
         {
 
         }

@@ -21,19 +21,10 @@ namespace LogiPark.MVVM.View
     /// </summary>
     public partial class HomeViewPage : UserControl
     {
-
-        //private bool admin;
-
         public HomeViewPage()
         {
             InitializeComponent();
         }
-
-        //public HomeViewPage(bool Admin)
-        //{
-        //    InitializeComponent();
-        //    this.admin = Admin;
-        //}
 
         private void OnParkImageClick(object sender, RoutedEventArgs e)
         {
@@ -41,10 +32,7 @@ namespace LogiPark.MVVM.View
             parkView.Show();
 
             Window parentWindow = Window.GetWindow(this);
-            if (parentWindow != null)
-            {
-                parentWindow.Close();
-            }
+            parentWindow?.Close();
         }
     }
 }

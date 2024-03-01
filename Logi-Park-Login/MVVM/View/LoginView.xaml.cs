@@ -64,7 +64,7 @@ namespace LogiPark.MVVM.View
             }
         }
 
-        private void loginButton_Click(object sender, RoutedEventArgs e)
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             bool isValid = true;
             StringBuilder sb = new StringBuilder();
@@ -109,16 +109,16 @@ namespace LogiPark.MVVM.View
             this.Close();
         }
 
-        private void usernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
-        private void passwordTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void PasswordTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AdminButton_Click(object sender, RoutedEventArgs e)
         {
             AdminHomeView HomeView = new AdminHomeView();
 
