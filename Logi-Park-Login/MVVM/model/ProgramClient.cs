@@ -1,17 +1,18 @@
-﻿using System;
+﻿using LogiPark.MVVM.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Client.MVVM.Model
+namespace LogiPark.MVVM.Model
 {
     public class ProgramClient
     {
         private UserDataManager.LoginData clientLoginData = new UserDataManager.LoginData();
         private ParkDataManager.ParkData clientParkData = new ParkDataManager.ParkData();
-        private TcpClient clientTcpClient;
+        //private TcpClient clientTcpClient;
         private NetworkStream stream;
 
         // Only used for testing without GUI

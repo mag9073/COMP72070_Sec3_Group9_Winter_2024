@@ -78,32 +78,32 @@ namespace Server
                 loginData.password = password;
             }
 
-            public string LoginUser(string filePath)
+            public string LoginUser(string filename)
             {
-                string message = "Username or password is incorrect";
+                string loginMessage = "Username or Password is incorrect. Please try again!!! /o\\";
                 try
                 {
-                    using (StreamReader reader = new StreamReader(filePath))
+                    using (StreamReader streamReader = new StreamReader(filename))
                     {
-                        string line1 = reader.ReadLine();
-                        string line2 = reader.ReadLine();
+                        string line1 = streamReader.ReadLine();
+                        string line2 = streamReader.ReadLine();
 
                         while ((line1 != null) && (line2 != null))
                         {
                             if ((line1 == loginData.GetUserName()) && (line2 == loginData.GetPassword()))
                             {
 
-                                message = "User signed in";
+                                loginMessage = "Username and password are Correct!!! \\o/";
                                 break;
                             }
 
-                            line1 = reader.ReadLine();
-                            line2 = reader.ReadLine();
+                            line1 = streamReader.ReadLine();
+                            line2 = streamReader.ReadLine();
                         }
 
 
 
-                        reader.Close();
+                        streamReader.Close();
                     }
                 }
                 catch (IOException e)
@@ -111,8 +111,9 @@ namespace Server
                     Console.WriteLine(e.Message + "Error Signing in user");
                 }
 
-                return message;
+                return loginMessage;
             }
         }
+
     }
 }
