@@ -108,6 +108,7 @@
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="MVVM\Model\Packet.cs" />
+    <Compile Include="MVVM\Model\TCPConnectionManager.cs" />
     <Compile Include="MVVM\ViewModel\AdminAddParkViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AdminHomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AdminParkEditViewModel.cs" />
