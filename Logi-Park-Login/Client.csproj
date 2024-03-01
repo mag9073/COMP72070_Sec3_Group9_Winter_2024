@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{71E949E0-F81E-451E-939A-5CCFD15DE9BC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Logi_Park_Login</RootNamespace>
+    <RootNamespace>Client</RootNamespace>
     <AssemblyName>Logi-Park-Login</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
