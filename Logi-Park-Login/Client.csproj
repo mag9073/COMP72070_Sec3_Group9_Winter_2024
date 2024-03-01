@@ -111,6 +111,7 @@
     <Compile Include="MVVM\Model\ParkDataManager.cs" />
     <Compile Include="MVVM\Model\ProgramClient.cs" />
     <Compile Include="MVVM\Model\TCPConnectionManager.cs" />
+    <Compile Include="MVVM\Model\UserDataManager.cs" />
     <Compile Include="MVVM\ViewModel\AdminAddParkViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AdminHomeViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AdminParkEditViewModel.cs" />
