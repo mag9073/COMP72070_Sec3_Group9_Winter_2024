@@ -1,16 +1,13 @@
-﻿using System;
+﻿using Client.MVVM.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace LogiPark.MVVM.View
 {
@@ -19,8 +16,15 @@ namespace LogiPark.MVVM.View
     /// </summary>
     public partial class LoginView : Window
     {
+        private ProgramClient client;
+        private string address = "127.0.0.1";
+        private int portnumber = 13000;
+        private int attempts = 0;
+        const int maxAttempts = 3;
+
         public LoginView()
         {
+            this.client = new ProgramClient();
             InitializeComponent();
         }
 
@@ -64,19 +68,38 @@ namespace LogiPark.MVVM.View
             }
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void loginButton_Click(object sender, RoutedEventArgs e)
         {
-            bool isValid = true;
-            StringBuilder sb = new StringBuilder();
+            if (attempts >= maxAttempts)
+            {
+                messageTextBlock.Text = "Maximum login attempts exceeded.";
+                messageTextBlock.Foreground = Brushes.Red;
+                return;
+            }
 
-            // Verify Username
-            if (string.IsNullOrWhiteSpace(usernameTextBox.Text) || usernameTextBox.Text == "Username or email")
+            string username = usernameTextBox.Text;
+            string password = passwordTextBox.Text;
+
+            bool isValid = ValidateCredentials(username, password);
+            if (isValid)
+            {
+                attempts++;
+                SendCredentials(username, password); // Separated logic for sending credentials
+            }
+        }
+
+        private bool ValidateCredentials(string username, string password)
+        {
+            StringBuilder sb = new StringBuilder();
+            bool isValid = true;
+
+            if (string.IsNullOrWhiteSpace(username) || username == "Username or email")
             {
                 isValid = false;
                 sb.AppendLine("Please enter your username or email");
             }
 
-            if (string.IsNullOrWhiteSpace(passwordTextBox.Text) || passwordTextBox.Text == "Password")
+            if (string.IsNullOrWhiteSpace(password) || password == "Password")
             {
                 isValid = false;
                 sb.AppendLine("Please enter your password");
@@ -86,16 +109,51 @@ namespace LogiPark.MVVM.View
             {
                 MessageBox.Show(sb.ToString(), "Validation Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            return isValid;
+        }
+
+        private void SendCredentials(string username, string password)
+        {
+            UserDataManager.LoginData loginData = new UserDataManager.LoginData
+            {
+                username = username,
+                password = password
+            };
+
+            client.SendLoginRequest(loginData);
+            string response = client.ReceiveServerResponse();
+
+            if (response.Contains("Username and password are Correct!!! \\o/"))
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    messageTextBlock.Text = "Login Successful";
+                    messageTextBlock.Foreground = Brushes.Green;
+
+                    AdminHomeView adminHomeView = new AdminHomeView();
+                    adminHomeView.Show();
+                    this.Close();
+                });
+            }
             else
             {
-                // If valid then open a home view
-                ClientHomeView HomeView = new ClientHomeView();
-
-                HomeView.Show();
-
-                this.Close();
+                // deals with run time thread safe
+                Dispatcher.Invoke(() =>
+                {
+                    if (attempts < maxAttempts)
+                    {
+                        messageTextBlock.Text = $"Login Failed. Attempt {attempts} of {maxAttempts}. Please try again.";
+                        messageTextBlock.Foreground = Brushes.Red;
+                    }
+                    else
+                    {
+                        messageTextBlock.Text = "Login Failed. Maximum attempts reached.";
+                        messageTextBlock.Foreground = Brushes.Red;
+                        client.CloseConnection();
+                    }
+                });
             }
-
         }
 
         private void Signup_Handler(object sender, MouseButtonEventArgs e)
