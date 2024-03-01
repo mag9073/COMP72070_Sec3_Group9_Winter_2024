@@ -5,7 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Client.MVVM.Model
+namespace LogiPark.MVVM.Model
 {
     // This will act as a central TCP Connection Manager for the Client Side to main DRY techniques
     public class TcpConnectionManager

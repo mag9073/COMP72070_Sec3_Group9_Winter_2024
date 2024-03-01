@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ProtoBuf;
 
-namespace Client.MVVM.Model
+namespace LogiPark.MVVM.Model
 {
     public enum Types
     {
