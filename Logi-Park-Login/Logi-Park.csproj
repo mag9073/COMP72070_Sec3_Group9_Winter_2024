@@ -35,7 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Logo.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SharpVectors.Converters.Wpf, Version=1.8.3.0, Culture=neutral, PublicKeyToken=b532964b8548be77, processorArchitecture=MSIL">
@@ -82,22 +83,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Client.cs" />
-    <Compile Include="View\AdminView.xaml.cs">
-      <DependentUpon>AdminView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\HomeView.xaml.cs">
-      <DependentUpon>HomeView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\LoginView.xaml.cs">
-      <DependentUpon>LoginView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SignupView.xaml.cs">
-      <DependentUpon>SignupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\RegistrationView.xaml.cs">
-      <DependentUpon>RegistrationView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Core\ObservableObject.cs" />
+    <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="MVVM\ViewModel\AdminAddParkViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\AdminHomeViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\AdminParkEditViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\AdminParkViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\MapViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\ParkViewModel.cs" />
+    <Compile Include="MVVM\ViewModel\ReviewViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -110,28 +105,119 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\AdminView.xaml">
+    <Page Include="MVVM\View\AdminAddParkView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\HomeView.xaml">
+    <Page Include="MVVM\View\AdminAddParkViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\LoginView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\SignupView.xaml">
+    <Page Include="MVVM\View\AdminHomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\RegistrationView.xaml">
+    <Page Include="MVVM\View\AdminHomeViewPage.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\AdminParkEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\AdminParkView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\AdminParkViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\ClientHomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\HomeViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\MapView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\ParkEditViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\ParkView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\ParkViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\View\SignupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\MenuButtonTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme\SearchBoxTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MVVM\View\AdminAddParkView.xaml.cs">
+      <DependentUpon>AdminAddParkView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\AdminAddParkViewPage.xaml.cs">
+      <DependentUpon>AdminAddParkViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\AdminHomeView.xaml.cs">
+      <DependentUpon>AdminHomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\AdminHomeViewPage.xaml.cs">
+      <DependentUpon>AdminHomeViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\AdminParkEditView.xaml.cs">
+      <DependentUpon>AdminParkEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\AdminParkView.xaml.cs">
+      <DependentUpon>AdminParkView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\AdminParkViewPage.xaml.cs">
+      <DependentUpon>AdminParkViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\ClientHomePage.xaml.cs">
+      <DependentUpon>ClientHomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\HomeViewPage.xaml.cs">
+      <DependentUpon>HomeViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\MapView.xaml.cs">
+      <DependentUpon>MapView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\ParkEditViewPage.xaml.cs">
+      <DependentUpon>ParkEditViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\ParkView.xaml.cs">
+      <DependentUpon>ParkView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\ParkViewPage.xaml.cs">
+      <DependentUpon>ParkViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\SignupView.xaml.cs">
+      <DependentUpon>SignupView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -159,86 +245,43 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModel\" />
+    <Folder Include="Fonts\" />
+    <Folder Include="MVVM\Model\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\background.png" />
+    <Resource Include="Assets\Images\background.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Shape-Two.png" />
+    <Resource Include="Assets\Images\Shape-Four.png" />
+    <Resource Include="Assets\Images\Shape-One.png" />
+    <Resource Include="Assets\Images\Shape-Three.png" />
+    <Resource Include="Assets\Images\Shape-Two.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Shape-Four.png" />
+    <Resource Include="Assets\Images\Star-Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Shape-Four.png" />
-    <Resource Include="Images\Shape-One.png" />
-    <Resource Include="Images\Shape-Three.png" />
-    <Resource Include="Images\Shape-Two.png" />
+    <Resource Include="Assets\Images\Waterloo Park.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Star-Icon.png" />
+    <Resource Include="Assets\Images\star rating icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Star-Icon.png" />
+    <Resource Include="Assets\Images\LoginImage.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Icons\img_contact.png" />
-    <Resource Include="Assets\Icons\img_home.png" />
-    <Resource Include="Assets\Icons\img_map.png" />
-    <Resource Include="Assets\Icons\img_message.png" />
-    <Resource Include="Assets\Icons\img_setting.png" />
-    <Resource Include="Assets\Icons\img_signout.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Icons\hamburger-menu.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\HomeBackground.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\HomeBackground.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Waterloo Park.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Waterloo Playground.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Victoria Park.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Kitchener Playground.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\star rating icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Settlers Grove Park.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Schneider Park.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Activity Feed Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\LoginImage.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Icons\Logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Icons\Search Icon.png" />
-    <Resource Include="Images\Bechtel Park.jpg" />
-    <Resource Include="Images\Bewmeister Green Park.jpg" />
-    <Resource Include="Images\Clair-Lake-Park.jpg" />
-    <Resource Include="Images\Hillside Park.jpg" />
-    <Resource Include="Images\Laurel Creek Conservation Area.jpeg" />
-    <Resource Include="Logo.ico" />
+    <Resource Include="Assets\Images\Bechtel Park.jpg" />
+    <Resource Include="Assets\Images\Brewmeister Green Park.jpg" />
+    <Resource Include="Assets\Images\Clair-Lake-Park.jpg" />
+    <Resource Include="Assets\Images\Hillside Park.jpg" />
+    <Resource Include="Assets\Images\Laurel Creek Conservation Area.jpeg" />
     <Resource Include="Assets\Icons\Logo.ico" />
-    <Content Include="Assets\Icons\Logo.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\MapInterface.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\star-rating-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
