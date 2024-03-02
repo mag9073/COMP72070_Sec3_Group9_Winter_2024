@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using ProtoBuf;
 using static Server.UserDataManager;
+using static Server.ParkDataManager;
 
 namespace Server
 {
@@ -109,6 +110,11 @@ namespace Server
                 case Types.send:
 
                     break;
+
+                // For retrieving all park data
+                case Types.all:
+                    ProcessParkDataRetrievalAll(stream);
+                    break;
             }
         }
 
@@ -143,36 +149,25 @@ namespace Server
         }
 
         // still has yet to implement park data retrival because of issue with client connection loss 
-        private static void ProcessParkDataRetrievalAll(Packet packet, NetworkStream stream)
+        private static void ProcessParkDataRetrievalAll(NetworkStream stream)
         {
-            ParkDataManager.ParkData[] parks = RetrieveParkDataFromFile("../../../ParkData.txt");
+            ParkDataManager.ParkData[] allParkData = ReadAllParkDataFromFile("../../../ParkData.txt");
 
-            for (int i = 0; i < parks.Length; i++)
+            // Sending the number of ParkData objects first 
+            byte[] numberOfBytes = BitConverter.GetBytes(allParkData.Length);
+            stream.Write(numberOfBytes, 0, numberOfBytes.Length);
+
+            for (int i = 0; i < allParkData.Length; i++)
             {
-                byte[] buffer = parks[i].SerializeToByteArray();
+                // Convert all park data into byte array
+                byte[] buffer = allParkData[i].SerializeToByteArray();
+
+                byte[] bufferLength = BitConverter.GetBytes(buffer.Length);
+                stream.Write(bufferLength, 0, bufferLength.Length);
+
                 stream.Write(buffer, 0, buffer.Length);
             }
             Console.WriteLine("All park data sent to client");
-        }
-
-        private static ParkDataManager.ParkData[] RetrieveParkDataFromFile(string filePath)
-        {
-            string[] lines = File.ReadAllLines(filePath);
-            ParkDataManager.ParkData[] parks = new ParkDataManager.ParkData[lines.Length / 4];
-
-            for (int i = 0; i < parks.Length; i++)
-            {
-                int index = i * 4;
-                // this setup is based on the parkdata.txt file
-                parks[i] = new ParkDataManager.ParkData
-                {
-                    parkName = lines[index],
-                    parkReview = float.Parse(lines[index + 1]),
-                    parkDescription = lines[index + 2],
-                    numberOfReviews = uint.Parse(lines[index + 3]),
-                };
-            }
-            return parks;
         }
     }
 }

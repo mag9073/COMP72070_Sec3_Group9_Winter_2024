@@ -17,17 +17,25 @@ namespace LogiPark.MVVM.Model
             public string parkName;
 
             [ProtoMember(2)]
-            public float parkReview;
+            public string parkAddress;
 
             [ProtoMember(3)]
-            public string parkDescription;
+            public float parkReview;
 
             [ProtoMember(4)]
+            public string parkDescription;
+
+            [ProtoMember(5)]
             public uint numberOfReviews;
 
             public string GetParkName()
             {
                 return this.parkName;
+            }
+
+            public string GetParkAddress()
+            {
+                return this.parkAddress;
             }
 
             public float GetParkReview()
@@ -48,6 +56,11 @@ namespace LogiPark.MVVM.Model
             public void SetParkName(string parkName)
             {
                 this.parkName = parkName;
+            }
+
+            public void SetParkAddress(string parkAddress)
+            {
+                this.parkAddress = parkAddress;
             }
 
             public void SetParkReview(float parkReview)
@@ -81,6 +94,9 @@ namespace LogiPark.MVVM.Model
                     return Serializer.Deserialize<ParkData>(memStream);
                 }
             }
+
         }
+
     }
+
 }
