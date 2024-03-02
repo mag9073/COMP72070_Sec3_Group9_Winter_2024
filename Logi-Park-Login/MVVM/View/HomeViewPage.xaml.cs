@@ -38,13 +38,20 @@ namespace LogiPark.MVVM.View
             // receive back the response from the server which contains array of park data obj
             ParkDataManager.ParkData[] parks = client.ReceiveParkDataAllResponse();
 
-            // make sure that we use UI thread - thread safe
+            // We make it annoynmous types which consists of name, address, review
+            var parkCards = parks.Select(park => new
+            {
+                Name = park.GetParkName(),
+                Address = park.GetParkAddress(),
+                Review = $"{park.GetParkReview()} stars",
+                // Still need to implement image manager
+                /*ImagePath = $"../../Assets/Images/{park.GetImageFileName()}"*/ 
+            }).ToList();    // Convert it back to list for the xaml card to dynamically rendered.
+
+            // make sure that we use UI thread - thread safe -> we update our xaml park card
             Dispatcher.Invoke(() =>
             {
-                for (int i = 0; i < parks.Length; i++)
-                {
-                    Console.WriteLine($"{parks[i].GetParkName()} {parks[i].GetParkAddress()} - {parks[i].GetParkReview()} stars -");
-                }
+                ParksItemsControl.ItemsSource = parkCards;
             });
         }
 
