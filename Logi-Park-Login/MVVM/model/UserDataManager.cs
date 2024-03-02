@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -112,6 +113,91 @@ namespace LogiPark.MVVM.Model
                 }
 
                 return message;
+            }
+        }
+
+
+        /***************** Sign Up *****************/
+
+       
+        // check if username already exists
+
+        public class SignUp
+        {
+            public SignUpData signUpData;
+            public SignUp(SignUpData data)
+            {
+                signUpData = data;
+            }
+
+
+            public SignUpData GetSignUpData()
+            {
+                return SignUpData;
+            }
+
+            public void SetSignUpData(string username, string password)
+            {
+                SignUpData.username = username;
+                SignUpData.password = password;
+            }
+            // 
+            // check if username already exists
+            // if (SignUpData.username == loginData.username) 
+            // {
+            // string signUpMessage = "Username already exists please try another again!!! /o\\ ";
+            // }
+
+            public string SignUpUser(string filename)
+            {
+                string signUpMessage = "Please enter username to register!!!! \\o/";
+                try
+                {
+                    using (StreamReader streamReader = new StreamReader(filename))
+                    {
+                        string line1 = streamReader.ReadLine();
+                        // string line2 = streamReader.ReadLine();
+
+                        while ((line1 != null)) //  && (line2 != null))
+                        {
+                            if ((line1 == signUpData.GetUserName()) //  && (line2 == signUpData.GetPassword()))
+                            {
+
+                                signUpMessage = "Username already exists please try another!!! /o\\";
+                                break;
+                            }
+
+                            line1 = streamReader.ReadLine();
+                            // line2 = streamReader.ReadLine();
+                        }
+
+
+
+                        streamReader.Close();
+
+
+                        // another method to write username and password and append to userDB.txt file 
+                        // Append text to an existing file named "WriteLines.txt".
+                        // helper function should return string back if signup was successful to signUpUser()
+
+                        // public string SignUp(string filename)
+                        using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "userDB.txt"), true))
+                        {
+                            outputFile.WriteLine(signUpData.GetUserName()); // will add the username to the text file
+                            outputFile.WriteLine(signUpData.GetUserPassword()); //will add the password to the text file
+                            outputFile.Close();
+                            // Console.WriteLine("Success registering user!!! \\o/"); // return success
+
+
+                        }
+                    }
+                }
+                catch (IOException e)
+                {
+                    Console.WriteLine(e.Message + "Error registering user!!! /o\\");
+                }
+
+                return signUpMessage;
             }
         }
     }
