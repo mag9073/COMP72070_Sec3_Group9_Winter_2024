@@ -17,8 +17,6 @@ namespace LogiPark.MVVM.View
     public partial class LoginView : Window
     {
         private ProgramClient client;
-        //private string address = "127.0.0.1";
-        //private int portnumber = 13000;
         private int attempts = 0;
         const int maxAttempts = 3;
 
