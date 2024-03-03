@@ -23,8 +23,10 @@ namespace LogiPark.MVVM.View
         // not sure if this is necessary but may removed once park data manager is implemented
         //private string address = "127.0.0.1";
         //private int portnumber = 13000;
+        private ProgramClient client;
         public ClientHomeView()
         {
+            this.client = new ProgramClient();
             InitializeComponent();
         }
 

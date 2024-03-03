@@ -112,8 +112,13 @@ namespace Server
                     break;
 
                 // For retrieving all park data
-                case Types.all:
+                case Types.allparkdata:
                     ProcessParkDataRetrievalAll(stream);
+                    break;
+
+                // For retrieving all park images
+                case Types.allparkimages:
+                    //ProcessImageRequest(stream);
                     break;
             }
         }
@@ -169,5 +174,9 @@ namespace Server
             }
             Console.WriteLine("All park data sent to client");
         }
+
+        /* Send Image File */
+
+
     }
 }

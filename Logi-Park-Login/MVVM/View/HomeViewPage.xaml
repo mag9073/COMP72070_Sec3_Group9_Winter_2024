@@ -37,7 +37,9 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border Style="{StaticResource ParkCardStyle}">
-                                    
+                                    <!--<Border.Background>
+                                        <ImageBrush ImageSource="{Binding ImagePath}" Stretch="Fill"/>
+                                    </Border.Background>-->
                                     <!-- This will be placement for each park image -->
                                     <Grid>
                                         <Border CornerRadius="10" Background="#AA000000" VerticalAlignment="Top" Height="42" Margin="10,148,10,0">

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace LogiPark.MVVM.Model
 {
@@ -76,7 +77,7 @@ namespace LogiPark.MVVM.Model
         public void SendParkDataAllRequest()
         {
             Packet sendPacket = new Packet();
-            sendPacket.SetPacketHead(1, 2, Types.all);
+            sendPacket.SetPacketHead(1, 2, Types.allparkdata);
 
             byte[] parkDataBuffer = clientParkData.SerializeToByteArray();
             sendPacket.SetPacketBody(parkDataBuffer, (uint)parkDataBuffer.Length);
@@ -127,7 +128,7 @@ namespace LogiPark.MVVM.Model
                 bytesRead = stream.Read(parkBuffer, 0, dataLength);
                 if (bytesRead != dataLength) throw new Exception("Failed to read complete park data.");
 
-                using (var ms = new MemoryStream(parkBuffer))
+                using (MemoryStream ms = new MemoryStream(parkBuffer))
                 {
                     // finally, we will deserialize the serialize park data object and format it back to park data obj
                     parks[i] = Serializer.Deserialize<ParkDataManager.ParkData>(ms);
@@ -137,6 +138,15 @@ namespace LogiPark.MVVM.Model
             return parks;
         }
 
+        public void SendImageRequest()
+        {
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.allparkimages);
+
+            // We dont need to send body in this request 
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
 
 
 

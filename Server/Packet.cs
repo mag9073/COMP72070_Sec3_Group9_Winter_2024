@@ -7,7 +7,7 @@ namespace Server
 {
     public enum Types
     {
-        login, register, send, recv, log, all
+        login, register, send, recv, log, allparkdata, allparkimages, image, park, review
     }
 
     /********** Head of the Packet **********/
@@ -198,7 +198,7 @@ namespace Server
 
         public byte[] SerializeToByteArray()
         {
-            using (var stream = new MemoryStream())
+            using (MemoryStream stream = new MemoryStream())
             {
                 Serializer.Serialize(stream, this);
                 return stream.ToArray();
