@@ -177,7 +177,7 @@ namespace LogiPark.MVVM.Model
 
 
                         // another method to write username and password and append to userDB.txt file 
-                        // Append text to an existing file named "WriteLines.txt".
+                        // Append text to an existing file named "userDB.txt".
                         // helper function should return string back if signup was successful to signUpUser()
 
                         // public string SignUp(string filename)
