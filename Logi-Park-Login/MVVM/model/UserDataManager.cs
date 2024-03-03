@@ -119,7 +119,53 @@ namespace LogiPark.MVVM.Model
 
         /***************** Sign Up *****************/
 
-       
+        /************* UserSignUpData *************/
+        [ProtoContract]
+        public class SignUpData
+        {
+            [ProtoMember(1)]
+            public string username;
+            [ProtoMember(2)]
+            public string password;
+
+            public string GetUserName()
+            {
+                return this.username;
+            }
+
+            public string GetPassword()
+            {
+                return this.password;
+            }
+
+            public void SetUserName(string username)
+            {
+                this.username = username;
+            }
+
+            public void SetPassword(string password)
+            {
+                this.password = password;
+            }
+
+            public byte[] SerializeToByteArray()
+            {
+                using (var stream = new MemoryStream())
+                {
+                    Serializer.Serialize(stream, this);
+                    return stream.ToArray();
+                }
+            }
+
+            public LoginData deserializeLoginData(byte[] buffer)
+            {
+                using (var memStream = new MemoryStream(buffer))
+                {
+                    return Serializer.Deserialize<LoginData>(memStream);
+                }
+            }
+        }
+
         // check if username already exists
 
         public class SignUp
@@ -127,19 +173,19 @@ namespace LogiPark.MVVM.Model
             public SignUpData signUpData;
             public SignUp(SignUpData data)
             {
-                signUpData = data;
+                this.signUpData = data;
             }
 
 
             public SignUpData GetSignUpData()
             {
-                return SignUpData;
+                return this.signUpData;
             }
 
             public void SetSignUpData(string username, string password)
             {
-                SignUpData.username = username;
-                SignUpData.password = password;
+                this.signUpData.username = username;
+                this.signUpData.password = password;
             }
             // 
             // check if username already exists
@@ -160,7 +206,7 @@ namespace LogiPark.MVVM.Model
 
                         while ((line1 != null)) //  && (line2 != null))
                         {
-                            if ((line1 == signUpData.GetUserName()) //  && (line2 == signUpData.GetPassword()))
+                            if ((line1 == signUpData.GetUserName())) //  && (line2 == signUpData.GetPassword()))
                             {
 
                                 signUpMessage = "Username already exists please try another!!! /o\\";
@@ -181,10 +227,10 @@ namespace LogiPark.MVVM.Model
                         // helper function should return string back if signup was successful to signUpUser()
 
                         // public string SignUp(string filename)
-                        using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "userDB.txt"), true))
+                        using (StreamWriter outputFile = new StreamWriter("userDB.txt", true))
                         {
                             outputFile.WriteLine(signUpData.GetUserName()); // will add the username to the text file
-                            outputFile.WriteLine(signUpData.GetUserPassword()); //will add the password to the text file
+                            outputFile.WriteLine(signUpData.GetPassword()); //will add the password to the text file
                             outputFile.Close();
                             // Console.WriteLine("Success registering user!!! \\o/"); // return success
 
