@@ -64,12 +64,14 @@ namespace LogiPark.MVVM.View
             }
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
             bool isValid = true;
             StringBuilder sb = new StringBuilder();
 
-            // Verify Username
+            // Define username and password -> get it from textbox (check xaml code)
+
+            // Verify Username -- This can be separated to a helper method
             if (string.IsNullOrWhiteSpace(usernameTextBox.Text) || usernameTextBox.Text == "Username or email")
             {
                 isValid = false;
@@ -95,6 +97,19 @@ namespace LogiPark.MVVM.View
 
                 //this.Close();
             }
+
+            // If the username and password are filled, then can proceed to sign up process
+
+
+            // Initialize it to the SignUp Data Class
+
+            // Send info to the sign up class 
+
+            // Need to implement a method to send info
+
+            // Need to implement a method to receive data back?
+
+            // its it is good then it can proceed, take them back to the login page and current view 
 
         }
 

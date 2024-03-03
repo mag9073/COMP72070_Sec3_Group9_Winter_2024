@@ -1,4 +1,4 @@
-﻿using Client.MVVM.Model;
+﻿using LogiPark.MVVM.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +21,9 @@ namespace LogiPark.MVVM.View
     public partial class ClientHomeView : Window
     {
         // not sure if this is necessary but may removed once park data manager is implemented
+        //private string address = "127.0.0.1";
+        //private int portnumber = 13000;
         private ProgramClient client;
-        private string address = "127.0.0.1";
-        private int portnumber = 13000;
         public ClientHomeView()
         {
             this.client = new ProgramClient();

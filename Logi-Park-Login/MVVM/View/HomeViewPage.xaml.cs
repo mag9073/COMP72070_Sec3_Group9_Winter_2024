@@ -1,4 +1,5 @@
-﻿using LogiPark.MVVM.ViewModel;
+﻿using LogiPark.MVVM.Model;
+using LogiPark.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,42 @@ namespace LogiPark.MVVM.View
     /// </summary>
     public partial class HomeViewPage : UserControl
     {
+        private ProgramClient client;
         public HomeViewPage()
         {
+            this.client = new ProgramClient();
             InitializeComponent();
+            this.RequestAllParkData();
+        }
+
+        private void RequestAllParkData()
+        {
+            // send request to the server retrieve all the park data info - we send empty body with the header containing flag to get all park data
+            client.SendParkDataAllRequest();
+            client.SendImageRequest();
+
+            // receive back the response from the server which contains array of park data obj
+            ParkDataManager.ParkData[] parks = client.ReceiveParkDataAllResponse();
+            //var images = client.RequestAndReceiveImages();
+
+            // We make it annoynmous types which consists of name, address, review
+            var parkCards = parks.Select(park =>
+            {
+                //var image = images.FirstOrDefault(img => img.FileName == park.GetParkName() + ".jpg"); // Assuming naming convention
+                return new
+                {
+                    Name = park.GetParkName(),
+                    Address = park.GetParkAddress(),
+                    Review = $"{park.GetParkReview()} stars",
+                    //ImagePath ?
+                };
+            }).ToList();   // Convert it back to list for the xaml card to dynamically rendered.
+
+            // make sure that we use UI thread - thread safe -> we update our xaml park card
+            Dispatcher.Invoke(() =>
+            {
+                ParksItemsControl.ItemsSource = parkCards;
+            });
         }
 
         private void OnParkImageClick(object sender, RoutedEventArgs e)

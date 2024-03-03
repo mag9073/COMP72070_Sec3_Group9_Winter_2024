@@ -4,342 +4,61 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LogiPark.MVVM.View"
-             mc:Ignorable="d" Height="542" Width="889"
-             >
+             mc:Ignorable="d" Height="542" Width="889">
 
+    <UserControl.Resources>
+        <!-- Style for dynamic park cards -->
+        <Style x:Key="ParkCardStyle" TargetType="Border">
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="200"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </UserControl.Resources>
 
     <Border Background="#EBEBEB" CornerRadius="10">
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>
-
-            <StackPanel Margin="0,0,0,211">
-                <TextBlock Text="Results"
-                           Margin="20,10,0,0"
-                           FontSize="28"
-                           />
+            <!-- Results Header -->
+            <StackPanel Grid.Row="0" Margin="20,10,0,0">
+                <TextBlock Text="6 Results in Waterloo" 
+                           FontSize="26"
+                           TextDecorations="Underline"/>
             </StackPanel>
 
-
-            <!-- Park Card 1 -->
-            <Border Grid.Row="0" Grid.Column="0" Width="250" Height="200" Margin="0,50,0,0" CornerRadius="10">
-                <!-- Background Image -->
-                <Border.Background>
-                    <ImageBrush ImageSource="../../Assets/Images/Waterloo Park.jpg" Stretch="Fill" />
-                </Border.Background>
-
-                <Grid>
-                    <!-- Text Overlay -->
-                    <Border CornerRadius="10" Background="#AA000000" VerticalAlignment="Top" Height="42" Margin="10,148,10,0">
-                        <StackPanel VerticalAlignment="Center" Height="42">
-                            <TextBlock Text="Waterloo Park" Foreground="White" FontSize="16" Height="19" Width="220"/>
-                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                <!-- Star Icon -->
-                                <Image Source="/Assets/Icons/star-rating-icon.png" Width="25" Height="14" VerticalAlignment="Center"/>
-                                <TextBlock Text="4.6" Foreground="White" FontSize="12" Margin="5,0" VerticalAlignment="Center"/>
-                                <!-- Address -->
-                                <TextBlock Text="50 Young St W, Waterloo, ON" Foreground="White" FontSize="12" Margin="10,0" Width="173"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-
-                    <Button Click="OnParkImageClick" Opacity="0.5">
-                        <Button.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="10"/>
-                            </Style>
-                        </Button.Resources>
-
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Background="{TemplateBinding Background}">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="SkyBlue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
+            <!-- Dynamically render each park -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <Grid HorizontalAlignment="Center">
+                    <ItemsControl Name="ParksItemsControl" Margin="10">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel ItemWidth="250" ItemHeight="200" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource ParkCardStyle}">
+                                    <!--<Border.Background>
+                                        <ImageBrush ImageSource="{Binding ImagePath}" Stretch="Fill"/>
+                                    </Border.Background>-->
+                                    <!-- This will be placement for each park image -->
+                                    <Grid>
+                                        <Border CornerRadius="10" Background="#AA000000" VerticalAlignment="Top" Height="42" Margin="10,148,10,0">
+                                            <StackPanel VerticalAlignment="Center" Height="42">
+                                                <TextBlock Text="{Binding Name}" Foreground="White" FontSize="16"/>
+                                                <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                                                    <Image Source="/Assets/Icons/star-rating-icon.png" Width="25" Height="14"/>
+                                                    <TextBlock Text="{Binding Review}" Foreground="White" FontSize="12" Margin="5,0"/>
+                                                    <TextBlock Text="{Binding Address}" Foreground="White" FontSize="10" Margin="10,0"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </Grid>
-            </Border>
-
-            <!-- Park Card 2 -->
-            <Border Grid.Row="0" Grid.Column="1" Width="250" Height="200" Margin="0,50,0,0" CornerRadius="10">
-                <!-- Background Image -->
-                <Border.Background>
-                    <ImageBrush ImageSource="../../Assets/Images/Clair-Lake-Park.jpg" Stretch="Fill" />
-                </Border.Background>
-
-                <Grid>
-                    <!-- Text Overlay -->
-                    <Border CornerRadius="10" Background="#AA000000" VerticalAlignment="Top" Height="42" Margin="10,148,10,0">
-                        <StackPanel VerticalAlignment="Center" Height="42">
-                            <TextBlock Text="Clair Lake Park" Foreground="White" FontSize="16" Height="19" Width="220"/>
-                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                <!-- Star Icon -->
-                                <Image Source="/Assets/Icons/star-rating-icon.png" Width="25" Height="14" VerticalAlignment="Center"/>
-                                <TextBlock Text="4.4" Foreground="White" FontSize="12" Margin="5,0" VerticalAlignment="Center"/>
-                                <!-- Address -->
-                                <TextBlock Text="Shakespare Dr, Waterloo, ON" Foreground="White" FontSize="12" Margin="10,0" Width="173"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-
-                    <Button Click="OnParkImageClick" Opacity="0.5">
-                        <Button.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="10"/>
-                            </Style>
-                        </Button.Resources>
-
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Background="{TemplateBinding Background}">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="SkyBlue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                </Grid>
-            </Border>
-
-            <!-- Park Card 3 -->
-            <Border Grid.Row="0" Grid.Column="3" Width="250" Height="200" Margin="0,50,0,0" CornerRadius="10">
-                <!-- Background Image -->
-                <Border.Background>
-                    <ImageBrush ImageSource="../../Assets/Images/Hillside Park.jpg" Stretch="Fill" />
-                </Border.Background>
-
-                <Grid>
-                    <!-- Text Overlay -->
-                    <Border CornerRadius="10" Background="#AA000000" VerticalAlignment="Top" Height="42" Margin="10,148,10,0">
-                        <StackPanel VerticalAlignment="Center" Height="42">
-                            <TextBlock Text="Hillside Park" Foreground="White" FontSize="16" Height="19" Width="220"/>
-                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                <!-- Star Icon -->
-                                <Image Source="/Assets/Icons/star-rating-icon.png" Width="25" Height="14" VerticalAlignment="Center"/>
-                                <TextBlock Text="4.4" Foreground="White" FontSize="12" Margin="5,0" VerticalAlignment="Center"/>
-                                <!-- Address -->
-                                <TextBlock Text="352 Marsland Dr, Waterloo, ON" Foreground="White" FontSize="12" Margin="10,0" Width="173"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-
-                    <Button Click="OnParkImageClick" Opacity="0.5">
-                        <Button.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="10"/>
-                            </Style>
-                        </Button.Resources>
-
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Background="{TemplateBinding Background}">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="SkyBlue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                </Grid>
-            </Border>
-
-            <!-- Park Card 4 -->
-            <Border Grid.Row="1" Grid.Column="0" Width="250" Height="200" Margin="0" CornerRadius="10">
-                <!-- Background Image -->
-                <Border.Background>
-                    <ImageBrush ImageSource="../../Assets/Images/Brewmeister Green Park.jpg" Stretch="Fill" />
-                </Border.Background>
-
-                <Grid>
-                    <!-- Text Overlay -->
-                    <Border CornerRadius="10" Background="#AA000000" VerticalAlignment="Top" Height="42" Margin="10,148,10,0">
-                        <StackPanel VerticalAlignment="Center" Height="42">
-                            <TextBlock Text="Brewmeister Green Park" Foreground="White" FontSize="16" Height="19" Width="220"/>
-                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                <!-- Star Icon -->
-                                <Image Source="/Assets/Icons/star-rating-icon.png" Width="25" Height="14" VerticalAlignment="Center"/>
-                                <TextBlock Text="4.6" Foreground="White" FontSize="12" Margin="5,0" VerticalAlignment="Center"/>
-                                <!-- Address -->
-                                <TextBlock Text="155 King St S, Waterloo, ON" Foreground="White" FontSize="12" Margin="10,0" Width="173"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-
-                    <Button Click="OnParkImageClick" Opacity="0.5">
-                        <Button.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="10"/>
-                            </Style>
-                        </Button.Resources>
-
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Background="{TemplateBinding Background}">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="SkyBlue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                </Grid>
-            </Border>
-
-            <!-- Park Card 5 -->
-            <Border Grid.Row="1" Grid.Column="1" Width="250" Height="200" Margin="0" CornerRadius="10">
-                <!-- Background Image -->
-                <Border.Background>
-                    <ImageBrush ImageSource="../../Assets/Images/Bechtel Park.jpg" Stretch="Fill" />
-                </Border.Background>
-
-                <Grid>
-                    <!-- Text Overlay -->
-                    <Border CornerRadius="10" Background="#AA000000" VerticalAlignment="Top" Height="42" Margin="10,148,10,0">
-                        <StackPanel VerticalAlignment="Center" Height="42">
-                            <TextBlock Text="Bechtel Park" Foreground="White" FontSize="16" Height="19" Width="220"/>
-                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                <!-- Star Icon -->
-                                <Image Source="/Assets/Icons/star-rating-icon.png" Width="25" Height="14" VerticalAlignment="Center"/>
-                                <TextBlock Text="4.4" Foreground="White" FontSize="12" Margin="5,0" VerticalAlignment="Center"/>
-                                <!-- Address -->
-                                <TextBlock Text="185 Bridge St W, Waterloo, ON" Foreground="White" FontSize="12" Margin="10,0" Width="173"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-
-                    <Button Click="OnParkImageClick" Opacity="0.5">
-                        <Button.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="10"/>
-                            </Style>
-                        </Button.Resources>
-
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Background="{TemplateBinding Background}">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="SkyBlue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                </Grid>
-            </Border>
-
-            <!-- Park Card 6 -->
-            <Border Grid.Row="1" Grid.Column="2" Width="250" Height="200" Margin="0" CornerRadius="10">
-                <!-- Background Image -->
-                <Border.Background>
-                    <ImageBrush ImageSource="../../Assets/Images/Laurel Creek Conservation Area.jpeg" Stretch="Fill" />
-                </Border.Background>
-
-                <Grid>
-                    <!-- Text Overlay -->
-                    <Border CornerRadius="10" Background="#AA000000" VerticalAlignment="Top" Height="42" Margin="10,148,10,0">
-                        <StackPanel VerticalAlignment="Center" Height="42">
-                            <TextBlock Text="Laurel Creek Conservation" Foreground="White" FontSize="16" Height="19" Width="220"/>
-                            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
-                                <!-- Star Icon -->
-                                <Image Source="/Assets/Icons/star-rating-icon.png" Width="25" Height="14" VerticalAlignment="Center"/>
-                                <TextBlock Text="4.6" Foreground="White" FontSize="12" Margin="5,0" VerticalAlignment="Center"/>
-                                <!-- Address -->
-                                <TextBlock Text="625 Westmount Rd N, Waterloo, ON" Foreground="White" FontSize="10" Margin="10,0" Width="173"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-
-                    <Button Click="OnParkImageClick" Opacity="0.5">
-                        <Button.Resources>
-                            <Style TargetType="{x:Type Border}">
-                                <Setter Property="CornerRadius" Value="10"/>
-                            </Style>
-                        </Button.Resources>
-
-                        <Button.Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border Background="{TemplateBinding Background}">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="SkyBlue"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
-                </Grid>
-            </Border>
-
+            </ScrollViewer>
         </Grid>
     </Border>
 </UserControl>

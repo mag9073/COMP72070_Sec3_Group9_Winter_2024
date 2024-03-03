@@ -1,4 +1,4 @@
-﻿using Client.MVVM.Model;
+﻿using LogiPark.MVVM.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +17,6 @@ namespace LogiPark.MVVM.View
     public partial class LoginView : Window
     {
         private ProgramClient client;
-        private string address = "127.0.0.1";
-        private int portnumber = 13000;
         private int attempts = 0;
         const int maxAttempts = 3;
 
@@ -68,7 +66,7 @@ namespace LogiPark.MVVM.View
             }
         }
 
-        private void loginButton_Click(object sender, RoutedEventArgs e)
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             if (attempts >= maxAttempts)
             {
@@ -84,7 +82,7 @@ namespace LogiPark.MVVM.View
             if (isValid)
             {
                 attempts++;
-                SendCredentials(username, password); // Separated logic for sending credentials
+                SendCredentials(username, password); 
             }
         }
 
@@ -131,8 +129,12 @@ namespace LogiPark.MVVM.View
                     messageTextBlock.Text = "Login Successful";
                     messageTextBlock.Foreground = Brushes.Green;
 
-                    AdminHomeView adminHomeView = new AdminHomeView();
-                    adminHomeView.Show();
+                    //AdminHomeView adminHomeView = new AdminHomeView();
+                    //adminHomeView.Show();
+                    //this.Close();
+
+                    ClientHomeView clientHomeView = new ClientHomeView();
+                    clientHomeView.Show();
                     this.Close();
                 });
             }

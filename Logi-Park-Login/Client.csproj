@@ -107,6 +107,7 @@
     </ApplicationDefinition>
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
+    <Compile Include="MVVM\Model\ImageManager.cs" />
     <Compile Include="MVVM\Model\Packet.cs" />
     <Compile Include="MVVM\Model\ParkDataManager.cs" />
     <Compile Include="MVVM\Model\ProgramClient.cs" />
@@ -284,10 +285,7 @@
     <Resource Include="Assets\Images\Shape-Two.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Star-Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\Images\Waterloo Park.jpg" />
+    <Resource Include="Assets\Icons\Star-Icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\star rating icon.png" />
@@ -296,11 +294,6 @@
     <Resource Include="Assets\Images\LoginImage.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\Bechtel Park.jpg" />
-    <Resource Include="Assets\Images\Brewmeister Green Park.jpg" />
-    <Resource Include="Assets\Images\Clair-Lake-Park.jpg" />
-    <Resource Include="Assets\Images\Hillside Park.jpg" />
-    <Resource Include="Assets\Images\Laurel Creek Conservation Area.jpeg" />
     <Resource Include="Assets\Icons\Logo.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -308,6 +301,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\star-rating-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ParkImages\Clair Lake Park.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

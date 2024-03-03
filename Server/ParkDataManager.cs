@@ -16,17 +16,25 @@ namespace Server
             public string parkName;
 
             [ProtoMember(2)]
-            public float parkReview;
+            public string parkAddress;
 
             [ProtoMember(3)]
-            public string parkDescription;
+            public float parkReview;
 
             [ProtoMember(4)]
+            public string parkDescription;
+
+            [ProtoMember(5)]
             public uint numberOfReviews;
 
             public string GetParkName()
             {
                 return this.parkName;
+            }
+
+            public string GetParkAddress()
+            {
+                return this.parkAddress;
             }
 
             public float GetParkReview()
@@ -47,6 +55,11 @@ namespace Server
             public void SetParkName(string parkName)
             {
                 this.parkName = parkName;
+            }
+
+            public void SetParkAddress(string parkAddress)
+            {
+                this.parkAddress = parkAddress;
             }
 
             public void SetParkReview(float parkReview)
@@ -73,13 +86,30 @@ namespace Server
                 }
             }
 
-            public ParkData deserializeLoginData(byte[] buffer)
+        }
+
+        // Get all park data from the text file
+        // param: takes the file path name as a param 
+        // return: ParkData[] - array of Park Data objects
+        public static ParkData[] ReadAllParkDataFromFile(string filename)
+        {
+            string[] lines = File.ReadAllLines(filename);
+
+            int linesPerPark = 5;
+            ParkDataManager.ParkData[] parks = new ParkDataManager.ParkData[lines.Length / linesPerPark];
+
+            for (int i = 0; i < parks.Length; i++)
             {
-                using (MemoryStream memStream = new MemoryStream(buffer))
+                int index = i * linesPerPark;
+                // this setup is based on the parkdata.txt file
+                parks[i] = new ParkDataManager.ParkData
                 {
-                    return Serializer.Deserialize<ParkData>(memStream);
-                }
+                    parkName = lines[index],
+                    parkAddress = lines[index + 1],
+                    parkReview = float.Parse(lines[index + 2]),
+                };
             }
+            return parks;
         }
     }
 }

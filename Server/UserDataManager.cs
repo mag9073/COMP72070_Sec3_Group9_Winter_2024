@@ -78,32 +78,32 @@ namespace Server
                 loginData.password = password;
             }
 
-            public string LoginUser(string filePath)
+            public string LoginUser(string filename)
             {
-                string message = "Username or password is incorrect";
+                string loginMessage = "Username or Password is incorrect. Please try again!!! /o\\";
                 try
                 {
-                    using (StreamReader reader = new StreamReader(filePath))
+                    using (StreamReader streamReader = new StreamReader(filename))
                     {
-                        string line1 = reader.ReadLine();
-                        string line2 = reader.ReadLine();
+                        string line1 = streamReader.ReadLine();
+                        string line2 = streamReader.ReadLine();
 
                         while ((line1 != null) && (line2 != null))
                         {
                             if ((line1 == loginData.GetUserName()) && (line2 == loginData.GetPassword()))
                             {
 
-                                message = "User signed in";
+                                loginMessage = "Username and password are Correct!!! \\o/";
                                 break;
                             }
 
-                            line1 = reader.ReadLine();
-                            line2 = reader.ReadLine();
+                            line1 = streamReader.ReadLine();
+                            line2 = streamReader.ReadLine();
                         }
 
 
 
-                        reader.Close();
+                        streamReader.Close();
                     }
                 }
                 catch (IOException e)
@@ -111,14 +111,61 @@ namespace Server
                     Console.WriteLine(e.Message + "Error Signing in user");
                 }
 
-                return message;
+                return loginMessage;
             }
         }
 
 
-    
+
 
         /***************** Sign Up *****************/
+
+        /************* UserSignUpData *************/
+        [ProtoContract]
+        public class SignUpData
+        {
+            [ProtoMember(1)]
+            public string username;
+            [ProtoMember(2)]
+            public string password;
+
+            public string GetUserName()
+            {
+                return this.username;
+            }
+
+            public string GetPassword()
+            {
+                return this.password;
+            }
+
+            public void SetUserName(string username)
+            {
+                this.username = username;
+            }
+
+            public void SetPassword(string password)
+            {
+                this.password = password;
+            }
+
+            public byte[] SerializeToByteArray()
+            {
+                using (var stream = new MemoryStream())
+                {
+                    Serializer.Serialize(stream, this);
+                    return stream.ToArray();
+                }
+            }
+
+            public LoginData deserializeLoginData(byte[] buffer)
+            {
+                using (var memStream = new MemoryStream(buffer))
+                {
+                    return Serializer.Deserialize<LoginData>(memStream);
+                }
+            }
+        }
 
 
         // check if username already exists
@@ -128,19 +175,19 @@ namespace Server
             public SignUpData signUpData;
             public SignUp(SignUpData data)
             {
-                signUpData = data;
+                this.signUpData = data;
             }
 
 
             public SignUpData GetSignUpData()
             {
-                return SignUpData;
+                return this.signUpData;
             }
 
             public void SetSignUpData(string username, string password)
             {
-                SignUpData.username = username;
-                SignUpData.password = password;
+                this.signUpData.username = username;
+                this.signUpData.password = password;
             }
             // 
             // check if username already exists
@@ -161,7 +208,7 @@ namespace Server
 
                         while ((line1 != null)) //  && (line2 != null))
                         {
-                            if ((line1 == signUpData.GetUserName()) //  && (line2 == signUpData.GetPassword()))
+                            if ((line1 == signUpData.GetUserName())) //  && (line2 == signUpData.GetPassword()))
                             {
 
                                 signUpMessage = "Username already exists please try another!!! /o\\";
@@ -182,10 +229,10 @@ namespace Server
                         // helper function should return string back if signup was successful to signUpUser()
 
                         // public string SignUp(string filename)
-                        using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "userDB.txt"), true))
+                        using (StreamWriter outputFile = new StreamWriter("userDB.txt", true))
                         {
                             outputFile.WriteLine(signUpData.GetUserName()); // will add the username to the text file
-                            outputFile.WriteLine(signUpData.GetUserPassword()); //will add the password to the text file
+                            outputFile.WriteLine(signUpData.GetPassword()); //will add the password to the text file
                             outputFile.Close();
                             // Console.WriteLine("Success registering user!!! \\o/"); // return success
 
@@ -201,6 +248,7 @@ namespace Server
                 return signUpMessage;
             }
         }
+    }
 }
 
 
