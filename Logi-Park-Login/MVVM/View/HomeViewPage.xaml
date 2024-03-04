@@ -51,6 +51,7 @@
                     </Border>
 
                     <Button Click="OnParkImageClick" Opacity="0.5">
+                        <Button Tag="WaterlooPark" Click="OnParkImageClick">WaterlooPark</Button>
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10"/>
@@ -103,6 +104,7 @@
                     </Border>
 
                     <Button Click="OnParkImageClick" Opacity="0.5">
+                        <Button Tag="ClairLakePark" Click="OnParkImageClick">ClairLakePark</Button>
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10"/>
@@ -155,6 +157,7 @@
                     </Border>
 
                     <Button Click="OnParkImageClick" Opacity="0.5">
+                        <Button Tag="HillsidePark" Click="OnParkImageClick">HillsidePark</Button>
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10"/>
@@ -207,6 +210,7 @@
                     </Border>
 
                     <Button Click="OnParkImageClick" Opacity="0.5">
+                        <Button Tag="BrewmeisterGreenPark" Click="OnParkImageClick">BrewmeisterGreenPark</Button>
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10"/>
@@ -259,6 +263,7 @@
                     </Border>
 
                     <Button Click="OnParkImageClick" Opacity="0.5">
+                        <Button Tag="BechtelPark" Click="OnParkImageClick">BechtelPark</Button>
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10"/>
@@ -311,6 +316,7 @@
                     </Border>
 
                     <Button Click="OnParkImageClick" Opacity="0.5">
+                        <Button Tag="LaurelCreekConservationPark" Click="OnParkImageClick">LaurelCreekConservationPark</Button>
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10"/>

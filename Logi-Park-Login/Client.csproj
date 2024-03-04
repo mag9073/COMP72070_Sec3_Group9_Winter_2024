@@ -236,6 +236,7 @@
     <Compile Include="MVVM\View\ParkEditViewPage.xaml.cs">
       <DependentUpon>ParkEditViewPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\View\ParkModel.cs" />
     <Compile Include="MVVM\View\ParkView.xaml.cs">
       <DependentUpon>ParkView.xaml</DependentUpon>
     </Compile>

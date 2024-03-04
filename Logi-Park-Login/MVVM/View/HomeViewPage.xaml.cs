@@ -28,7 +28,9 @@ namespace LogiPark.MVVM.View
 
         private void OnParkImageClick(object sender, RoutedEventArgs e)
         {
-            ParkView parkView = new ParkView();
+            string parkName = ((FrameworkElement)sender).Tag.ToString();
+
+            ParkView parkView = new ParkView(parkName);
             parkView.Show();
 
             Window parentWindow = Window.GetWindow(this);

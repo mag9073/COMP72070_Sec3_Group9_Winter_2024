@@ -19,9 +19,12 @@ namespace LogiPark.MVVM.View
     /// </summary>
     public partial class ParkView : Window
     {
-        public ParkView()
+        private string parkName;
+
+        public ParkView(string parkName)
         {
             InitializeComponent();
+            this.parkName = parkName;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
