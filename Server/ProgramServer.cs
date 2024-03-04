@@ -111,6 +111,21 @@ namespace Server
 
                     break;
 
+                // Get individual park data
+                case Types.park:
+
+                    break;
+
+                // Get individual park image
+                case Types.image:
+
+                    break;
+
+                // Get individual park reviews
+                case Types.review:
+                    ProcessParkReviewRequest(stream, packet);
+                    break;
+
                 // For retrieving all park data
                 case Types.allparkdata:
                     ProcessParkDataRetrievalAll(stream);
@@ -176,6 +191,38 @@ namespace Server
         }
 
         /* Send Image File */
+
+        /* Get individual park reviews */
+        private static void ProcessParkReviewRequest(NetworkStream stream, Packet receivedPacket)
+        {
+            // Deserialize the packet body to get the park name
+            string parkName = Encoding.UTF8.GetString(receivedPacket.GetBody().buffer);
+
+            // Read reviews from file
+            List<ParkReviewManager.ParkReviewData> allReviews = Server.ParkReviewManager.ParkReviewData.ReadAllParkReviewsFromFile("../../../ParkReview.txt");
+
+            // Filter reviews for the requested park
+            // .Where is borrowed from the LINQ similar to how we did on MySQL => as long as the review contains the matching parkName -> then we will add it to the list to be stream back to the client
+            List<ParkReviewManager.ParkReviewData> matchingReviews = allReviews.Where(review => review.ParkName.Equals(parkName)).ToList();
+
+            // Preping to send the number of matching reviews first -> let the client know a head of time how many matching reviews 
+            byte[] reviewCount = BitConverter.GetBytes(matchingReviews.Count);
+            stream.Write(reviewCount, 0, reviewCount.Length);
+
+            // Serialize and send each matching review
+            for (int i = 0; i < matchingReviews.Count; i++)
+            {
+                ParkReviewManager.ParkReviewData review = matchingReviews[i]; // Get the review at the current index
+                byte[] reviewBuffer = review.SerializeToByteArray();
+
+                // Send the length of the review buffer first
+                byte[] reviewBufferLength = BitConverter.GetBytes(reviewBuffer.Length);
+                stream.Write(reviewBufferLength, 0, reviewBufferLength.Length);
+
+                // Now send the review buffer itself
+                stream.Write(reviewBuffer, 0, reviewBuffer.Length);
+            }
+        }
 
 
     }

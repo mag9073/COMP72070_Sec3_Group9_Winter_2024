@@ -110,6 +110,7 @@
     <Compile Include="MVVM\Model\ImageManager.cs" />
     <Compile Include="MVVM\Model\Packet.cs" />
     <Compile Include="MVVM\Model\ParkDataManager.cs" />
+    <Compile Include="MVVM\Model\ParkReviewManager.cs" />
     <Compile Include="MVVM\Model\ProgramClient.cs" />
     <Compile Include="MVVM\Model\TCPConnectionManager.cs" />
     <Compile Include="MVVM\Model\UserDataManager.cs" />

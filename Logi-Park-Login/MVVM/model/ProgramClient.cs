@@ -138,6 +138,7 @@ namespace LogiPark.MVVM.Model
             return parks;
         }
 
+        /* Park All Images Request */
         public void SendImageRequest()
         {
             Packet sendPacket = new Packet();
@@ -148,6 +149,68 @@ namespace LogiPark.MVVM.Model
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
+        /* Park Review Manager - Individual Park Reviews */
+        public void SendParkReviewsRequest(string parkName)
+        {
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.review);
+
+            // Serialize the park name and set as packet body
+            byte[] parkNameBuffer = Encoding.UTF8.GetBytes(parkName);
+            sendPacket.SetPacketBody(parkNameBuffer, (uint)parkNameBuffer.Length);
+
+            // Send the packet
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
+
+        public List<ParkReviewManager.ParkReviewData> ReceiveParkReviewsResponse()
+        {
+            List<ParkReviewManager.ParkReviewData> reviews = new List<ParkReviewManager.ParkReviewData>();
+
+            try
+            {
+                byte[] countBuffer = new byte[4];
+
+                // Read the count of park review objects to expect
+                int bytesRead = stream.Read(countBuffer, 0, 4);
+
+                int count = BitConverter.ToInt32(countBuffer, 0);
+
+                // Read each park review object
+                for (int i = 0; i < count; i++)
+                {
+                    byte[] lengthBuffer = new byte[4];
+
+                    // Read the length of the next park review object
+                    bytesRead = stream.Read(lengthBuffer, 0, 4);
+
+                    int dataLength = BitConverter.ToInt32(lengthBuffer, 0);
+                    byte[] reviewBuffer = new byte[dataLength];
+
+                    // Read the park review data
+                    bytesRead = stream.Read(reviewBuffer, 0, dataLength);
+
+                    using (MemoryStream ms = new MemoryStream(reviewBuffer))
+                    {
+                        // Deserialize the review data
+                        var review = Serializer.Deserialize<ParkReviewManager.ParkReviewData>(ms);
+                        reviews.Add(review);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Errors handling
+                Console.WriteLine($"Error receiving park reviews: {ex.Message}");
+            }
+
+            return reviews;
+        }
+
+        /* Park Data Manager - Individual Park Data */
+
+        /* Park Image Manager - Individual Park Image */
 
 
         public void CloseConnection()

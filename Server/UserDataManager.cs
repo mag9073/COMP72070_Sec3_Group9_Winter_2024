@@ -15,9 +15,9 @@ namespace Server
         public class LoginData
         {
             [ProtoMember(1)]
-            public string username;
+            public string username = String.Empty;
             [ProtoMember(2)]
-            public string password;
+            public string password = String.Empty;
 
             public string GetUserName()
             {
@@ -125,9 +125,9 @@ namespace Server
         public class SignUpData
         {
             [ProtoMember(1)]
-            public string username;
+            public string username = String.Empty;
             [ProtoMember(2)]
-            public string password;
+            public string password = String.Empty;
 
             public string GetUserName()
             {

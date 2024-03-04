@@ -7,6 +7,16 @@
              mc:Ignorable="d" Height="569" Width="1019"
              >
 
+    <UserControl.Resources>
+        <!-- Style for dynamic reviews cards -->
+        <Style x:Key="ReviewsCardStyle" TargetType="Border">
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="200"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </UserControl.Resources>
+
     <Border Background="#D9D9D9" CornerRadius="10">
         <Grid>
             <Grid.ColumnDefinitions>

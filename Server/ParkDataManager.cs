@@ -13,19 +13,19 @@ namespace Server
         public class ParkData
         {
             [ProtoMember(1)]
-            public string parkName;
+            public string parkName = String.Empty;
 
             [ProtoMember(2)]
-            public string parkAddress;
+            public string parkAddress = String.Empty;
 
             [ProtoMember(3)]
-            public float parkReview;
+            public float parkReview = float.MinValue;
 
             [ProtoMember(4)]
-            public string parkDescription;
+            public string parkDescription = String.Empty;
 
             [ProtoMember(5)]
-            public uint numberOfReviews;
+            public uint numberOfReviews = uint.MinValue;
 
             public string GetParkName()
             {
@@ -111,5 +111,13 @@ namespace Server
             }
             return parks;
         }
+
+        // Get individual park data from athe text file
+        // param: the file path name as a param
+        // Return: ParkData - a Park Data oject
+        //public static ParkData ReadParkDataFromFile(string filename)
+        //{
+
+        //}
     }
 }

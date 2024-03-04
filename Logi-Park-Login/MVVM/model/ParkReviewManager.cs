@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Server
+namespace LogiPark.MVVM.Model
 {
     public class ParkReviewManager
     {
@@ -100,12 +101,12 @@ namespace Server
                     if (string.IsNullOrWhiteSpace(section)) continue; // Skip empty sections
 
                     // Extract the park name and the rest of the section separately
-                    var lines = section.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-                    var parkName = lines[0].Trim();
-                    var reviewLines = string.Join("\n", lines.Skip(1)); // Re-join the lines for further processing
+                    string[] lines = section.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+                    string parkName = lines[0].Trim();
+                    string reviewLines = string.Join("\n", lines.Skip(1)); // Re-join the lines for further processing
 
                     // Match the pattern for each review within a section
-                    var reviewPattern = @"Username: (.*?) \| ParkRating: (.*?) \| DateOfPosting: (.*?) \| Review: (.*?)\n\n";
+                    string reviewPattern = @"Username: (.*?) \| ParkRating: (.*?) \| DateOfPosting: (.*?) \| Review: (.*?)\n\n";
 
                     foreach (Match match in Regex.Matches(reviewLines + "\n\n", reviewPattern, RegexOptions.Singleline))
                     {

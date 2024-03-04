@@ -1,4 +1,5 @@
-﻿using LogiPark.MVVM.ViewModel;
+﻿using LogiPark.MVVM.Model;
+using LogiPark.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,6 +24,7 @@ namespace LogiPark.MVVM.View
     public partial class ParkViewPage : UserControl
     {
         private string _parkName;
+        private ProgramClient _client;
         public ParkViewPage()
         {
         }
@@ -30,10 +32,30 @@ namespace LogiPark.MVVM.View
         public ParkViewPage(string parkName)
         {
             InitializeComponent();
+            this._client = new ProgramClient();
             _parkName = parkName;   // Now we have the park name -> can request park data from server (data + reviews)
-            ParkNameTextBlock.Text = parkName;  
+            ParkNameTextBlock.Text = _parkName;  
+            // 1. Request Park Reviews
+            _client.SendParkReviewsRequest(_parkName);
+            // 2. Request Park Data
 
+            // 3. Request Park Image
+
+
+            // Fetch and display the reviews
+            ReceiveParkReviewsFromServer();
         }
+
+        private void ReceiveParkReviewsFromServer()
+        {
+            List<ParkReviewManager.ParkReviewData> reviews = _client.ReceiveParkReviewsResponse();
+
+            for (int i = 0; i < reviews.Count; i++)
+            {
+                Console.WriteLine($"{reviews[i].UserName}: {reviews[i].Review} : {reviews[i].Rating} : {reviews[i].DateOfPosting}");
+            }
+        }
+
 
         private void ReviewButton_Click(object sender, RoutedEventArgs e)
         {
