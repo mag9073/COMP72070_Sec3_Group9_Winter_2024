@@ -151,18 +151,18 @@ namespace Server
 
             public byte[] SerializeToByteArray()
             {
-                using (var stream = new MemoryStream())
+                using (MemoryStream stream = new MemoryStream())
                 {
                     Serializer.Serialize(stream, this);
                     return stream.ToArray();
                 }
             }
 
-            public LoginData deserializeLoginData(byte[] buffer)
+            public SignUpData deserializeSignUpData(byte[] buffer)
             {
-                using (var memStream = new MemoryStream(buffer))
+                using (MemoryStream memStream = new MemoryStream(buffer))
                 {
-                    return Serializer.Deserialize<LoginData>(memStream);
+                    return Serializer.Deserialize<SignUpData>(memStream);
                 }
             }
         }
@@ -199,12 +199,13 @@ namespace Server
             public string SignUpUser(string filename)
             {
                 string signUpMessage = "Please enter username to register!!!! \\o/";
+                bool userNameExists = false;
                 try
                 {
                     using (StreamReader streamReader = new StreamReader(filename))
                     {
                         string line1 = streamReader.ReadLine();
-                        // string line2 = streamReader.ReadLine();
+                        string line2 = streamReader.ReadLine();
 
                         while ((line1 != null)) //  && (line2 != null))
                         {
@@ -212,6 +213,7 @@ namespace Server
                             {
 
                                 signUpMessage = "Username already exists please try another!!! /o\\";
+                                userNameExists = true;
                                 break;
                             }
 
@@ -229,13 +231,15 @@ namespace Server
                         // helper function should return string back if signup was successful to signUpUser()
 
                         // public string SignUp(string filename)
-                        using (StreamWriter outputFile = new StreamWriter("userDB.txt", true))
-                        {
-                            outputFile.WriteLine(signUpData.GetUserName()); // will add the username to the text file
-                            outputFile.WriteLine(signUpData.GetPassword()); //will add the password to the text file
-                            outputFile.Close();
-                            // Console.WriteLine("Success registering user!!! \\o/"); // return success
-
+                        if (!userNameExists) {
+                            using (StreamWriter outputFile = new StreamWriter("../../../UserDB.txt", true))
+                            {
+                                outputFile.WriteLine();
+                                outputFile.WriteLine(signUpData.GetUserName()); // will add the username to the text file
+                                outputFile.Write(signUpData.GetPassword()); //will add the password to the text file
+                                outputFile.Close();
+                                // Console.WriteLine("Success registering user!!! \\o/"); // return success
+                            }
 
                         }
                     }
