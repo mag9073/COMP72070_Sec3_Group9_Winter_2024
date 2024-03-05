@@ -86,7 +86,8 @@ namespace Server
                 }
             }
 
-            // Reads all park reviews from a file, assuming a simple delimited format
+            // Reads all park reviews from a file, we will identified based on each reviews park name -> 
+            // within each review we will look for the delimiter (|) 
             public static List<ParkReviewData> ReadAllParkReviewsFromFile(string filePath)
             {
                 List<ParkReviewData> reviews = new List<ParkReviewData>();
@@ -100,12 +101,12 @@ namespace Server
                     if (string.IsNullOrWhiteSpace(section)) continue; // Skip empty sections
 
                     // Extract the park name and the rest of the section separately
-                    var lines = section.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-                    var parkName = lines[0].Trim();
-                    var reviewLines = string.Join("\n", lines.Skip(1)); // Re-join the lines for further processing
+                    string[] lines = section.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+                    string parkName = lines[0].Trim();
+                    string reviewLines = string.Join("\n", lines.Skip(1)); // Re-join the lines for further processing
 
                     // Match the pattern for each review within a section
-                    var reviewPattern = @"Username: (.*?) \| ParkRating: (.*?) \| DateOfPosting: (.*?) \| Review: (.*?)\n\n";
+                    string reviewPattern = @"Username: (.*?) \| ParkRating: (.*?) \| DateOfPosting: (.*?) \| Review: (.*?)\n\n";
 
                     foreach (Match match in Regex.Matches(reviewLines + "\n\n", reviewPattern, RegexOptions.Singleline))
                     {
@@ -115,7 +116,7 @@ namespace Server
                             UserName = match.Groups[1].Value.Trim(),
                             Rating = float.Parse(match.Groups[2].Value.Trim()),
                             DateOfPosting = DateTime.ParseExact(match.Groups[3].Value.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                            Review = match.Groups[4].Value.Trim().Replace("\n", " ") // Replace newline characters to maintain review integrity
+                            Review = match.Groups[4].Value.Trim().Replace("\n", " ") // Replace newline characters to maintain review structure
                         });
                     }
                 }

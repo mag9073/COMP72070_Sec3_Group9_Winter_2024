@@ -34,11 +34,11 @@ namespace LogiPark.MVVM.View
         private void RequestAllParkData()
         {
             // send request to the server retrieve all the park data info - we send empty body with the header containing flag to get all park data
-            client.SendParkDataAllRequest();
-            client.SendImageRequest();
+            client.SendAllParkDataRequest();
+            //client.SendAllParkImagesRequest();
 
             // receive back the response from the server which contains array of park data obj
-            ParkDataManager.ParkData[] parks = client.ReceiveParkDataAllResponse();
+            ParkDataManager.ParkData[] parks = client.ReceiveAllParkDataResponse();
             //var images = client.RequestAndReceiveImages();
 
             // We make it annoynmous types which consists of name, address, review

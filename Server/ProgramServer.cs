@@ -106,11 +106,6 @@ namespace Server
                     ProcessSignUpPacket(packet, stream, client);
                     break;
 
-                // Send image?
-                case Types.send:
-
-                    break;
-
                 // Get individual park data
                 case Types.park:
 
