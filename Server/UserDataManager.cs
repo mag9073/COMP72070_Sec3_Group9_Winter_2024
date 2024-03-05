@@ -196,13 +196,13 @@ namespace Server
             // string signUpMessage = "Username already exists please try another again!!! /o\\ ";
             // }
 
-            public string SignUpUser(string filename)
+            public string SignUpUser(string filePath)
             {
                 string signUpMessage = "Please enter username to register!!!! \\o/";
                 bool userNameExists = false;
                 try
                 {
-                    using (StreamReader streamReader = new StreamReader(filename))
+                    using (StreamReader streamReader = new StreamReader(filePath))
                     {
                         string line1 = streamReader.ReadLine();
                         string line2 = streamReader.ReadLine();
@@ -232,7 +232,7 @@ namespace Server
 
                         // public string SignUp(string filename)
                         if (!userNameExists) {
-                            using (StreamWriter outputFile = new StreamWriter("../../../UserDB.txt", true))
+                            using (StreamWriter outputFile = new StreamWriter(filePath, true))
                             {
                                 outputFile.WriteLine();
                                 outputFile.WriteLine(signUpData.GetUserName()); // will add the username to the text file

@@ -86,7 +86,7 @@ namespace LogiPark.MVVM.Model
         public void SendOneParkDataRequest()
         {
             Packet sendPacket = new Packet();
-            sendPacket.SetPacketHead(1, 2, Types.park);
+            sendPacket.SetPacketHead(1, 2, Types.a_park);
 
             // We dont need to send body in this request 
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
@@ -117,7 +117,7 @@ namespace LogiPark.MVVM.Model
         public void SendOneParkImageRequest()
         {
             Packet sendPacket = new Packet();
-            sendPacket.SetPacketHead(1, 2, Types.image);
+            sendPacket.SetPacketHead(1, 2, Types.an_image);
 
             // We dont need to send body in this request
             byte[] packetBuffer = sendPacket.SerializeToByteArray();

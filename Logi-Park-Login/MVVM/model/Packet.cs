@@ -10,7 +10,7 @@ namespace LogiPark.MVVM.Model
 {
     public enum Types
     {
-        login, register, log, allparkdata, allparkimages, image, park, review
+        login, register, log, allparkdata, a_park, allparkimages, an_image, review
     }
 
     /********** Head of the Packet **********/
