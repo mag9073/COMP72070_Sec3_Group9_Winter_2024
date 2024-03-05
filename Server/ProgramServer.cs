@@ -18,6 +18,7 @@ namespace Server
 
     public class ProgramServer
     {
+        private static Logger logger = new Logger("../../../ServerLog.txt");
         public static void Main(string[] args)
         {
             StartServer();
@@ -94,6 +95,8 @@ namespace Server
         {
             byte[] buffer = new byte[1024];
             int bytesRead = stream.Read(buffer, 0, buffer.Length);
+            logger.Log(buffer);
+
             using (MemoryStream memStream = new MemoryStream(buffer, 0, bytesRead))
             {
                 return Serializer.Deserialize<Packet>(memStream);
