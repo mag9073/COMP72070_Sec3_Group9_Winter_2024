@@ -7,7 +7,7 @@ namespace Server
 {
     public enum Types
     {
-        login, register, send, recv, log, allparkdata, allparkimages, image, park, review
+        login, register, log, allparkdata, a_park, allparkimages, an_image, review
     }
 
     /********** Head of the Packet **********/
@@ -15,19 +15,23 @@ namespace Server
     public struct Header
     {
         [ProtoMember(1)]
-        public byte sourceID;
+        public byte sourceID = byte.MinValue;
 
         [ProtoMember(2)]
-        public byte destinationID;
+        public byte destinationID = byte.MinValue;
 
         [ProtoMember(3)]
-        public uint sequenceNumber;
+        public uint sequenceNumber = uint.MinValue;
 
         [ProtoMember(4)]
-        public uint bodyLength;
+        public uint bodyLength = uint.MinValue;
 
         [ProtoMember(5)]
-        public Types type;
+        public Types type = Types.login;
+
+        public Header()
+        {
+        }
 
         public void SetHeaderSourceID(byte sourceID)
         {
@@ -122,8 +126,10 @@ namespace Server
     {
         [ProtoMember(1)]
         private Header header;
+
         [ProtoMember(2)]
         private Body body;
+
         [ProtoMember(3)]
         private Tail tail;
 

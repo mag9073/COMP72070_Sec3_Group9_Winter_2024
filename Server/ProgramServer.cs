@@ -9,12 +9,21 @@ using static Server.ParkDataManager;
 
 namespace Server
 {
+    static class Constants
+    {
+        public const string ParkData_FilePath = "../../../Database/ParkData.txt";
+        public const string ParkReviews_FilePath = "../../../Database/ParkReview.txt";
+        public const string UserDB_FilePath = "../../../Database/UserDB.txt";
+    }
+
     public class ProgramServer
     {
         public static void Main(string[] args)
         {
             StartServer();
         }
+
+        // Below needs to be restructure into its own class according to the class Diagram -> i.e: Transmission Manager, TCP Connection Manager?
 
         public static void StartServer()
         {
@@ -64,7 +73,7 @@ namespace Server
                     while (client.Connected)    // doesn't seem to keep connection 
                     {
                         Packet packet = ReceivePacket(stream);
-                        ProcessPacket(packet, stream, client);
+                        ProcessPacketType(packet, stream, client);
                     }
                 }
                 catch (Exception ex)
@@ -74,6 +83,13 @@ namespace Server
             }
         }
 
+        // Above needs to be restructure into its own class according to the class Diagram -> i.e: Transmission Manager, TCP Connection Manager?
+
+        /**************************************************************************************************************
+         *                                                      Packet                                                *
+         * ************************************************************************************************************/
+
+        /*** Receive Packet -> Deserialize into Packet Object ***/
         public static Packet ReceivePacket(NetworkStream stream)
         {
             byte[] buffer = new byte[1024];
@@ -84,47 +100,64 @@ namespace Server
             }
         }
 
-        public static void SendAcknowledgement(NetworkStream stream, string message)
-        {
-            byte[] messageBytes = Encoding.UTF8.GetBytes(message);
-
-            Console.WriteLine($"Acknowledgement: {message}");
-            stream.Write(messageBytes, 0, messageBytes.Length);
-            stream.Flush();
-        }
-
-        public static void ProcessPacket(Packet packet, NetworkStream stream, TcpClient client)
+        /*** Process Packet Type ***/
+        public static void ProcessPacketType(Packet packet, NetworkStream stream, TcpClient client)
         {
             // Process packets based on type
             switch (packet.GetPacketHeader().GetType())
             {
+                // Login State
                 case Types.login:
                     ProcessLoginPacket(packet, stream, client);
                     break;
 
+                // Register State
                 case Types.register:
                     ProcessSignUpPacket(packet, stream, client);
                     break;
 
-                // Send image?
-                case Types.send:
+                // Not sure if we need at all? 
+                case Types.log:
 
                     break;
 
-                // For retrieving all park data
+                // All Park Data State
                 case Types.allparkdata:
-                    ProcessParkDataRetrievalAll(stream);
+                    ProcessAllParkDataPacket(stream);
                     break;
 
-                // For retrieving all park images
+                // Individual Park Data State
+                case Types.a_park:
+
+                    break;
+
+                // All Park Images State
                 case Types.allparkimages:
                     //ProcessImageRequest(stream);
+                    break;
+
+                // Individual Park Image State
+                case Types.an_image:
+
+                    break;
+
+                // Individual Park Reviews State
+                case Types.review:
+                    ProcessParkReviewPacket(stream, packet);
                     break;
             }
         }
 
-        /*** Helper Functions ***/
+        /**************************************************************************************************************
+         *                                                      Packet                                                *
+         * ************************************************************************************************************/
 
+
+        /**************************************************************************************************************
+         *                                              Process Packet Type                                           *
+         * ************************************************************************************************************/
+
+        /*** Process Packet Type -> Login ***/
         private static void ProcessLoginPacket(Packet packet, NetworkStream stream, TcpClient client)
         {
             byte[] buffer = packet.GetBody().buffer;
@@ -144,9 +177,7 @@ namespace Server
             }
         }
 
-
-
-
+        /*** Process Packet Type -> Sign Up ***/
         private static void ProcessSignUpPacket(Packet packet, NetworkStream stream, TcpClient client)
         {
             byte[] buffer = packet.GetBody().buffer;
@@ -166,28 +197,10 @@ namespace Server
             }
         }
 
-        private static string PerformLogin(UserDataManager.LoginData loginData)
+        /*** Process Packet Type -> All Park Data ***/
+        private static void ProcessAllParkDataPacket(NetworkStream stream)
         {
-            Console.WriteLine($"Username: {loginData.GetUserName()}");
-            Console.WriteLine($"Password: {loginData.GetPassword()}");
-
-            Login login = new Login(loginData);
-            return login.LoginUser("../../../UserDB.txt");
-        }
-
-        private static string PerformSignUp(UserDataManager.SignUpData signUpData)
-        {
-            Console.WriteLine($"Username:  {signUpData.GetUserName()}");
-            Console.WriteLine($"Password:  {signUpData.GetPassword()}");
-
-            SignUp signUp = new SignUp(signUpData);
-            return signUp.SignUpUser("../../../UserDB.txt");
-        }
-
-        // still has yet to implement park data retrival because of issue with client connection loss 
-        private static void ProcessParkDataRetrievalAll(NetworkStream stream)
-        {
-            ParkDataManager.ParkData[] allParkData = ReadAllParkDataFromFile("../../../ParkData.txt");
+            ParkDataManager.ParkData[] allParkData = ReadAllParkDataFromFile(Constants.ParkData_FilePath);
 
             // Sending the number of ParkData objects first 
             byte[] numberOfBytes = BitConverter.GetBytes(allParkData.Length);
@@ -206,8 +219,166 @@ namespace Server
             Console.WriteLine("All park data sent to client");
         }
 
-        /* Send Image File */
+        /*** Process Packet Type -> Individual Park Data ***/
 
+
+
+
+
+
+
+
+
+
+
+
+
+        /*** Process Packet Type -> All Park Images ***/
+
+
+
+
+
+
+
+
+
+
+
+
+        /*** Process Packet Type -> Individual Park Image ***/
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*** Process Packet Type -> Individual Park Reviews ***/
+        private static void ProcessParkReviewPacket(NetworkStream stream, Packet receivedPacket)
+        {
+            // Deserialize the packet body to get the park name
+            string parkName = Encoding.UTF8.GetString(receivedPacket.GetBody().buffer);
+
+            // Read reviews from file
+            List<ParkReviewManager.ParkReviewData> allReviews = Server.ParkReviewManager.ParkReviewData.ReadAllParkReviewsFromFile(Constants.ParkReviews_FilePath);
+
+            // Filter reviews for the requested park
+            // .Where is borrowed from the LINQ similar to how we did on MySQL => as long as the review contains the matching parkName -> then we will add it to the list to be stream back to the client
+            List<ParkReviewManager.ParkReviewData> matchingReviews = allReviews.Where(review => review.ParkName.Equals(parkName)).ToList();
+
+            // Preping to send the number of matching reviews first -> let the client know a head of time how many matching reviews 
+            byte[] reviewCount = BitConverter.GetBytes(matchingReviews.Count);
+            stream.Write(reviewCount, 0, reviewCount.Length);
+
+            // Serialize and send each matching review
+            for (int i = 0; i < matchingReviews.Count; i++)
+            {
+                ParkReviewManager.ParkReviewData review = matchingReviews[i]; // Get the review at the current index
+                byte[] reviewBuffer = review.SerializeToByteArray();
+
+                // Send the length of the review buffer first
+                byte[] reviewBufferLength = BitConverter.GetBytes(reviewBuffer.Length);
+                stream.Write(reviewBufferLength, 0, reviewBufferLength.Length);
+
+                // Now send the review buffer itself
+                stream.Write(reviewBuffer, 0, reviewBuffer.Length);
+            }
+        }
+
+        /**************************************************************************************************************
+         *                                    Helper Methods to Process Packet Type                                   *
+         * ************************************************************************************************************/
+
+        private static string PerformLogin(UserDataManager.LoginData loginData)
+        {
+            Console.WriteLine($"Username: {loginData.GetUserName()}");
+            Console.WriteLine($"Password: {loginData.GetPassword()}");
+
+            Login login = new Login(loginData);
+            return login.LoginUser(Constants.UserDB_FilePath);
+        }
+
+        private static string PerformSignUp(UserDataManager.SignUpData signUpData)
+        {
+            Console.WriteLine($"Username:  {signUpData.GetUserName()}");
+            Console.WriteLine($"Password:  {signUpData.GetPassword()}");
+
+            SignUp signUp = new SignUp(signUpData);
+            return signUp.SignUpUser(Constants.UserDB_FilePath);
+        }
+
+
+        // Below may not be needed for all the packet types
+
+        /*** Helper Method for -> Individual Park Data ***/
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*** Helper Method for -> All Park Images ***/
+
+
+
+
+
+
+
+
+
+
+
+
+        /*** Helper Method for -> Individual Park Image ***/
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /**************************************************************************************************************
+         *                                    Helper Methods to Process Packet Type                                   *
+         * ************************************************************************************************************/
+
+
+        /**************************************************************************************************************
+         *                                        Acknowledge Message to Client                                       *
+         * ************************************************************************************************************/
+
+        public static void SendAcknowledgement(NetworkStream stream, string message)
+        {
+            byte[] messageBytes = Encoding.UTF8.GetBytes(message);
+
+            Console.WriteLine($"Acknowledgement: {message}");
+            stream.Write(messageBytes, 0, messageBytes.Length);
+            stream.Flush();
+        }
+
+        /**************************************************************************************************************
+         *                                        Acknowledge Message to Client                                       *
+         * ************************************************************************************************************/
 
     }
 }

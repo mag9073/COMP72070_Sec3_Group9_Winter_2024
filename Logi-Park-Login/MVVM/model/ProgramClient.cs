@@ -14,29 +14,12 @@ namespace LogiPark.MVVM.Model
 {
     public class ProgramClient
     {
+
+        /*** Member attributes of Program Client Class ***/
         private UserDataManager.SignUpData clientSignUpData = new UserDataManager.SignUpData();
         private UserDataManager.LoginData clientLoginData = new UserDataManager.LoginData();
         private ParkDataManager.ParkData clientParkData = new ParkDataManager.ParkData();
-        //private TcpClient clientTcpClient;
         private NetworkStream stream;
-
-        // Only used for testing without GUI
-        //static void Main(string[] args)
-        //{
-        //    ProgramClient client = new ProgramClient("127.0.0.1", 13000);
-        //    try
-        //    {
-        //        client.PromptForCredentials();
-        //        client.SendLoginRequest();
-        //        string response = client.ReceiveServerResponse();
-        //        Console.WriteLine(response);
-        //    }
-        //    finally
-        //    {
-        //        client.CloseConnection();
-        //    }
-        //}
-
         private TcpConnectionManager connectionManager;
 
         public ProgramClient()
@@ -45,22 +28,11 @@ namespace LogiPark.MVVM.Model
             stream = connectionManager.stream;
         }
 
-        // Only used for testing without GUI
-        //public void PromptForCredentials()
-        //{
-        //    Console.WriteLine("Enter username:");
-        //    string username = Console.ReadLine();
+        /**************************************************************************************************************
+         *                                             User Data Manager                                              *
+         * ************************************************************************************************************/
 
-        //    Console.WriteLine("Enter password:");
-        //    string password = Console.ReadLine();
-
-
-
-        //    clientLoginData.SetUserName(username);
-        //    clientLoginData.SetPassword(password);
-        //}
-
-        /*** User Data Manager - Login ***/
+        /*** Send Request for - Login ***/
         public void SendLoginRequest(UserDataManager.LoginData loginData)
         {
             this.clientLoginData = loginData;
@@ -75,10 +47,7 @@ namespace LogiPark.MVVM.Model
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
-
-        // 
-
-        /*** User Data Manager - SignUp ***/
+        /*** Send Request for - Sign Up ***/
         public void SendSignUpRequest(UserDataManager.SignUpData signUpData)
         {
             this.clientSignUpData = signUpData;
@@ -92,23 +61,103 @@ namespace LogiPark.MVVM.Model
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
-        
+
+        /**************************************************************************************************************
+         *                                             User Data Manager                                              *
+         * ************************************************************************************************************/
 
 
+        /**************************************************************************************************************
+         *                                             Park Data Manager                                              *
+         * ************************************************************************************************************/
 
-        /*** Park Data Manager ***/
-        public void SendParkDataAllRequest()
+        /*** Send Request for -> All Park Data ***/
+        public void SendAllParkDataRequest()
         {
             Packet sendPacket = new Packet();
             sendPacket.SetPacketHead(1, 2, Types.allparkdata);
 
-            byte[] parkDataBuffer = clientParkData.SerializeToByteArray();
-            sendPacket.SetPacketBody(parkDataBuffer, (uint)parkDataBuffer.Length);
-
+            // We dont need to send body in this request 
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
+        /*** Send Request for -> a Specific Park Data ***/
+        public void SendOneParkDataRequest()
+        {
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.a_park);
+
+            // We dont need to send body in this request 
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
+
+        /**************************************************************************************************************
+         *                                             Park Data Manager                                              *
+         * ************************************************************************************************************/
+
+
+        /**************************************************************************************************************
+         *                                             Image Manager                                                  *
+         * ************************************************************************************************************/
+
+        /*** Send Request for -> All Park Images ***/
+        public void SendAllParkImagesRequest()
+        {
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.allparkimages);
+
+            // We dont need to send body in this request 
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
+
+        /*** Send Request for -> a Specific Park Image ***/
+        public void SendOneParkImageRequest()
+        {
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.an_image);
+
+            // We dont need to send body in this request
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
+
+        /**************************************************************************************************************
+         *                                             Image Manager                                                  *
+         * ************************************************************************************************************/
+
+
+        /**************************************************************************************************************
+         *                                             Park Review Manager                                            *
+         * ************************************************************************************************************/
+
+        /*** Send Request for - Individual Park Reviews */
+        public void SendParkReviewsRequest(string parkName)
+        {
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.review);
+
+            // Serialize the park name and set as packet body
+            byte[] parkNameBuffer = Encoding.UTF8.GetBytes(parkName);
+            sendPacket.SetPacketBody(parkNameBuffer, (uint)parkNameBuffer.Length);
+
+            // Send the packet
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
+
+        /**************************************************************************************************************
+         *                                             Park Review Manager                                            *
+         * ************************************************************************************************************/
+
+
+        /**************************************************************************************************************
+         *                                             Universal Server Response                                      *
+         * ************************************************************************************************************/
+
+        /*** Receive from Server -> Response ***/
         public string ReceiveServerResponse()
         {
             byte[] responseBuffer = new byte[1024];
@@ -116,7 +165,17 @@ namespace LogiPark.MVVM.Model
             return Encoding.UTF8.GetString(responseBuffer, 0, bytesRead);
         }
 
-        public ParkDataManager.ParkData[] ReceiveParkDataAllResponse()
+        /**************************************************************************************************************
+         *                                             Universal Server Response                                      *
+         * ************************************************************************************************************/
+
+
+        /**************************************************************************************************************
+         *                                                 Park Data Manager                                          *
+         * ************************************************************************************************************/
+
+        /*** Receive from Server -> All Park Data  ***/
+        public ParkDataManager.ParkData[] ReceiveAllParkDataResponse()
         {
             
             byte[] countBuffer = new byte[4];
@@ -161,18 +220,106 @@ namespace LogiPark.MVVM.Model
             return parks;
         }
 
-        public void SendImageRequest()
-        {
-            Packet sendPacket = new Packet();
-            sendPacket.SetPacketHead(1, 2, Types.allparkimages);
+        /**************************************************************************************************************
+         *                                                Park Data Manager                                           *
+         * ************************************************************************************************************/
 
-            // We dont need to send body in this request 
-            byte[] packetBuffer = sendPacket.SerializeToByteArray();
-            stream.Write(packetBuffer, 0, packetBuffer.Length);
+
+        /**************************************************************************************************************
+         *                                                Park Review Manager                                         *
+         * ************************************************************************************************************/
+
+        /*** Receive from Server -> Park Reviews  ***/
+        public List<ParkReviewManager.ParkReviewData> ReceiveParkReviewsResponse()
+        {
+            List<ParkReviewManager.ParkReviewData> reviews = new List<ParkReviewManager.ParkReviewData>();
+
+            try
+            {
+                byte[] countBuffer = new byte[4];
+
+                // Read the count of park review objects to expect
+                int bytesRead = stream.Read(countBuffer, 0, 4);
+
+                int count = BitConverter.ToInt32(countBuffer, 0);
+
+                // Read each park review object
+                for (int i = 0; i < count; i++)
+                {
+                    byte[] lengthBuffer = new byte[4];
+
+                    // Read the length of the next park review object
+                    bytesRead = stream.Read(lengthBuffer, 0, 4);
+
+                    int dataLength = BitConverter.ToInt32(lengthBuffer, 0);
+                    byte[] reviewBuffer = new byte[dataLength];
+
+                    // Read the park review data
+                    bytesRead = stream.Read(reviewBuffer, 0, dataLength);
+
+                    using (MemoryStream ms = new MemoryStream(reviewBuffer))
+                    {
+                        // Deserialize the review data
+                        var review = Serializer.Deserialize<ParkReviewManager.ParkReviewData>(ms);
+                        reviews.Add(review);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Errors handling
+                Console.WriteLine($"Error receiving park reviews: {ex.Message}");
+            }
+
+            return reviews;
         }
 
+        /**************************************************************************************************************
+         *                                                Park Review Manager                                         *
+         * ************************************************************************************************************/
 
 
+        /**************************************************************************************************************
+         *                                                 Park Data Manager                                          *
+         * ************************************************************************************************************/
+
+        /*** Receive from Server -> Individual Park Data ***/
+
+
+
+
+
+
+
+
+
+
+        /**************************************************************************************************************
+         *                                                 Park Data Manager                                          *
+         * ************************************************************************************************************/
+
+
+        /**************************************************************************************************************
+         *                                                 Park Image Manager                                         *
+         * ************************************************************************************************************/
+
+        /*** Receive from Server -> All Park Image ***/
+
+
+
+
+
+        /*** Receive from Server -> Individual Park Image ***/
+
+
+
+
+        /**************************************************************************************************************
+         *                                                 Park Image Manager                                         *
+         * ************************************************************************************************************/
+
+
+        // Helper function to close streaming connection
         public void CloseConnection()
         {
             stream.Close();

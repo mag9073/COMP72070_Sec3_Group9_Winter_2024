@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Server
+namespace LogiPark.MVVM.Model
 {
     public class ParkReviewManager
     {
@@ -86,8 +87,7 @@ namespace Server
                 }
             }
 
-            // Reads all park reviews from a file, we will identified based on each reviews park name -> 
-            // within each review we will look for the delimiter (|) 
+            // Reads all park reviews from a file, assuming a simple delimited format
             public static List<ParkReviewData> ReadAllParkReviewsFromFile(string filePath)
             {
                 List<ParkReviewData> reviews = new List<ParkReviewData>();
@@ -116,7 +116,7 @@ namespace Server
                             UserName = match.Groups[1].Value.Trim(),
                             Rating = float.Parse(match.Groups[2].Value.Trim()),
                             DateOfPosting = DateTime.ParseExact(match.Groups[3].Value.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                            Review = match.Groups[4].Value.Trim().Replace("\n", " ") // Replace newline characters to maintain review structure
+                            Review = match.Groups[4].Value.Trim().Replace("\n", " ") // Replace newline characters to maintain review integrity
                         });
                     }
                 }
