@@ -114,12 +114,15 @@ namespace LogiPark.MVVM.Model
         }
 
         /*** Send Request for -> a Specific Park Image ***/
-        public void SendOneParkImageRequest()
+        public void SendOneParkImageRequest(string parkname)
         {
             Packet sendPacket = new Packet();
             sendPacket.SetPacketHead(1, 2, Types.an_image);
 
-            // We dont need to send body in this request
+            // convert string to bytes array
+            byte[] parknameBuffer = Encoding.UTF8.GetBytes(parkname);
+            sendPacket.SetPacketBody(parknameBuffer, (uint) parkname.Length);
+
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
@@ -310,7 +313,34 @@ namespace LogiPark.MVVM.Model
 
 
         /*** Receive from Server -> Individual Park Image ***/
+        public BitmapImage ReceiveOneParkImageResponse()
+        {
+            MemoryStream imageStream = new MemoryStream();
 
+            int chunkSize = 1024 * 1024; // 1 MB sent at a time for large image transfer/stream
+
+            byte[] buffer = new byte[chunkSize];
+
+            int bytesToRead = 0;
+
+            // We receive stream of byte [] in chunk of 1 MB at a time -> will read til there is nothing left 
+            do
+            {
+                bytesToRead = stream.Read(buffer, 0, buffer.Length);
+                imageStream.Write(buffer, 0, bytesToRead);
+            } while (bytesToRead == buffer.Length);
+
+            // https://www.codeproject.com/Questions/648495/Convert-byte-to-BitmapImage-in-WPF-application-usi
+            imageStream.Position = 0; 
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.CacheOption = BitmapCacheOption.OnLoad;
+            image.StreamSource = imageStream;
+            image.EndInit();
+            image.Freeze();
+
+            return image;
+        }
 
 
 

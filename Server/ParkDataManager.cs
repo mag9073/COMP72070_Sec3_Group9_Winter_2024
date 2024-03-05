@@ -91,9 +91,9 @@ namespace Server
         // Get all park data from the text file
         // param: takes the file path name as a param 
         // return: ParkData[] - array of Park Data objects
-        public static ParkData[] ReadAllParkDataFromFile(string filename)
+        public static ParkData[] ReadAllParkDataFromFile(string filePath)
         {
-            string[] lines = File.ReadAllLines(filename);
+            string[] lines = File.ReadAllLines(filePath);
 
             int linesPerPark = 5;
             ParkDataManager.ParkData[] parks = new ParkDataManager.ParkData[lines.Length / linesPerPark];
@@ -115,7 +115,7 @@ namespace Server
         // Get individual park data from athe text file
         // param: the file path name as a param
         // Return: ParkData - a Park Data oject
-        //public static ParkData ReadParkDataFromFile(string filename)
+        //public static ParkData ReadOneParkDataFromFile(string filePath)
         //{
 
         //}
