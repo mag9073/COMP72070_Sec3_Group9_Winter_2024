@@ -1,5 +1,4 @@
-﻿using LogiPark.MVVM.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,18 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace LogiPark.MVVM.View
+namespace LogiPark
 {
     /// <summary>
     /// Interaction logic for SignupView.xaml
     /// </summary>
     public partial class SignupView : Window
     {
-        ProgramClient client;
-
         public SignupView()
         {
-            this.client = new ProgramClient();
             InitializeComponent();
         }
 
@@ -74,16 +70,6 @@ namespace LogiPark.MVVM.View
             StringBuilder sb = new StringBuilder();
 
             // Define username and password -> get it from textbox (check xaml code)
-            string username = usernameTextBox.Text;
-            string password = passwordTextBox.Text;
-
-            Console.WriteLine($"username: {username}");
-            Console.WriteLine($"password: {password}");
-
-           
-         
-
-
 
             // Verify Username -- This can be separated to a helper method
             if (string.IsNullOrWhiteSpace(usernameTextBox.Text) || usernameTextBox.Text == "Username or email")
@@ -104,32 +90,12 @@ namespace LogiPark.MVVM.View
             }
             else
             {
+                // If valid then open a home view
+                //HomeView homeView = new HomeView();
 
-                UserDataManager.SignUpData signUpData = new UserDataManager.SignUpData
-                {
-                    username = username,
-                    password = password
-                };
+                //homeView.Show();
 
-                client.SendSignUpRequest(signUpData);
-                string response = client.ReceiveServerResponse();
-
-                Dispatcher.Invoke(() =>
-                {
-                    if (response.Contains("Username already exists please try another!!! /o\\"))
-                    {
-                        messageTextBlock.Text = response;
-                        messageTextBlock.Foreground = Brushes.Red;
-                    }
-                    else
-                    {
-                        messageTextBlock.Text = response;
-                        messageTextBlock.Foreground = Brushes.Green;
-                    }
-
-
-                });
-
+                //this.Close();
             }
 
             // If the username and password are filled, then can proceed to sign up process
@@ -147,17 +113,11 @@ namespace LogiPark.MVVM.View
 
         }
 
-
         private void Login_Handler(object sender, MouseButtonEventArgs e)
         {
 
             // Handle login label clicked
 
-            LoginView loginView = new LoginView();
-
-            loginView.Show();
-
-            this.Close();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

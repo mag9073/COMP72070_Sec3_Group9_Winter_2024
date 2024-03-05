@@ -23,6 +23,7 @@ namespace LogiPark.MVVM.View
     public partial class HomeViewPage : UserControl
     {
         private ProgramClient client;
+
         public HomeViewPage()
         {
             this.client = new ProgramClient();
@@ -33,11 +34,11 @@ namespace LogiPark.MVVM.View
         private void RequestAllParkData()
         {
             // send request to the server retrieve all the park data info - we send empty body with the header containing flag to get all park data
-            client.SendParkDataAllRequest();
-            client.SendImageRequest();
+            client.SendAllParkDataRequest();
+            //client.SendAllParkImagesRequest();
 
             // receive back the response from the server which contains array of park data obj
-            ParkDataManager.ParkData[] parks = client.ReceiveParkDataAllResponse();
+            ParkDataManager.ParkData[] parks = client.ReceiveAllParkDataResponse();
             //var images = client.RequestAndReceiveImages();
 
             // We make it annoynmous types which consists of name, address, review
@@ -60,13 +61,30 @@ namespace LogiPark.MVVM.View
             });
         }
 
-        private void OnParkImageClick(object sender, RoutedEventArgs e)
+        private void OnParkCardClick(object sender, RoutedEventArgs e)
         {
-            ParkView parkView = new ParkView();
-            parkView.Show();
+            var button = sender as FrameworkElement;
+            if (button != null)
+            {
+                var park = button.DataContext;
+                if (park != null)
+                {
+                    // TextBlock -> Text={Binding Name}
+                    string parkName = park.GetType().GetProperty("Name")?.GetValue(park, null)?.ToString();
+                    if (!string.IsNullOrEmpty(parkName))
+                    {
+                        MessageBox.Show($"Park Name: {parkName}");
 
-            Window parentWindow = Window.GetWindow(this);
-            parentWindow?.Close();
+                        ParkViewPage parkViewPage = new ParkViewPage(parkName);
+                        Window window = new Window
+                        {
+                            Content = parkViewPage,
+                            SizeToContent = SizeToContent.WidthAndHeight
+                        };
+                        window.Show();  // Right now, im creating this 
+                    }
+                }
+            }
         }
     }
 }

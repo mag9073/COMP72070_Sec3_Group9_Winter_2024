@@ -27,10 +27,6 @@ namespace LogiPark.MVVM.View
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            AdminHomeView homeView = new AdminHomeView();
-
-            homeView.Show();
-
             Window parentWindow = Window.GetWindow(this);
             parentWindow?.Close();
         }
