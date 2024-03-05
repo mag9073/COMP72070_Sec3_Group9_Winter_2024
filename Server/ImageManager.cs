@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
+//using System.Windows.Media.Imaging;
 
 namespace Server
 {
@@ -11,7 +11,7 @@ namespace Server
     {
         public string FileName;
         public byte[] Data;
-        public BitmapImage Image;   // We will use this reconstruct the image when we receive byte [] image data back from the server
+        //public BitmapImage Image;   // We will use this reconstruct the image when we receive byte [] image data back from the server
 
     }
 }
