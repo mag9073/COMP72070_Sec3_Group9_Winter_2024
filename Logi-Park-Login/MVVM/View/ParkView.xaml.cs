@@ -21,10 +21,10 @@ namespace LogiPark.MVVM.View
     {
         private string parkName;
 
-        public ParkView(string parkName)
+        public ParkView() //string parkName for constructor
         {
             InitializeComponent();
-            this.parkName = parkName;
+            //this.parkName = parkName;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

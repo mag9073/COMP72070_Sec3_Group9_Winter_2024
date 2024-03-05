@@ -1,11 +1,12 @@
-﻿<UserControl x:Class="LogiPark.MVVM.View.ParkViewPage"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:LogiPark.MVVM.View" xmlns:core="clr-namespace:LogiPark.Core" d:DataContext="{d:DesignInstance Type=core:ObservableObject}"
-             mc:Ignorable="d" Height="569" Width="1019"
-             >
+﻿<Page x:Class="LogiPark.MVVM.View.writeReview"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LogiPark.MVVM.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="writeReview">
 
     <Border Background="#D9D9D9" CornerRadius="10">
         <Grid>
@@ -31,7 +32,7 @@
                     <Image Source="/Assets/Icons/star-rating-icon.png" Width="25" Height="14" VerticalAlignment="Center"/>
                     <Image Source="/Assets/Icons/star-rating-icon.png" Width="25" Height="14" VerticalAlignment="Center"/>
                     <Image Source="/Assets/Icons/star-rating-icon.png" Width="25" Height="14" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="ParkReviewTextBlock" Text="4.4" FontSize="14" TextDecorations="Underline" Width="27" TextAlignment="Center"/>
+                    <TextBlock x:Name="ParkReviewTextBlock" FontSize="14" TextDecorations="Underline" Width="27" TextAlignment="Center"/>
                     <TextBlock Text=" (2 reviews)" FontSize="14"/>
                 </StackPanel>
 
@@ -66,7 +67,7 @@
                             </StackPanel>
                             <!-- Review Text -->
                             <TextBlock Text="I came to realize that I had more to offer this world than just making things that blow up..." 
-                       TextWrapping="Wrap" Width="250" Margin="0,10,0,0" Height="38"/>
+                   TextWrapping="Wrap" Width="250" Margin="0,10,0,0" Height="38"/>
                         </StackPanel>
                     </Border>
 
@@ -84,10 +85,10 @@
                 </Grid>
 
                 <!-- Phone number and address -->
-                <Image Source="../../Assets/Images/Clair-Lake-Park.jpg" Stretch="UniformToFill" Height="345" Width="466" Margin="0,40,0,0"/>
+                <Image Source="../../Assets/Images/Clair-Lake-Park.jpg" Stretch="UniformToFill" Height="250" Width="304" Margin="0,40,0,0"/>
                 <!-- Phone number and address -->
                 <Border Grid.Column="1" Margin="20,20,20,20" 
-                        BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Height="98" Width="318">
+                    BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Height="98" Width="318">
                     <StackPanel Margin="10">
                         <!-- Phone number and address -->
                         <TextBlock Text="(519) 725-0511" FontSize="18" Padding="10" HorizontalAlignment="Center" Height="31"/>
@@ -95,6 +96,55 @@
                     </StackPanel>
                 </Border>
             </StackPanel>
+
+            <!-- Write Review Content -->
+            <Grid>
+                <Grid Margin="100,70,-300,70">
+                    <Grid.Style>
+                        <Style TargetType="Grid">
+                            <Setter Property="Visibility"
+                        Value="Visible" />
+
+                        </Style>
+                    </Grid.Style>
+                    <Border HorizontalAlignment="Stretch"
+                     VerticalAlignment="Stretch"
+                     Background="DarkGray"
+                     Opacity=".9" />
+
+                    <!-- <TextBlock Text="Select your rating" FontSize="18" Padding="10" Margin="10,10,428,259"/> -->
+                    <Menu Margin="10,10,471,274">
+                        <MenuItem Header="Select your rating" Height="26" Width="118">
+                            <MenuItem Header="1 Star"></MenuItem>
+                            <MenuItem Header="2 Star"></MenuItem>
+                            <MenuItem Header="3 Star"></MenuItem>
+                            <MenuItem Header="4 Star"></MenuItem>
+                            <MenuItem Header="5 Star"></MenuItem>
+
+                        </MenuItem>
+                    </Menu>
+                    <TextBlock Text="Share your experience below" Margin="0,23,0,-23"  FontSize="17" Padding="13" />
+                    <TextBox x:Name="userReview" Margin="10,63,10,52" AcceptsReturn="True" SpellCheck.IsEnabled="True"/>
+
+                    <Button Content="Leave Review" Margin="374,263,0,7" Height="40" Background="Green" Foreground="White" Width="186" HorizontalAlignment="Left" Click="PostReviewButton_Click">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                    <Button Content="Cancel" Margin="42,263,0,7" Height="40" Background="Gray" Foreground="White" Width="186" HorizontalAlignment="Left" Click="CancelReviewButton_Click">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+            </Grid>
+
+
         </Grid>
     </Border>
-</UserControl>
+</Page>

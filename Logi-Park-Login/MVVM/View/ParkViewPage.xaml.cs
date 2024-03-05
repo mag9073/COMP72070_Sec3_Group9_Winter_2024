@@ -59,6 +59,7 @@ namespace LogiPark.MVVM.View
         private void ReviewButton_Click(object sender, RoutedEventArgs e)
         {
             // write a reveiw code goes here
+            //WriteReview.Click(sender, e) = the constuctor for the review module;
 
         }
     }
