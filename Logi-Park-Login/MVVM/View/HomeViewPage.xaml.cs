@@ -82,7 +82,6 @@ namespace LogiPark.MVVM.View
                             SizeToContent = SizeToContent.WidthAndHeight
                         };
                         window.Show();  // Right now, im creating this 
-
                     }
                 }
             }

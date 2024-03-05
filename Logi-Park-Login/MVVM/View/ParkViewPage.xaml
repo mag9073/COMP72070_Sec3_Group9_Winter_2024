@@ -93,8 +93,8 @@
                     </Grid.ColumnDefinitions>
                 </Grid>
 
-                <!-- Phone number and address -->
-                <Image Source="../../Assets/Images/Clair-Lake-Park.jpg" Stretch="UniformToFill" Height="345" Width="466" Margin="0,40,0,0"/>
+                <!-- Render image for the Park -->
+                <Image x:Name="ParkImage" Stretch="UniformToFill" Height="345" Width="466" Margin="0,40,0,0"/>
                 <!-- Phone number and address -->
                 <Border Grid.Column="1" Margin="20,20,20,20" 
                         BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Height="98" Width="318">

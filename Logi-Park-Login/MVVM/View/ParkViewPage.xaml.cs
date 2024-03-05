@@ -41,9 +41,9 @@ namespace LogiPark.MVVM.View
 
             // 3. Request Park Image
 
-
             // Fetch and display the reviews
             ReceiveParkReviewsFromServer();
+            DisplayParkImage(parkName);
         }
 
         private void ReceiveParkReviewsFromServer()
@@ -54,6 +54,22 @@ namespace LogiPark.MVVM.View
             {
                 Console.WriteLine($"{reviews[i].UserName}: {reviews[i].Review} : {reviews[i].Rating} : {reviews[i].DateOfPosting}");
             }
+        }
+
+        private void DisplayParkImage(string parkName)
+        {
+            this.Dispatcher.Invoke(async () =>
+            {
+                _client.SendOneParkImageRequest(parkName);
+                BitmapImage parkImage = _client.ReceiveOneParkImageResponse();
+
+                SetParkImage(parkImage);
+            });
+        }
+
+        public void SetParkImage(BitmapImage image)
+        {
+            ParkImage.Source = image;
         }
 
 

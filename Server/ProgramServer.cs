@@ -138,7 +138,7 @@ namespace Server
 
                 // Individual Park Image State
                 case Types.an_image:
-
+                    ProcessOneParkImagePacket(stream, packet);
                     break;
 
                 // Individual Park Reviews State
@@ -248,7 +248,32 @@ namespace Server
 
         /*** Process Packet Type -> Individual Park Image ***/
 
+        private static void ProcessOneParkImagePacket(NetworkStream stream, Packet receivedPacket)
+        {
+            string parkName = Encoding.UTF8.GetString(receivedPacket.GetBody().buffer);
+            string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "../../../Assets/ParkImages/" + parkName + ".jpg"); // Only .jpg file will work!!!
 
+            // https://stackoverflow.com/questions/16282933/c-sharp-filestream-reads-bytes-incorrectly
+            if (File.Exists(imagePath))
+            {
+                FileStream fileStream = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
+                int chunkSize = 1024 * 1024; // 1 MB sent at a time for large image transfer/stream
+
+                byte[] buffer = new byte[chunkSize];
+
+                int bytesToRead;
+
+                while ((bytesToRead = fileStream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    stream.Write(buffer, 0, bytesToRead);
+                }
+                fileStream.Close();
+            } 
+            else
+            {
+                Console.WriteLine($"Image for park {parkName} cannot be found");
+            }
+        }
 
 
 
