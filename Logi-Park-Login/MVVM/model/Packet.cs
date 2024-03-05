@@ -10,7 +10,7 @@ namespace LogiPark.MVVM.Model
 {
     public enum Types
     {
-        login, register, send, recv, log, allparkdata, allparkimages, image, park, review
+        login, register, log, allparkdata, a_park, allparkimages, an_image, review
     }
 
     /********** Head of the Packet **********/
@@ -19,14 +19,19 @@ namespace LogiPark.MVVM.Model
     {
         [ProtoMember(1)]
         public byte sourceID;
+
         [ProtoMember(2)]
         public byte destinationID;
+
         [ProtoMember(3)]
         public uint sequenceNumber;
+
         [ProtoMember(4)]
         public uint bodyLength;
+
         [ProtoMember(5)]
         public Types type;
+
 
         public void SetHeaderSourceID(byte sourceID)
         {

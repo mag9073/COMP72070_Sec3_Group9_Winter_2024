@@ -15,9 +15,9 @@ namespace Server
         public class LoginData
         {
             [ProtoMember(1)]
-            public string username;
+            public string username = String.Empty;
             [ProtoMember(2)]
-            public string password;
+            public string password = String.Empty;
 
             public string GetUserName()
             {
@@ -125,9 +125,9 @@ namespace Server
         public class SignUpData
         {
             [ProtoMember(1)]
-            public string username;
+            public string username = String.Empty;
             [ProtoMember(2)]
-            public string password;
+            public string password = String.Empty;
 
             public string GetUserName()
             {
@@ -151,18 +151,18 @@ namespace Server
 
             public byte[] SerializeToByteArray()
             {
-                using (var stream = new MemoryStream())
+                using (MemoryStream stream = new MemoryStream())
                 {
                     Serializer.Serialize(stream, this);
                     return stream.ToArray();
                 }
             }
 
-            public LoginData deserializeLoginData(byte[] buffer)
+            public SignUpData deserializeSignUpData(byte[] buffer)
             {
-                using (var memStream = new MemoryStream(buffer))
+                using (MemoryStream memStream = new MemoryStream(buffer))
                 {
-                    return Serializer.Deserialize<LoginData>(memStream);
+                    return Serializer.Deserialize<SignUpData>(memStream);
                 }
             }
         }
@@ -196,15 +196,16 @@ namespace Server
             // string signUpMessage = "Username already exists please try another again!!! /o\\ ";
             // }
 
-            public string SignUpUser(string filename)
+            public string SignUpUser(string filePath)
             {
                 string signUpMessage = "Please enter username to register!!!! \\o/";
+                bool userNameExists = false;
                 try
                 {
-                    using (StreamReader streamReader = new StreamReader(filename))
+                    using (StreamReader streamReader = new StreamReader(filePath))
                     {
                         string line1 = streamReader.ReadLine();
-                        // string line2 = streamReader.ReadLine();
+                        string line2 = streamReader.ReadLine();
 
                         while ((line1 != null)) //  && (line2 != null))
                         {
@@ -212,6 +213,7 @@ namespace Server
                             {
 
                                 signUpMessage = "Username already exists please try another!!! /o\\";
+                                userNameExists = true;
                                 break;
                             }
 
@@ -225,17 +227,19 @@ namespace Server
 
 
                         // another method to write username and password and append to userDB.txt file 
-                        // Append text to an existing file named "WriteLines.txt".
+                        // Append text to an existing file named "userDB.txt".
                         // helper function should return string back if signup was successful to signUpUser()
 
                         // public string SignUp(string filename)
-                        using (StreamWriter outputFile = new StreamWriter("userDB.txt", true))
-                        {
-                            outputFile.WriteLine(signUpData.GetUserName()); // will add the username to the text file
-                            outputFile.WriteLine(signUpData.GetPassword()); //will add the password to the text file
-                            outputFile.Close();
-                            // Console.WriteLine("Success registering user!!! \\o/"); // return success
-
+                        if (!userNameExists) {
+                            using (StreamWriter outputFile = new StreamWriter(filePath, true))
+                            {
+                                outputFile.WriteLine();
+                                outputFile.WriteLine(signUpData.GetUserName()); // will add the username to the text file
+                                outputFile.Write(signUpData.GetPassword()); //will add the password to the text file
+                                outputFile.Close();
+                                // Console.WriteLine("Success registering user!!! \\o/"); // return success
+                            }
 
                         }
                     }
