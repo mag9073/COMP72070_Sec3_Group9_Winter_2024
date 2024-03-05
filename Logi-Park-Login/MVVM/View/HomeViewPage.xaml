@@ -38,9 +38,17 @@
                             <DataTemplate>
                                 <Border Style="{StaticResource ParkCardStyle}" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Button Background="Transparent" Click="OnParkCardClick">
+
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="10"/>
+                                            </Style>
+                                        </Button.Resources>
+                                        
                                         <!--<Border.Background>
-                                        <ImageBrush ImageSource="{Binding ImagePath}" Stretch="Fill"/>
-                                    </Border.Background>-->
+                                                <ImageBrush ImageSource="{Binding ImagePath}" Stretch="Fill"/>
+                                            </Border.Background>-->
+                                        
                                         <!-- This will be placement for each park image -->
                                         <Grid>
                                             <Border CornerRadius="10" Background="#AA000000" VerticalAlignment="Center" HorizontalAlignment="Center" Height="42" Margin="10,148,10,0">
