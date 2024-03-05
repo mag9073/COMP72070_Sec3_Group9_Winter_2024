@@ -8,11 +8,13 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace LogiPark.MVVM.Model
 {
     public class ProgramClient
     {
+        private UserDataManager.SignUpData clientSignUpData = new UserDataManager.SignUpData();
         private UserDataManager.LoginData clientLoginData = new UserDataManager.LoginData();
         private ParkDataManager.ParkData clientParkData = new ParkDataManager.ParkData();
         //private TcpClient clientTcpClient;
@@ -72,6 +74,27 @@ namespace LogiPark.MVVM.Model
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
+
+
+        // 
+
+        /*** User Data Manager - SignUp ***/
+        public void SendSignUpRequest(UserDataManager.SignUpData signUpData)
+        {
+            this.clientSignUpData = signUpData;
+
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.register);
+
+            byte[] signUpDataBuffer = clientSignUpData.SerializeToByteArray();
+            sendPacket.SetPacketBody(signUpDataBuffer, (uint)signUpDataBuffer.Length);
+
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
+        
+
+
 
         /*** Park Data Manager ***/
         public void SendParkDataAllRequest()

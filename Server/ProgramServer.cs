@@ -103,7 +103,7 @@ namespace Server
                     break;
 
                 case Types.register:
-
+                    ProcessSignUpPacket(packet, stream, client);
                     break;
 
                 // Send image?
@@ -159,6 +159,28 @@ namespace Server
             }
         }
 
+
+
+
+        private static void ProcessSignUpPacket(Packet packet, NetworkStream stream, TcpClient client)
+        {
+            byte[] buffer = packet.GetBody().buffer;
+            if (buffer != null && buffer.Length > 0)
+            {
+                UserDataManager.SignUpData signUpData = new UserDataManager.SignUpData();
+                signUpData = signUpData.deserializeSignUpData(buffer);
+
+                string message = PerformSignUp(signUpData);
+                SendAcknowledgement(stream, message);
+            }
+            else
+            {
+                Console.WriteLine("Packet bodyBuffer is empty or null");
+                stream.Close();
+                client.Close();
+            }
+        }
+
         private static string PerformLogin(UserDataManager.LoginData loginData)
         {
             Console.WriteLine($"Username: {loginData.GetUserName()}");
@@ -166,6 +188,15 @@ namespace Server
 
             Login login = new Login(loginData);
             return login.LoginUser("../../../UserDB.txt");
+        }
+
+        private static string PerformSignUp(UserDataManager.SignUpData signUpData)
+        {
+            Console.WriteLine($"Username:  {signUpData.GetUserName()}");
+            Console.WriteLine($"Password:  {signUpData.GetPassword()}");
+
+            SignUp signUp = new SignUp(signUpData);
+            return signUp.SignUpUser("../../../UserDB.txt");
         }
 
         // still has yet to implement park data retrival because of issue with client connection loss 
