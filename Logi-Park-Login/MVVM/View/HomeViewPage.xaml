@@ -45,9 +45,7 @@
                                             </Style>
                                         </Button.Resources>
                                         
-                                        <!--<Border.Background>
-                                                <ImageBrush ImageSource="{Binding ImagePath}" Stretch="Fill"/>
-                                            </Border.Background>-->
+                                       
                                         
                                         <!-- This will be placement for each park image -->
                                         <Grid>

@@ -310,10 +310,10 @@ namespace LogiPark.MVVM.Model
 
             // 2. Get the park data buffer from the server
             bytesRead = stream.Read(parkDataBuffer, 0, dataLength);
-            if (bytesRead != dataLength)
-            {
-                throw new Exception("Failed to read complete park data.");
-            }
+            //if (bytesRead != dataLength)
+            //{
+            //    throw new Exception("Failed to read complete park data.");
+            //}
 
             // We deserialize the stream data we got back from the server into Park Data object
             using (MemoryStream ms = new MemoryStream(parkDataBuffer))
@@ -344,6 +344,18 @@ namespace LogiPark.MVVM.Model
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
         /*** Receive from Server -> Individual Park Image ***/
         public BitmapImage ReceiveOneParkImageResponse()
         {
@@ -362,8 +374,13 @@ namespace LogiPark.MVVM.Model
                 imageStream.Write(buffer, 0, bytesToRead);
             } while (bytesToRead == buffer.Length);
 
+            return ConvertImageStreamToBitmapImage(imageStream);
+        }
+
+        private static BitmapImage ConvertImageStreamToBitmapImage(MemoryStream imageStream)
+        {
             // https://www.codeproject.com/Questions/648495/Convert-byte-to-BitmapImage-in-WPF-application-usi
-            imageStream.Position = 0; 
+            imageStream.Position = 0;
             BitmapImage image = new BitmapImage();
             image.BeginInit();
             image.CacheOption = BitmapCacheOption.OnLoad;
