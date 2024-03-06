@@ -163,6 +163,11 @@ namespace LogiPark.MVVM.View
                 // Finally, Add the card to the StackPanel
                 ReviewsStackPanel.Children.Add(reviewCard);
             }
+
+            this.Dispatcher.Invoke(() =>
+            {
+                ParkReviewsCountTextBlock.Text = $"{reviews.Count} reviews";
+            });
         }
     
 
