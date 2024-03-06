@@ -25,6 +25,7 @@
             <StackPanel Grid.Column="0" Margin="20,20,20,20" RenderTransformOrigin="0.5,0.463">
 
                 <StackPanel>
+                    <!-- Add Nmae to each text block -->
                     <TextBlock Text="Park Name" Margin="45,100,45,0" FontSize="20" FontWeight="Bold"/>
                     <TextBox Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
                 </StackPanel>

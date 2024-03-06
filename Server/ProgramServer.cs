@@ -128,7 +128,7 @@ namespace Server
 
                 // Individual Park Data State
                 case Types.a_park:
-
+                    ProcessOneParkDataPacket(stream, packet);
                     break;
 
                 // All Park Images State
@@ -220,7 +220,31 @@ namespace Server
         }
 
         /*** Process Packet Type -> Individual Park Data ***/
+        private static void ProcessOneParkDataPacket(NetworkStream stream, Packet receivedPacket)
+        {
+            string parkName = Encoding.UTF8.GetString(receivedPacket.GetBody().buffer);
 
+            ParkData? parkData = ParkDataManager.ReadOneParkDataFromFile(Constants.ParkData_FilePath, parkName);
+
+            // Verify if its not null then we can proceed to process the park data object
+            if (parkData != null)
+            {
+                byte[] parkDataBuffer = parkData.SerializeToByteArray();
+
+                // We convert parkdatbuffer length into byte [] as the first 4 bytes
+                byte[] bufferLength = BitConverter.GetBytes(parkDataBuffer.Length);
+
+                // 1. Send buffer length
+                stream.Write(bufferLength, 0, bufferLength.Length); 
+
+                // 2. Send the data buffer back
+                stream.Write(parkDataBuffer, 0, parkDataBuffer.Length); 
+            }
+            else
+            {
+                Console.WriteLine($"Park data for {parkName} not found.");
+            }
+        }
 
 
 
