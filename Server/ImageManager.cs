@@ -9,8 +9,8 @@ namespace Server
 {
     public class ImageManager
     {
-        public string FileName;
-        public byte[] Data;
+        //public string FileName;
+        //public byte[] Data;
         //public BitmapImage Image;   // We will use this reconstruct the image when we receive byte [] image data back from the server
 
     }
