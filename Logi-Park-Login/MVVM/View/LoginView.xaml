@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LogiPark.MVVM.View"
         mc:Ignorable="d"
-        Title="LoginView" Height="720" Width="1280"
+        Title="Logi-Park" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize">
     <Window.Resources>
@@ -132,7 +132,7 @@
             <StackPanel Orientation="Horizontal">
                 <TextBox x:Name="passwordTextBox" 
                      Style="{StaticResource TextBoxStyle}"
-                     Text="" Width="440" TextChanged="PasswordTextBox_TextChanged" />
+                     Text="" Width="443" TextChanged="PasswordTextBox_TextChanged" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,10,0,20">

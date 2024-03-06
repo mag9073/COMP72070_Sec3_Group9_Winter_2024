@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LogiPark.MVVM.View" xmlns:core="clr-namespace:LogiPark.Core" d:DataContext="{d:DesignInstance Type=core:ObservableObject}"
-             mc:Ignorable="d" Height="569" Width="1019"
+             mc:Ignorable="d" Height="569" Width="950"
              >
 
     <Border Background="#D9D9D9" CornerRadius="10">
@@ -22,25 +22,25 @@
 
 
             <!-- Left Column Content -->
-            <StackPanel Grid.Column="0" Margin="20,20,20,20" RenderTransformOrigin="0.5,0.463">
+            <StackPanel Grid.Column="0" Margin="10,110,0,0">
 
                 <StackPanel>
-                    <TextBlock Text="Park Name" Margin="45,100,45,0" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="Park Name" Height="30" Width="350" FontSize="20" FontWeight="Bold"/>
                     <TextBox Margin="0,0,0,20" Height="30" Width="350" FontSize="18" Text="Clair Lake Park"/>
                 </StackPanel>
 
                 <StackPanel>
-                    <TextBlock Text="Park Address" Margin="45,0,45,0" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="Park Address" Height="30" Width="350" FontSize="20" FontWeight="Bold"/>
                     <TextBox Margin="0,0,0,20" Height="30" Width="350" Text="Shakespare Dr, Waterloo, ON" FontSize="18"/>
                 </StackPanel>
 
                 <StackPanel>
-                    <TextBlock Text="Park Number (If applicable)" Margin="45,0,45,0" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="Park Number (If applicable)" Height="30" Width="350" FontSize="20" FontWeight="Bold"/>
                     <TextBox Margin="0,0,0,20" Height="30" Width="350" FontSize="18" Text="123-456-7890"/>
                 </StackPanel>
 
                 <StackPanel>
-                    <TextBlock Text="Open Hours (Eg. 7:00 am - 10:00pm)" Margin="45,0,45,0" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="Open Hours (Eg. 7:00 am - 10:00pm)" Height="30" Width="350" FontSize="20" FontWeight="Bold"/>
                     <TextBox Margin="0,0,0,20" Height="30" Width="350" Text="7:00am - 11:00pm" FontSize="18"/>
                 </StackPanel>
 
@@ -65,7 +65,7 @@
                     </Grid.ColumnDefinitions>
                 </Grid>
 
-                <Image Source="../../Assets/Images/Clair-Lake-Park.jpg" Stretch="Fill" Height="345" Width="466" Margin="0,70,0,0"/>
+                <Image Source="../../Assets/ParkImages/Clair Lake Park.jpg" Stretch="Fill" Height="370" Margin="0,50,0,0"/>
 
                 <Button Background="#00A3FF" Content="Change Photo" HorizontalAlignment="Center" Margin="0,20,0,0"  Click="ChangePhotoButton_Click" Padding="15" FontSize="20">
                     <Button.Resources>

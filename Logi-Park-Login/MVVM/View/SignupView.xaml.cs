@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -125,11 +126,17 @@ namespace LogiPark.MVVM.View
                     {
                         messageTextBlock.Text = response;
                         messageTextBlock.Foreground = Brushes.Green;
+                        
                     }
-
-
+                    
                 });
 
+                LoginView loginView = new LoginView();
+
+                Thread.Sleep(2000);
+                loginView.Show();
+
+                this.Close();
             }
 
             // If the username and password are filled, then can proceed to sign up process
@@ -144,7 +151,6 @@ namespace LogiPark.MVVM.View
             // Need to implement a method to receive data back?
 
             // its it is good then it can proceed, take them back to the login page and current view 
-
         }
 
 
