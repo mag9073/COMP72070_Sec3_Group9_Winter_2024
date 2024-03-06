@@ -25,7 +25,7 @@ namespace Server
             public string parkDescription = String.Empty;
 
             [ProtoMember(5)]
-            public uint numberOfReviews = uint.MinValue;
+            public string parkHours = String.Empty;
 
             public string GetParkName()
             {
@@ -47,9 +47,9 @@ namespace Server
                 return this.parkDescription;
             }
 
-            public uint GetNumberOfReviews()
+            public string GetParkHours()
             {
-                return this.numberOfReviews;
+                return this.parkHours;
             }
 
             public void SetParkName(string parkName)
@@ -72,9 +72,9 @@ namespace Server
                 this.parkDescription = parkDescription;
             }
 
-            public void SetNumberOfReviews(uint numberOfReviews)
+            public void SetParkHours(string parkHours)
             {
-                this.numberOfReviews = numberOfReviews;
+                this.parkHours  = parkHours;
             }
 
             public byte[] SerializeToByteArray()
@@ -142,7 +142,7 @@ namespace Server
                             string parkAddress_line = streamReader.ReadLine();
                             string parkRating_line = streamReader.ReadLine();
                             string parkDescriptions_line = streamReader.ReadLine();
-                            string parkReviewsNumber_line = streamReader.ReadLine();
+                            string parkHours_line = streamReader.ReadLine();
 
                             return new ParkData
                             {
@@ -150,7 +150,7 @@ namespace Server
                                 parkAddress = parkAddress_line,
                                 parkReview = float.Parse(parkRating_line),
                                 parkDescription = parkDescriptions_line,
-                                numberOfReviews = uint.Parse(parkReviewsNumber_line)
+                                parkHours = parkHours_line
                             };
                         }
                         // Skip the next 4 lines if the current park name does not match any

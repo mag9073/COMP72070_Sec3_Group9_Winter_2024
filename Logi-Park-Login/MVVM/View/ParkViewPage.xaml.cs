@@ -174,7 +174,8 @@ namespace LogiPark.MVVM.View
                 ParkNameTextBlock.Text = parkData.parkName;
 
                 ParkRatingTextBlock.Text = $"Rating: {parkData.parkReview} stars";
-                ParkReviewsCountTextBlock.Text = $"{parkData.numberOfReviews} reviews";
+                ParkHoursTextBox.Text = parkData.parkHours;
+                //ParkReviewsCountTextBlock.Text = $"{parkData.numberOfReviews} reviews";
                 ParkAddressTextBlock.Text = parkData.parkAddress;
 
                 // Dynamically generate star ratings based on the rounded-down rating
