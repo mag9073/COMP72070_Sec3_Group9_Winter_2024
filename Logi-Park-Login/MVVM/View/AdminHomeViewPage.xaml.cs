@@ -38,7 +38,8 @@ namespace LogiPark.MVVM.View
             Window window = new Window
             {
                 Content = parkView,
-                SizeToContent = SizeToContent.WidthAndHeight
+                SizeToContent = SizeToContent.WidthAndHeight,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
             window.Show();  // Right now, im creating this
         }
@@ -86,13 +87,12 @@ namespace LogiPark.MVVM.View
                 string parkName = park.GetType().GetProperty("Name")?.GetValue(park, null)?.ToString();
                 if (!string.IsNullOrEmpty(parkName))
                 {
-                    MessageBox.Show($"Park Name: {parkName}");
-
-                    ParkViewPage parkViewPage = new ParkViewPage(parkName);
+                    AdminParkViewPage parkViewPage = new AdminParkViewPage();
                     Window window = new Window
                     {
                         Content = parkViewPage,
-                        SizeToContent = SizeToContent.WidthAndHeight
+                        SizeToContent = SizeToContent.WidthAndHeight,
+                        WindowStartupLocation = WindowStartupLocation.CenterScreen
                     };
                     window.Show();  // Right now, im creating this 
                 }

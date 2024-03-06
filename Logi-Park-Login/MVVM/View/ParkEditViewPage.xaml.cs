@@ -28,13 +28,18 @@ namespace LogiPark.MVVM.View
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Handle back to main menu label clicked
-            AdminParkView adminParkView = new AdminParkView();
-
-            adminParkView.Show();
+            AdminParkViewPage parkEditView = new AdminParkViewPage();
 
             Window parentWindow = Window.GetWindow(this);
             parentWindow?.Close();
+
+            Window window = new Window
+            {
+                Content = parkEditView,
+                SizeToContent = SizeToContent.WidthAndHeight,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+            };
+            window.Show();
         }
 
         private void ChangePhotoButton_Click(object sender, RoutedEventArgs e)
