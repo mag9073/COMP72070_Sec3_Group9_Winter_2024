@@ -18,7 +18,7 @@ namespace Server
 
     public class ProgramServer
     {
-        private static Logger logger = new Logger("../../../ServerLog.txt");
+        private static Logger logger = new Logger("../../../Log/ServerLog.txt");
         public static void Main(string[] args)
         {
             StartServer();
