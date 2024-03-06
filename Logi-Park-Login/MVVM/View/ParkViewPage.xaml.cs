@@ -62,5 +62,10 @@ namespace LogiPark.MVVM.View
             //WriteReview.Click(sender, e) = the constuctor for the review module;
 
         }
+
+        internal void Show()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

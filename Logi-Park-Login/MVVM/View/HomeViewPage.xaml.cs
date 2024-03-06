@@ -1,4 +1,5 @@
-﻿using LogiPark.MVVM.ViewModel;
+﻿using LogiPark.MVVM.Model;
+using LogiPark.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,18 +24,16 @@ namespace LogiPark.MVVM.View
     {
         public HomeViewPage()
         {
-            InitializeComponent();
+            InitializeComponent(); 
         }
 
         private void OnParkImageClick(object sender, RoutedEventArgs e)
         {
             string parkName = ((FrameworkElement)sender).Tag.ToString();
 
-            ParkView parkView = new ParkView(parkName);
+            ParkView parkView = new ParkView();
             parkView.Show();
-
-            Window parentWindow = Window.GetWindow(this);
-            parentWindow?.Close();
         }
+
     }
 }

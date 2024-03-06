@@ -18,7 +18,7 @@ namespace LogiPark.MVVM.View
     /// <summary>
     /// Interaction logic for writeReview.xaml
     /// </summary>
-    public partial class writeReview : Page
+    public partial class writeReview : Window
     {
         public writeReview()
         {
@@ -27,17 +27,23 @@ namespace LogiPark.MVVM.View
 
         private void PostReviewButton_Click(object sender, RoutedEventArgs e)
         {
-            string logReview = userReview.Text;
-            byte[] reviewBytes = Encoding.Default.GetBytes(logReview);
-            Logger log = new Logger("../../../ClientLog.txt"); // assume thats the correct file path 
-            log.Log(reviewBytes);
-            this.NavigationService.Navigate(new ParkViewPage());
+            //string logReview = userReview.Text;
+            //byte[] reviewBytes = Encoding.Default.GetBytes(logReview);
+            // Logger log = new Logger("../../../ClientLog.txt"); // assume thats the correct file path 
+            // log.Log(reviewBytes);
+            ParkViewPage parkViewPage = new ParkViewPage();
+            parkViewPage.Show();
+            this.Close();
         }
 
         private void CancelReviewButton_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new ParkViewPage());
+            this.Close();
         }
 
+        private void ReviewButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
