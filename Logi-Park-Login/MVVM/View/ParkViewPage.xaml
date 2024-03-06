@@ -66,28 +66,12 @@
                 </Button>
 
                 <TextBlock Text="Recommended Reviews" FontSize="20" FontWeight="SemiBold" Margin="0,20"/>
-                <StackPanel Grid.Column="0" Margin="20">
-                    <Border Padding="10" Background="#F0F0F0" CornerRadius="5" Height="126">
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal" Height="36">
-                                <Ellipse Width="30" Height="29" Fill="LightBlue" Margin="0,0,10,0"/>
-                                <StackPanel Width="120">
-                                    <TextBlock Text="Tony Stark" FontWeight="Bold"/>
-                                    <TextBlock Text="Waterloo, ON" FontStyle="Italic"/>
-                                </StackPanel>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0" VerticalAlignment="Top">
-                                <!-- Star Rating and Date -->
-                                <TextBlock Text="★★★★☆" FontWeight="Bold" Foreground="Gold"/>
-                                <TextBlock Text=" Dec 24, 2023" Margin="10,0,0,0"/>
-                            </StackPanel>
-                            <!-- Review Text -->
-                            <TextBlock Text="I came to realize that I had more to offer this world than just making things that blow up..." 
-                       TextWrapping="Wrap" Width="250" Margin="0,10,0,0" Height="38"/>
-                        </StackPanel>
-                    </Border>
-
-                </StackPanel>
+                <!-- ScrollViewer for dynamic review cards -->
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="Auto">
+                    <StackPanel x:Name="ReviewsStackPanel">
+                        <!-- Park Reviews Card will be dynamically render here -->
+                    </StackPanel>
+                </ScrollViewer>
 
             </StackPanel>
 
