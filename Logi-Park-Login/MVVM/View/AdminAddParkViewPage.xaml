@@ -26,7 +26,7 @@
             <StackPanel VerticalAlignment="Center" Grid.Column="0" Margin="30">
 
                 <StackPanel>
-                    <TextBlock Text="Park Name" Height="30" Width="350" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="Park Name" Margin="45,100,45,0" FontSize="20" FontWeight="Bold"/>
                     <TextBox Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
                 </StackPanel>
 

@@ -115,9 +115,62 @@ namespace Server
         // Get individual park data from athe text file
         // param: the file path name as a param
         // Return: ParkData - a Park Data oject
-        //public static ParkData ReadOneParkDataFromFile(string filePath)
-        //{
+        // Should be return ParkData object so it can be serialize to be sent back the client
+        public static ParkData? ReadOneParkDataFromFile(string filePath, string parkName)
+        {
+            try
+            {
+                using (StreamReader streamReader = new StreamReader(filePath))
+                {
 
-        //}
+                    // Iterate through the the file and each time 
+                    // We look for index:
+                    // 1. Park Name:
+                    // 2. Address
+                    // 3. Rating
+                    // 4. Descriptions
+                    // 5. Number of ratings
+
+                    while (!streamReader.EndOfStream)
+                    {
+                        string parkName_line = streamReader.ReadLine();
+
+                        // Read the file -> Filter the the file data -> Look for the park name
+                        if (parkName_line == parkName)
+                        {
+                            // The order of each park -> park name, address, rating, description, number of reviews
+                            string parkAddress_line = streamReader.ReadLine();
+                            string parkRating_line = streamReader.ReadLine();
+                            string parkDescriptions_line = streamReader.ReadLine();
+                            string parkReviewsNumber_line = streamReader.ReadLine();
+
+                            return new ParkData
+                            {
+                                parkName = parkName_line,
+                                parkAddress = parkAddress_line,
+                                parkReview = float.Parse(parkRating_line),
+                                parkDescription = parkDescriptions_line,
+                                numberOfReviews = uint.Parse(parkReviewsNumber_line)
+                            };
+                        }
+                        // Skip the next 4 lines if the current park name does not match any
+                        for (int i = 0; i < 4; i++)
+                        {
+                            streamReader.ReadLine();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unable to read park data from this file /o\\ :o {ex.Message}");
+            }
+
+            return null; // Return null if we cant find any matching park name
+        }
+
+
+
+
     }
 }

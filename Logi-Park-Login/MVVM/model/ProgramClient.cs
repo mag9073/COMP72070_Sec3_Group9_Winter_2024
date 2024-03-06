@@ -83,14 +83,19 @@ namespace LogiPark.MVVM.Model
         }
 
         /*** Send Request for -> a Specific Park Data ***/
-        public void SendOneParkDataRequest()
+        public void SendOneParkDataRequest(string parkname)
         {
             Packet sendPacket = new Packet();
             sendPacket.SetPacketHead(1, 2, Types.a_park);
 
-            // We dont need to send body in this request 
+            // convert string to bytes array
+            byte[] parknameBuffer = Encoding.UTF8.GetBytes(parkname);
+            sendPacket.SetPacketBody(parknameBuffer, (uint)parknameBuffer.Length);
+
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
             stream.Write(packetBuffer, 0, packetBuffer.Length);
+
+            Console.WriteLine("One Park Data sent from client");
         }
 
         /**************************************************************************************************************
@@ -288,7 +293,34 @@ namespace LogiPark.MVVM.Model
 
         /*** Receive from Server -> Individual Park Data ***/
 
+        public ParkDataManager.ParkData ReceiveOneParkDataResponse()
+        {
+            byte[] lengthBuffer = new byte[4];
 
+            // 1. Get the buffer length from the server - the first 4 bytes
+            int bytesRead = stream.Read(lengthBuffer, 0, 4);
+
+            if (bytesRead != 4)
+            { 
+                throw new Exception("Failed to read park data length.");
+            } 
+
+            int dataLength = BitConverter.ToInt32(lengthBuffer, 0);
+            byte[] parkDataBuffer = new byte[dataLength];
+
+            // 2. Get the park data buffer from the server
+            bytesRead = stream.Read(parkDataBuffer, 0, dataLength);
+            //if (bytesRead != dataLength)
+            //{
+            //    throw new Exception("Failed to read complete park data.");
+            //}
+
+            // We deserialize the stream data we got back from the server into Park Data object
+            using (MemoryStream ms = new MemoryStream(parkDataBuffer))
+            {
+                return Serializer.Deserialize<ParkDataManager.ParkData>(ms);
+            }
+        }
 
 
 
@@ -312,6 +344,18 @@ namespace LogiPark.MVVM.Model
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
         /*** Receive from Server -> Individual Park Image ***/
         public BitmapImage ReceiveOneParkImageResponse()
         {
@@ -330,8 +374,13 @@ namespace LogiPark.MVVM.Model
                 imageStream.Write(buffer, 0, bytesToRead);
             } while (bytesToRead == buffer.Length);
 
+            return ConvertImageStreamToBitmapImage(imageStream);
+        }
+
+        private static BitmapImage ConvertImageStreamToBitmapImage(MemoryStream imageStream)
+        {
             // https://www.codeproject.com/Questions/648495/Convert-byte-to-BitmapImage-in-WPF-application-usi
-            imageStream.Position = 0; 
+            imageStream.Position = 0;
             BitmapImage image = new BitmapImage();
             image.BeginInit();
             image.CacheOption = BitmapCacheOption.OnLoad;
