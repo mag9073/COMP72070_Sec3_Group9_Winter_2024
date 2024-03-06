@@ -95,7 +95,7 @@ namespace Server
         {
             string[] lines = File.ReadAllLines(filePath);
 
-            int linesPerPark = 5;
+            int linesPerPark = 4;
             ParkDataManager.ParkData[] parks = new ParkDataManager.ParkData[lines.Length / linesPerPark];
 
             for (int i = 0; i < parks.Length; i++)
@@ -106,7 +106,6 @@ namespace Server
                 {
                     parkName = lines[index],
                     parkAddress = lines[index + 1],
-                    parkReview = float.Parse(lines[index + 2]),
                 };
             }
             return parks;
@@ -140,7 +139,6 @@ namespace Server
                         {
                             // The order of each park -> park name, address, rating, description, number of reviews
                             string parkAddress_line = streamReader.ReadLine();
-                            string parkRating_line = streamReader.ReadLine();
                             string parkDescriptions_line = streamReader.ReadLine();
                             string parkHours_line = streamReader.ReadLine();
 
@@ -148,13 +146,12 @@ namespace Server
                             {
                                 parkName = parkName_line,
                                 parkAddress = parkAddress_line,
-                                parkReview = float.Parse(parkRating_line),
                                 parkDescription = parkDescriptions_line,
                                 parkHours = parkHours_line
                             };
                         }
                         // Skip the next 4 lines if the current park name does not match any
-                        for (int i = 0; i < 4; i++)
+                        for (int i = 0; i < 3; i++)
                         {
                             streamReader.ReadLine();
                         }

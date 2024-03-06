@@ -144,6 +144,11 @@ namespace Server
                     ProcessOneParkImagePacket(stream, packet);
                     break;
 
+                // All Park Reviews
+                case Types.all_reviews:
+                    ProcessAllReviewsPacket(stream);
+                    break;
+
                 // Individual Park Reviews State
                 case Types.review:
                     ProcessParkReviewPacket(stream, packet);
@@ -299,13 +304,32 @@ namespace Server
         }
 
 
+        /*** Process Packet Type -> All Park Reviews ***/
+        private static void ProcessAllReviewsPacket(NetworkStream stream)
+        {
 
+            List<ParkReviewManager.ParkReviewData> allReviews = ParkReviewManager.ParkReviewData.ReadAllParkReviewsFromFile(Constants.ParkReviews_FilePath);
 
+            byte[] reviewCount = BitConverter.GetBytes(allReviews.Count);
+            stream.Write(reviewCount, 0, reviewCount.Length);
 
+            // Iterate over all reviews
+            for (int i = 0; i < allReviews.Count; i++)
+            {
+                // Serialize current review to byte array
+                byte[] reviewBuffer = allReviews[i].SerializeToByteArray();
 
+                // Convert the length of the review buffer to bytes []
+                byte[] reviewBufferLength = BitConverter.GetBytes(reviewBuffer.Length);
 
+                // Send the review buffer length first so the client knows what to expect
+                stream.Write(reviewBufferLength, 0, reviewBufferLength.Length);
 
+                // Send the serialized review
+                stream.Write(reviewBuffer, 0, reviewBuffer.Length);
+            }
 
+        }
 
 
         /*** Process Packet Type -> Individual Park Reviews ***/

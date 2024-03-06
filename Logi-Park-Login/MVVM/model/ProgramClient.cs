@@ -156,6 +156,18 @@ namespace LogiPark.MVVM.Model
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
+        public void SendAllReviewsRequest()
+        {
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.all_reviews);
+
+            // We dont need to send body in this request 
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+
+            Console.WriteLine("All reviews data request sent from client");
+        }
+
         /**************************************************************************************************************
          *                                             Park Review Manager                                            *
          * ************************************************************************************************************/
@@ -268,7 +280,7 @@ namespace LogiPark.MVVM.Model
                     using (MemoryStream ms = new MemoryStream(reviewBuffer))
                     {
                         // Deserialize the review data
-                        var review = Serializer.Deserialize<ParkReviewManager.ParkReviewData>(ms);
+                        ParkReviewManager.ParkReviewData review = Serializer.Deserialize<ParkReviewManager.ParkReviewData>(ms);
                         reviews.Add(review);
                     }
                 }

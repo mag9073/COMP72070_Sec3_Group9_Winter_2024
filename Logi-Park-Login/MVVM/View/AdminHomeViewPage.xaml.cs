@@ -63,7 +63,6 @@ namespace LogiPark.MVVM.View
             {
                 Name = park.GetParkName(),
                 Address = park.GetParkAddress(),
-                Review = $"{park.GetParkReview()} stars",
                 //ImagePath ?
             };
         }).ToList();   // Convert it back to list for the xaml card to dynamically rendered.
