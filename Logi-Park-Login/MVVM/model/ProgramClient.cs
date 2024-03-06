@@ -19,6 +19,7 @@ namespace LogiPark.MVVM.Model
         private UserDataManager.SignUpData clientSignUpData = new UserDataManager.SignUpData();
         private UserDataManager.LoginData clientLoginData = new UserDataManager.LoginData();
         private ParkDataManager.ParkData clientParkData = new ParkDataManager.ParkData();
+        private ParkReviewManager.ParkReviewData clientParkReviewData = new ParkReviewManager.ParkReviewData();
         private NetworkStream stream;
         private TcpConnectionManager connectionManager;
 
@@ -167,6 +168,22 @@ namespace LogiPark.MVVM.Model
 
             Console.WriteLine("All reviews data request sent from client");
         }
+
+        public void SendDeleteReviewRequest(ParkReviewManager.ParkReviewData parkReviewData)
+        {
+            //// Send an object of the delete reviews (username, address, rating, date of posting, review)
+            this.clientParkReviewData = parkReviewData;
+
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.delete_review);
+
+            byte[] deleteReviewsDataBuffer = clientParkReviewData.SerializeToByteArray();
+            sendPacket.SetPacketBody(deleteReviewsDataBuffer, (uint)deleteReviewsDataBuffer.Length);
+
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
+
 
         /**************************************************************************************************************
          *                                             Park Review Manager                                            *

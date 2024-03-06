@@ -7,7 +7,7 @@ namespace Server
 {
     public enum Types
     {
-        login, register, log, allparkdata, a_park, allparkimages, an_image, all_reviews, review
+        login, register, log, allparkdata, a_park, allparkimages, an_image, all_reviews, review, delete_review
     }
 
     /********** Head of the Packet **********/

@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LogiPark.MVVM.View"
              mc:Ignorable="d" 
-             d:DesignWidth="889" d:DesignHeight="600" 
-             >
+             d:DesignWidth="889" d:DesignHeight="600">
+
     <UserControl.Resources>
         <!-- Style for dynamic park cards -->
         <Style x:Key="ParkCardStyle" TargetType="Border">
@@ -20,7 +20,7 @@
     <Border Background="#EBEBEB" CornerRadius="10">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -29,12 +29,12 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid VerticalAlignment="Top" Grid.Row="0" ColumnSpan="3" Height="89">
+            <!-- Results Header and Add Park Button -->
+            <Grid VerticalAlignment="Top" Grid.Row="0" ColumnSpan="3">
                 <TextBlock Text="Results"
-               FontSize="28"
-               VerticalAlignment="Center"
-               Margin="30,0,0,0"
-               />
+                           FontSize="28"
+                           VerticalAlignment="Center"
+                           Margin="30,0,0,0" Height="70"/>
                 <Button HorizontalAlignment="Right" Margin="0,0,30,0" Background="Green" Content="Add Park" Click="AddButton_Click" Width="100" Height="40" FontSize="20">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
@@ -45,7 +45,7 @@
             </Grid>
 
             <!-- Dynamically render each park -->
-            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Hidden" Grid.ColumnSpan="3" Grid.RowSpan="2" Margin="0,89,0,0">
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3">
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                     <ItemsControl Name="ParksItemsControl" Margin="10">
                         <ItemsControl.ItemsPanel>
@@ -57,19 +57,19 @@
                             <DataTemplate>
                                 <Border Style="{StaticResource ParkCardStyle}" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Button Background="Transparent" Click="OnParkCardClick">
-
-                                        <!--<Border.Background>
-                                                <ImageBrush ImageSource="{Binding ImagePath}" Stretch="Fill"/>
-                                            </Border.Background>-->
-                                        
-                                        <!-- This will be placement for each park image -->
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="10"/>
+                                            </Style>
+                                        </Button.Resources>
+                                        <!-- Placeholder for park content -->
                                         <Grid>
                                             <Border CornerRadius="10" Background="#AA000000" VerticalAlignment="Center" HorizontalAlignment="Center" Height="42" Margin="10,148,10,0">
                                                 <StackPanel VerticalAlignment="Center" Height="42">
                                                     <TextBlock Text="{Binding Name}" Foreground="White" FontSize="16"/>
                                                     <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
                                                         <Image Source="/Assets/Icons/star-rating-icon.png" Width="25" Height="14"/>
-                                                        <TextBlock Text="{Binding Review}" Foreground="White" FontSize="12" Margin="5,0"/>
+                                                        <TextBlock Text="{Binding AverageRating, StringFormat='{} {0:0.0}'}" Foreground="White" FontSize="12" Margin="5,0"/>
                                                         <TextBlock Text="{Binding Address}" Foreground="White" FontSize="10" Margin="10,0"/>
                                                     </StackPanel>
                                                 </StackPanel>
@@ -82,7 +82,6 @@
                     </ItemsControl>
                 </Grid>
             </ScrollViewer>
-            
         </Grid>
     </Border>
 </UserControl>

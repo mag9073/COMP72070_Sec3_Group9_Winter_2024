@@ -1,36 +1,30 @@
 ParkName: Waterloo Park
-Username: Katherine Slattery | ParkRating: 4.0 | DateOfPosting: 2023-04-05 | Review: I have many good memories walking through this park. I like the path around the lake and the trails through the woods. There are some nice flowering trees which are so peaceful to sit under in the summer.
-
-ParkName: Waterloo Park
-Username: Jennifer Fletcher | ParkRating: 5.0 | DateOfPosting: 2023-04-05 | Review: We came to see the Christmas lights, and we were not disappointed! Lovely displays!!
+Username: Katherine Slattery | ParkRating: 4 | DateOfPosting: 2023-04-05 | Review: I have many good memories walking through this park. I like the path around the lake and the trails through the woods. There are some nice flowering trees which are so peaceful to sit under in the summer.
 
 ParkName: Clair Lake Park
-Username: Barry Smylie | ParkRating: 3.0 | DateOfPosting: 2022-04-05 | Review: The trail doesn't follow the banks of the reservoir.  It is a sports park with swimming pool, tennis courts, and field sports.  There is one access to the water
+Username: Barry Smylie | ParkRating: 3 | DateOfPosting: 2022-04-05 | Review: The trail doesn't follow the banks of the reservoir.  It is a sports park with swimming pool, tennis courts, and field sports.  There is one access to the water
 
 ParkName: Clair Lake Park
-Username: Amber Clarke | ParkRating: 4.0 | DateOfPosting: 2023-04-05 | Review: Cute little playground and not too busy.
-Sandbox is filled with sand toys that anyone is free to use. It is a very interactive playground for children of all ages but i would say its geared more to littles.
+Username: Amber Clarke | ParkRating: 4 | DateOfPosting: 2023-04-05 | Review: Cute little playground and not too busy. Sandbox is filled with sand toys that anyone is free to use. It is a very interactive playground for children of all ages but i would say its geared more to littles.
 
 ParkName: Hillside Park
-Username: Bernzie Baby | ParkRating: 5.0 | DateOfPosting: 2023-04-05 | Review: It's a Great day to sit around at the junction and people watch listen and look for signs of Spring
-
-ParkName: Hillside Park
-Username: Lucy Zhang | ParkRating: 5.0| DateOfPosting: 2023-04-05 | Review: I saw the my first barred owl here. The most trail is along the water.
+Username: Bernzie Baby | ParkRating: 5 | DateOfPosting: 2023-04-05 | Review: It's a Great day to sit around at the junction and people watch listen and look for signs of Spring
 
 ParkName: Brewmeister Green Park
-Username: Dennis Baker | ParkRating: 4.0 | DateOfPosting: 2023-04-05 | Review: Great place to relax and watch the world go by.
+Username: Dennis Baker | ParkRating: 4 | DateOfPosting: 2023-04-05 | Review: Great place to relax and watch the world go by.
 
 ParkName: Brewmeister Green Park
-Username: Jane Yang | ParkRating: 4.0 | DateOfPosting: 2023-04-05 | Review: Perfect paved trails for young kids walking or biking .
+Username: Jane Yang | ParkRating: 4 | DateOfPosting: 2023-04-05 | Review: Perfect paved trails for young kids walking or biking .
 
 ParkName: Bechtel Park
-Username: Meaghan Brown | ParkRating: 4.0 | DateOfPosting: 2023-04-05 | Review: Stunning paths to walk, especially with the fall colours! The playground is great too for kids of all ages. Lots of garbage and dog poo around though.
+Username: Meaghan Brown | ParkRating: 4 | DateOfPosting: 2023-04-05 | Review: Stunning paths to walk, especially with the fall colours! The playground is great too for kids of all ages. Lots of garbage and dog poo around though.
 
 ParkName: Bechtel Park
-Username: Clara Esteves | ParkRating: 4.0 | DateOfPosting: 2023-04-05 | Review: This is place is dope! Very peaceful, gorgeous park with nice scenery. It's clean and well kept. A great place to take your dog on an adventure, here's my dog and my best friend, he's a Newfoundland and loves his leash.
+Username: Clara Esteves | ParkRating: 4 | DateOfPosting: 2023-04-05 | Review: This is place is dope! Very peaceful, gorgeous park with nice scenery. It's clean and well kept. A great place to take your dog on an adventure, here's my dog and my best friend, he's a Newfoundland and loves his leash.
 
 ParkName: Laurel Creek Conservation Area Park
-Username: Kathy Brookes | ParkRating: 5.0 | DateOfPosting: 2023-04-05 | Review: So pretty of a walk, and the birds are so much fun. Note if you want  to drive in and park, there is a fee
+Username: Kathy Brookes | ParkRating: 5 | DateOfPosting: 2023-04-05 | Review: So pretty of a walk, and the birds are so much fun. Note if you want  to drive in and park, there is a fee
 
 ParkName: Laurel Creek Conservation Area Park
-Username: Terence McGuire | ParkRating: 4.0 | DateOfPosting: 2023-04-05 | Review: I've never camped her but used this area many times for hiking and photography. Sunrise and sunsets are great over the lake. Autumn is such a great time to hike the trails before the snow flies.
+Username: Terence McGuire | ParkRating: 4 | DateOfPosting: 2023-04-05 | Review: I've never camped her but used this area many times for hiking and photography. Sunrise and sunsets are great over the lake. Autumn is such a great time to hike the trails before the snow flies.
+

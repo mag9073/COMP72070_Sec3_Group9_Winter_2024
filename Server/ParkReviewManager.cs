@@ -78,7 +78,7 @@ namespace Server
                 }
             }
 
-            public ParkReviewData deserializeLoginData(byte[] buffer)
+            public ParkReviewData deserializeParkReviewData(byte[] buffer)
             {
                 using (MemoryStream memStream = new MemoryStream(buffer))
                 {
@@ -123,6 +123,29 @@ namespace Server
 
                 return reviews;
             }
+
+            // Overwrite All Park Reviews back to text file after it has been modified -> i.e deleted a review
+            public static void OverwriteAllParkReviewsToFile(string filePath, List<ParkReviewManager.ParkReviewData> reviews)
+            {
+                StringBuilder fileContent = new StringBuilder();
+
+                // Group reviews by ParkName to correctly format them when writing reviews back to the text file
+                IEnumerable<IGrouping<string, ParkReviewData>>? groupedReviews = reviews.GroupBy(review => review.ParkName);
+
+                foreach (IGrouping<string, ParkReviewData> group in groupedReviews)
+                {
+                    
+                    foreach (ParkReviewData? review in group)
+                    {
+                        fileContent.AppendLine($"ParkName: {group.Key}");
+                        fileContent.AppendLine($"Username: {review.UserName} | ParkRating: {review.Rating} | DateOfPosting: {review.DateOfPosting.ToString("yyyy-MM-dd")} | Review: {review.Review}\n");
+                    }
+                }
+
+                // Finally write every back 
+                File.WriteAllText(filePath, fileContent.ToString());
+            }
+
         }
     }
 }

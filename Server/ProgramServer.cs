@@ -153,6 +153,11 @@ namespace Server
                 case Types.review:
                     ProcessParkReviewPacket(stream, packet);
                     break;
+
+                // ADMIN - Request delete a park review
+                case Types.delete_review:
+                    ProcessDeleteParkReviewPacket(stream, packet);
+                    break;
             }
         }
 
@@ -363,6 +368,48 @@ namespace Server
                 stream.Write(reviewBuffer, 0, reviewBuffer.Length);
             }
         }
+
+        /*** Process Packet Type -> Delete Park Review ***/
+        private static void ProcessDeleteParkReviewPacket(NetworkStream stream, Packet receivedPacket)
+        {
+
+            // First, we need to deserialize the packet into ParkReviewData object form
+            ParkReviewManager.ParkReviewData reviewDataToDelete = new ParkReviewManager.ParkReviewData().deserializeParkReviewData(receivedPacket.GetBody().buffer);
+
+            bool isDeleted = false;
+
+            // Second, we will go through the ParkReviews text file - SAVE it in a list of ParkReviewData object
+            List<ParkReviewManager.ParkReviewData> allReviews = ParkReviewManager.ParkReviewData.ReadAllParkReviewsFromFile(Constants.ParkReviews_FilePath);
+
+            // Third we use FirstOrDefault built-in method which essentially return the element that first match the condition (First matching review we would like to delete
+            ParkReviewManager.ParkReviewData? reviewToRemove = allReviews.FirstOrDefault(review => review.ParkName == reviewDataToDelete.ParkName &&
+                                                         review.UserName == reviewDataToDelete.UserName &&
+                                                         review.DateOfPosting == reviewDataToDelete.DateOfPosting &&
+                                                         review.Rating == reviewDataToDelete.Rating &&
+                                                         review.Review == reviewDataToDelete.Review);
+
+            // Fourth, we would like reassure that we successfully deleted the review from the List before moving on
+            if (reviewToRemove != null)
+            {
+                allReviews.Remove(reviewToRemove);
+                isDeleted = true;
+            }
+
+            // Fifth, we take the remaining reviews that were not request to be deleted (remaining reviews) and rewrite it back to the textfile
+            ParkReviewManager.ParkReviewData.OverwriteAllParkReviewsToFile(Constants.ParkReviews_FilePath, allReviews);
+
+
+            string message = "Review not found.";
+
+            if (isDeleted)
+            {
+                message = "Review deleted successfully.";
+            }
+
+            // Send an acknowledgement message to the client whether the deletion process was successful
+            SendAcknowledgement(stream, message);
+        }
+
 
         /**************************************************************************************************************
          *                                    Helper Methods to Process Packet Type                                   *
