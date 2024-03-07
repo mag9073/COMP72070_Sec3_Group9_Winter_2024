@@ -19,13 +19,10 @@ namespace Server
             public string parkAddress = String.Empty;
 
             [ProtoMember(3)]
-            public float parkReview = float.MinValue;
-
-            [ProtoMember(4)]
             public string parkDescription = String.Empty;
 
-            [ProtoMember(5)]
-            public uint numberOfReviews = uint.MinValue;
+            [ProtoMember(4)]
+            public string parkHours = String.Empty;
 
             public string GetParkName()
             {
@@ -37,19 +34,14 @@ namespace Server
                 return this.parkAddress;
             }
 
-            public float GetParkReview()
-            {
-                return this.parkReview;
-            }
-
             public string GetParkDescription()
             {
                 return this.parkDescription;
             }
 
-            public uint GetNumberOfReviews()
+            public string GetParkHours()
             {
-                return this.numberOfReviews;
+                return this.parkHours;
             }
 
             public void SetParkName(string parkName)
@@ -62,19 +54,14 @@ namespace Server
                 this.parkAddress = parkAddress;
             }
 
-            public void SetParkReview(float parkReview)
-            {
-                this.parkReview = parkReview;
-            }
-
             public void SetParkDescription(string parkDescription)
             {
                 this.parkDescription = parkDescription;
             }
 
-            public void SetNumberOfReviews(uint numberOfReviews)
+            public void SetParkHours(string parkHours)
             {
-                this.numberOfReviews = numberOfReviews;
+                this.parkHours  = parkHours;
             }
 
             public byte[] SerializeToByteArray()
@@ -95,7 +82,7 @@ namespace Server
         {
             string[] lines = File.ReadAllLines(filePath);
 
-            int linesPerPark = 5;
+            int linesPerPark = 4;
             ParkDataManager.ParkData[] parks = new ParkDataManager.ParkData[lines.Length / linesPerPark];
 
             for (int i = 0; i < parks.Length; i++)
@@ -106,7 +93,8 @@ namespace Server
                 {
                     parkName = lines[index],
                     parkAddress = lines[index + 1],
-                    parkReview = float.Parse(lines[index + 2]),
+                    parkDescription = lines[index + 2],
+                    parkHours = lines[index + 3],
                 };
             }
             return parks;
@@ -140,21 +128,19 @@ namespace Server
                         {
                             // The order of each park -> park name, address, rating, description, number of reviews
                             string parkAddress_line = streamReader.ReadLine();
-                            string parkRating_line = streamReader.ReadLine();
                             string parkDescriptions_line = streamReader.ReadLine();
-                            string parkReviewsNumber_line = streamReader.ReadLine();
+                            string parkHours_line = streamReader.ReadLine();
 
                             return new ParkData
                             {
                                 parkName = parkName_line,
                                 parkAddress = parkAddress_line,
-                                parkReview = float.Parse(parkRating_line),
                                 parkDescription = parkDescriptions_line,
-                                numberOfReviews = uint.Parse(parkReviewsNumber_line)
+                                parkHours = parkHours_line
                             };
                         }
                         // Skip the next 4 lines if the current park name does not match any
-                        for (int i = 0; i < 4; i++)
+                        for (int i = 0; i < 3; i++)
                         {
                             streamReader.ReadLine();
                         }

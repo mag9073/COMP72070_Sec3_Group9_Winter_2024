@@ -25,6 +25,7 @@ namespace LogiPark.MVVM.View
     {
         private string _parkName;
         private ProgramClient _client;
+        private float _averageRating = 0;
         public ParkViewPage()
         {
         }
@@ -62,11 +63,17 @@ namespace LogiPark.MVVM.View
             List<ParkReviewManager.ParkReviewData> reviews = _client.ReceiveParkReviewsResponse();
 
             // In case there is any reviews stack panel already exist then we clear it first before starting to create reviews card
-            ReviewsStackPanel.Children.Clear(); 
+            ReviewsStackPanel.Children.Clear();
+
+            // Store park review rating 
+            float totalRating = 0;
 
             // Iterate through each review and build a review card
             foreach (ParkReviewManager.ParkReviewData review in reviews)
             {
+                // get the total rating
+                totalRating += review.Rating;
+
                 // Main container for each review
                 Border reviewCard = new Border
                 {
@@ -163,6 +170,23 @@ namespace LogiPark.MVVM.View
                 // Finally, Add the card to the StackPanel
                 ReviewsStackPanel.Children.Add(reviewCard);
             }
+
+            // Calculate for average park rating 
+            float averageRating = 0;
+
+            if (reviews.Count > 0)
+            {
+                averageRating = totalRating / reviews.Count;
+            }
+
+            this.Dispatcher.Invoke(() =>
+            {
+                ParkReviewsCountTextBlock.Text = $"{reviews.Count} reviews";
+
+                // In here, we will update our average rating for each park
+                UpdateAverageRating(averageRating);
+
+            });
         }
     
 
@@ -173,12 +197,13 @@ namespace LogiPark.MVVM.View
                 ParkDataManager.ParkData parkData = _client.ReceiveOneParkDataResponse();
                 ParkNameTextBlock.Text = parkData.parkName;
 
-                ParkRatingTextBlock.Text = $"Rating: {parkData.parkReview} stars";
-                ParkReviewsCountTextBlock.Text = $"{parkData.numberOfReviews} reviews";
+                ParkRatingTextBlock.Text = $"Rating: {_averageRating.ToString("0.0")} stars";
+                ParkHoursTextBox.Text = parkData.parkHours;
+                //ParkReviewsCountTextBlock.Text = $"{parkData.numberOfReviews} reviews";
                 ParkAddressTextBlock.Text = parkData.parkAddress;
 
                 // Dynamically generate star ratings based on the rounded-down rating
-                double roundedRating = Math.Floor(parkData.parkReview);
+                double roundedRating = Math.Floor(_averageRating);
                 List<BitmapImage> stars = new List<BitmapImage>();
                 for (int i = 0; i < roundedRating; i++)
                 {
@@ -199,10 +224,18 @@ namespace LogiPark.MVVM.View
             });
         }
 
+        // Helper methods
+
+        private void UpdateAverageRating(float averageRating)
+        {
+            _averageRating = averageRating;
+        }
+
         public void SetParkImage(BitmapImage image)
         {
             ParkImage.Source = image;
         }
+
 
         private void ReviewButton_Click(object sender, RoutedEventArgs e)
         {

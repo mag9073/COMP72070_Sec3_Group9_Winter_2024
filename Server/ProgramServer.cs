@@ -14,6 +14,7 @@ namespace Server
         public const string ParkData_FilePath = "../../../Database/ParkData.txt";
         public const string ParkReviews_FilePath = "../../../Database/ParkReview.txt";
         public const string UserDB_FilePath = "../../../Database/UserDB.txt";
+        public const string ParkImages_FilePath = "../../../Assets/ParkImages/";
     }
 
     public class ProgramServer
@@ -144,9 +145,24 @@ namespace Server
                     ProcessOneParkImagePacket(stream, packet);
                     break;
 
+                // All Park Reviews
+                case Types.all_reviews:
+                    ProcessAllReviewsPacket(stream);
+                    break;
+
                 // Individual Park Reviews State
                 case Types.review:
                     ProcessParkReviewPacket(stream, packet);
+                    break;
+
+                // ADMIN - Request delete a park review
+                case Types.delete_review:
+                    ProcessDeleteParkReviewPacket(stream, packet);
+                    break;
+
+                // ADMIN - Delete a park (Park Data, Park Reviews, Park Image)
+                case Types.delete_park:
+                    ProcessDeleteAParkPacket(stream, packet);
                     break;
             }
         }
@@ -299,13 +315,32 @@ namespace Server
         }
 
 
+        /*** Process Packet Type -> All Park Reviews ***/
+        private static void ProcessAllReviewsPacket(NetworkStream stream)
+        {
 
+            List<ParkReviewManager.ParkReviewData> allReviews = ParkReviewManager.ParkReviewData.ReadAllParkReviewsFromFile(Constants.ParkReviews_FilePath);
 
+            byte[] reviewCount = BitConverter.GetBytes(allReviews.Count);
+            stream.Write(reviewCount, 0, reviewCount.Length);
 
+            // Iterate over all reviews
+            for (int i = 0; i < allReviews.Count; i++)
+            {
+                // Serialize current review to byte array
+                byte[] reviewBuffer = allReviews[i].SerializeToByteArray();
 
+                // Convert the length of the review buffer to bytes []
+                byte[] reviewBufferLength = BitConverter.GetBytes(reviewBuffer.Length);
 
+                // Send the review buffer length first so the client knows what to expect
+                stream.Write(reviewBufferLength, 0, reviewBufferLength.Length);
 
+                // Send the serialized review
+                stream.Write(reviewBuffer, 0, reviewBuffer.Length);
+            }
 
+        }
 
 
         /*** Process Packet Type -> Individual Park Reviews ***/
@@ -340,11 +375,89 @@ namespace Server
             }
         }
 
-        /**************************************************************************************************************
-         *                                    Helper Methods to Process Packet Type                                   *
-         * ************************************************************************************************************/
+        /*** Process Packet Type -> Delete Park Review ***/
+        private static void ProcessDeleteParkReviewPacket(NetworkStream stream, Packet receivedPacket)
+        {
 
-        private static string PerformLogin(UserDataManager.LoginData loginData)
+            // First, we need to deserialize the packet into ParkReviewData object form
+            ParkReviewManager.ParkReviewData reviewDataToDelete = new ParkReviewManager.ParkReviewData().deserializeParkReviewData(receivedPacket.GetBody().buffer);
+
+            bool isDeleted = false;
+
+            // Second, we will go through the ParkReviews text file - SAVE it in a list of ParkReviewData object
+            List<ParkReviewManager.ParkReviewData> allReviews = ParkReviewManager.ParkReviewData.ReadAllParkReviewsFromFile(Constants.ParkReviews_FilePath);
+
+            // Third we use FirstOrDefault built-in method which essentially return the element that first match the condition (First matching review we would like to delete
+            ParkReviewManager.ParkReviewData? reviewToRemove = allReviews.FirstOrDefault(review => review.ParkName == reviewDataToDelete.ParkName &&
+                                                         review.UserName == reviewDataToDelete.UserName &&
+                                                         review.DateOfPosting == reviewDataToDelete.DateOfPosting &&
+                                                         review.Rating == reviewDataToDelete.Rating &&
+                                                         review.Review == reviewDataToDelete.Review);
+
+            // Fourth, we would like reassure that we successfully deleted the review from the List before moving on
+            if (reviewToRemove != null)
+            {
+                allReviews.Remove(reviewToRemove);
+                isDeleted = true;
+            }
+
+            // Fifth, we take the remaining reviews that were not request to be deleted (remaining reviews) and rewrite it back to the textfile
+            ParkReviewManager.ParkReviewData.OverwriteAllParkReviewsToFile(Constants.ParkReviews_FilePath, allReviews);
+
+
+            string message = "Review not found.";
+
+            if (isDeleted)
+            {
+                message = "Review deleted successfully.";
+            }
+
+            // Send an acknowledgement message to the client whether the deletion process was successful
+            SendAcknowledgement(stream, message);
+        }
+
+        /*** Process Packet Type -> Delete Park Review ***/
+        private static void ProcessDeleteAParkPacket(NetworkStream stream, Packet receivedPacket)
+        {
+            string parkName = Encoding.UTF8.GetString(receivedPacket.GetBody().buffer);
+
+            string parkImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + Constants.ParkImages_FilePath + parkName + ".jpg");
+            //string parkDataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + Constants.ParkData_FilePath);
+            //string parkReviewsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + Constants.ParkReviews_FilePath);
+
+            try
+            {
+                if (File.Exists(Constants.ParkImages_FilePath))
+                {
+                    File.Delete($"{AppDomain.CurrentDomain.BaseDirectory + Constants.ParkImages_FilePath + parkName}.jpg");
+                }
+                else
+                {
+                    Console.WriteLine($"Unable to delete {parkName}.jpg");
+                }
+
+                // Delete park data.
+                DeleteParkData(parkName);
+
+                // Delete park reviews.
+                DeleteParkReviews(parkName);
+
+                // Send a success message back to the client.
+                SendAcknowledgement(stream, $"{parkName} has been deleted -> (park data, park image, park reviews)");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                SendAcknowledgement(stream, $"Failed to delete park: {ex.Message}");
+            }
+
+        }
+
+            /**************************************************************************************************************
+             *                                    Helper Methods to Process Packet Type                                   *
+             * ************************************************************************************************************/
+
+            private static string PerformLogin(UserDataManager.LoginData loginData)
         {
             Console.WriteLine($"Username: {loginData.GetUserName()}");
             Console.WriteLine($"Password: {loginData.GetPassword()}");
@@ -395,6 +508,82 @@ namespace Server
         /*** Helper Method for -> Individual Park Image ***/
 
 
+
+
+
+
+
+
+
+        private static void DeleteParkData(string parkName)
+        {
+            // https://stackoverflow.com/questions/29975219/reading-lines-from-text-file-and-add-to-liststring
+
+            // Read all the lines from the file and store it in the memory as list
+            List<string> lines = File.ReadAllLines(Constants.ParkData_FilePath).ToList();
+
+            // We then will use this to hold all the new lines that arent supposed to be deleted
+            List<string> remainLines = new List<string>();
+
+            // Iterate through each line looking for matching park name
+            for (int i = 0; i < lines.Count; i++)
+            {
+                // When a park name match is found...
+                if (lines[i].Trim().Equals(parkName))
+                {
+                    // We wanna skip the next 3 lines
+                    i = i + 3;
+                }
+                else
+                {
+                    // If the current line is not part of the park to delete, we add them back to a line to be written back to our file
+                    remainLines.Add(lines[i]);
+                }
+            }
+
+            // Rewrite the updated park data back to the file
+            File.WriteAllLines(Constants.ParkData_FilePath, remainLines.ToArray());
+
+            Console.WriteLine($"{parkName} data deleted successfully.");
+        }
+
+
+        private static void DeleteParkReviews(string parkNameToDelete)
+        {
+            // https://stackoverflow.com/questions/29975219/reading-lines-from-text-file-and-add-to-liststring
+
+            List<string> updatedContent = new List<string>();
+            bool isThisReviewATargetPark = false; 
+
+            // Read all the lines from the file and store it in the memory as list
+            string[] allLines = File.ReadAllLines(Constants.ParkReviews_FilePath);
+            for (int i = 0; i < allLines.Length; i++)
+            {
+                string line = allLines[i];
+
+                // Check if the line is the start of a new review block
+                if (line.StartsWith("ParkName: "))
+                {
+                    // Check if the current review block is for the park we want to delete
+                    isThisReviewATargetPark = line.Contains(parkNameToDelete);
+                }
+
+                // If the current line is not part of the park to delete, we add them back to a line to be written back to our file
+                if (!isThisReviewATargetPark)
+                {
+                    updatedContent.Add(line);
+                }
+
+                // If the line is empty, we know that it should be the end of the file then
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    isThisReviewATargetPark = false;
+                }
+            }
+
+            // Write updated file without the file we park we deleted
+            File.WriteAllLines(Constants.ParkReviews_FilePath, updatedContent);
+        }
 
 
 

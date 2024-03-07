@@ -19,6 +19,7 @@ namespace LogiPark.MVVM.Model
         private UserDataManager.SignUpData clientSignUpData = new UserDataManager.SignUpData();
         private UserDataManager.LoginData clientLoginData = new UserDataManager.LoginData();
         private ParkDataManager.ParkData clientParkData = new ParkDataManager.ParkData();
+        private ParkReviewManager.ParkReviewData clientParkReviewData = new ParkReviewManager.ParkReviewData();
         private NetworkStream stream;
         private TcpConnectionManager connectionManager;
 
@@ -156,6 +157,51 @@ namespace LogiPark.MVVM.Model
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
+        /*** Send Request for - All Park Reviews */
+        public void SendAllReviewsRequest()
+        {
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.all_reviews);
+
+            // We dont need to send body in this request 
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+
+            Console.WriteLine("All reviews data request sent from client");
+        }
+
+        /*** Send Request for - Delete Individual Park Reviews */
+        public void SendDeleteReviewRequest(ParkReviewManager.ParkReviewData parkReviewData)
+        {
+            //// Send an object of the delete reviews (username, address, rating, date of posting, review)
+            this.clientParkReviewData = parkReviewData;
+
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.delete_review);
+
+            byte[] deleteReviewsDataBuffer = clientParkReviewData.SerializeToByteArray();
+            sendPacket.SetPacketBody(deleteReviewsDataBuffer, (uint)deleteReviewsDataBuffer.Length);
+
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
+
+        /*** Send Request for - Delete All Park Reviews */
+        public void SendDeleteAParkRequest(string parkName)
+        {
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.delete_park);
+
+            // Serialize the park name and set as packet body
+            byte[] parkNameBuffer = Encoding.UTF8.GetBytes(parkName);
+            sendPacket.SetPacketBody(parkNameBuffer, (uint)parkNameBuffer.Length);
+
+            // Send the packet
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
+
+
         /**************************************************************************************************************
          *                                             Park Review Manager                                            *
          * ************************************************************************************************************/
@@ -268,7 +314,7 @@ namespace LogiPark.MVVM.Model
                     using (MemoryStream ms = new MemoryStream(reviewBuffer))
                     {
                         // Deserialize the review data
-                        var review = Serializer.Deserialize<ParkReviewManager.ParkReviewData>(ms);
+                        ParkReviewManager.ParkReviewData review = Serializer.Deserialize<ParkReviewManager.ParkReviewData>(ms);
                         reviews.Add(review);
                     }
                 }

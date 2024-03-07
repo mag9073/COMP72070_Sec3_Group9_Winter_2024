@@ -7,7 +7,7 @@ namespace Server
 {
     public enum Types
     {
-        login, register, log, allparkdata, a_park, allparkimages, an_image, review
+        login, register, log, allparkdata, a_park, allparkimages, an_image, all_reviews, review, delete_review, delete_park
     }
 
     /********** Head of the Packet **********/
@@ -199,7 +199,6 @@ namespace Server
         public byte[] getTailBuffer()
         {
             return this.tail.GetTailCRC();
-
         }
 
         public byte[] SerializeToByteArray()
