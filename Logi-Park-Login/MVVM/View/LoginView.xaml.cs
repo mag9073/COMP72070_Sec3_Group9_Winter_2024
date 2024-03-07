@@ -130,12 +130,12 @@ namespace LogiPark.MVVM.View
                     messageTextBlock.Foreground = Brushes.Green;
 
                     //AdminHomeView adminHomeView = new AdminHomeView();
-                   //adminHomeView.Show();
+                    //adminHomeView.Show();
                     //this.Close();
 
                     ClientHomeView clientHomeView = new ClientHomeView();
                     clientHomeView.Show();
-                   this.Close();
+                    this.Close();
                 });
             }
             else
@@ -180,8 +180,9 @@ namespace LogiPark.MVVM.View
 
         private void AdminButton_Click(object sender, RoutedEventArgs e)
         {
-            adminSignIn signIn = new adminSignIn();
-            signIn.Show();
+            AdminHomeView HomeView = new AdminHomeView();
+
+            HomeView.Show();
 
             this.Close();
         }
