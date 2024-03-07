@@ -69,7 +69,7 @@ namespace LogiPark.MVVM.View
 
         public void SetParkImage(BitmapImage image)
         {
-            ParkImage.Source = image;
+            //ParkImage.Source = image;
         }
 
 
