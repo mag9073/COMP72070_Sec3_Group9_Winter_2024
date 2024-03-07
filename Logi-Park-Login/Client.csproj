@@ -144,6 +144,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MVVM\View\adminSignIn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\ClientHomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -195,6 +199,9 @@
     </Compile>
     <Compile Include="MVVM\View\AdminParkViewPage.xaml.cs">
       <DependentUpon>AdminParkViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\View\adminSignIn.xaml.cs">
+      <DependentUpon>adminSignIn.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\ClientHomePage.xaml.cs">
       <DependentUpon>ClientHomePage.xaml</DependentUpon>

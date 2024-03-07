@@ -6,25 +6,27 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace LogiPark.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for LoginView.xaml
+    /// Interaction logic for adminSignIn.xaml
     /// </summary>
-    public partial class LoginView : Window
+    public partial class adminSignIn : Window
     {
-        private ProgramClient client;
         private int attempts = 0;
         const int maxAttempts = 3;
-
-        public LoginView()
+        public adminSignIn()
         {
-            this.client = new ProgramClient();
             InitializeComponent();
         }
+
 
         private void UsernameTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -82,7 +84,7 @@ namespace LogiPark.MVVM.View
             if (isValid)
             {
                 attempts++;
-                SendCredentials(username, password); 
+                SendCredentials(username, password);
             }
         }
 
@@ -119,8 +121,8 @@ namespace LogiPark.MVVM.View
                 password = password
             };
 
-            client.SendLoginRequest(loginData);
-            string response = client.ReceiveServerResponse();
+            //client.SendLoginRequest(loginData);
+            //string response = client.ReceiveServerResponse();
 
             if (response.Contains("Username and password are Correct!!! \\o/"))
             {
@@ -129,13 +131,9 @@ namespace LogiPark.MVVM.View
                     messageTextBlock.Text = "Login Successful";
                     messageTextBlock.Foreground = Brushes.Green;
 
-                    //AdminHomeView adminHomeView = new AdminHomeView();
-                   //adminHomeView.Show();
-                    //this.Close();
-
-                    ClientHomeView clientHomeView = new ClientHomeView();
-                    clientHomeView.Show();
-                   this.Close();
+                    AdminHomeView adminHomeView = new AdminHomeView();
+                    adminHomeView.Show();
+                    this.Close();
                 });
             }
             else
@@ -156,34 +154,6 @@ namespace LogiPark.MVVM.View
                     }
                 });
             }
-        }
-
-        private void Signup_Handler(object sender, MouseButtonEventArgs e)
-        {
-
-            // Handle signup label clicked
-            SignupView signupView = new SignupView();
-
-            signupView.Show();
-
-            this.Close();
-        }
-
-        private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-        private void PasswordTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void AdminButton_Click(object sender, RoutedEventArgs e)
-        {
-            adminSignIn signIn = new adminSignIn();
-            signIn.Show();
-
-            this.Close();
         }
     }
 }
