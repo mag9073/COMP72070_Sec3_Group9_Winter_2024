@@ -27,4 +27,3 @@ Username: Kathy Brookes | ParkRating: 5 | DateOfPosting: 2023-04-05 | Review: So
 
 ParkName: Laurel Creek Conservation Area Park
 Username: Terence McGuire | ParkRating: 4 | DateOfPosting: 2023-04-05 | Review: I've never camped her but used this area many times for hiking and photography. Sunrise and sunsets are great over the lake. Autumn is such a great time to hike the trails before the snow flies.
-

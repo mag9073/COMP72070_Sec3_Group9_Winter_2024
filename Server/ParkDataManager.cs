@@ -19,12 +19,9 @@ namespace Server
             public string parkAddress = String.Empty;
 
             [ProtoMember(3)]
-            public float parkReview = float.MinValue;
-
-            [ProtoMember(4)]
             public string parkDescription = String.Empty;
 
-            [ProtoMember(5)]
+            [ProtoMember(4)]
             public string parkHours = String.Empty;
 
             public string GetParkName()
@@ -35,11 +32,6 @@ namespace Server
             public string GetParkAddress()
             {
                 return this.parkAddress;
-            }
-
-            public float GetParkReview()
-            {
-                return this.parkReview;
             }
 
             public string GetParkDescription()
@@ -60,11 +52,6 @@ namespace Server
             public void SetParkAddress(string parkAddress)
             {
                 this.parkAddress = parkAddress;
-            }
-
-            public void SetParkReview(float parkReview)
-            {
-                this.parkReview = parkReview;
             }
 
             public void SetParkDescription(string parkDescription)
@@ -106,6 +93,8 @@ namespace Server
                 {
                     parkName = lines[index],
                     parkAddress = lines[index + 1],
+                    parkDescription = lines[index + 2],
+                    parkHours = lines[index + 3],
                 };
             }
             return parks;

@@ -157,6 +157,7 @@ namespace LogiPark.MVVM.Model
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
+        /*** Send Request for - All Park Reviews */
         public void SendAllReviewsRequest()
         {
             Packet sendPacket = new Packet();
@@ -169,6 +170,7 @@ namespace LogiPark.MVVM.Model
             Console.WriteLine("All reviews data request sent from client");
         }
 
+        /*** Send Request for - Delete Individual Park Reviews */
         public void SendDeleteReviewRequest(ParkReviewManager.ParkReviewData parkReviewData)
         {
             //// Send an object of the delete reviews (username, address, rating, date of posting, review)
@@ -180,6 +182,21 @@ namespace LogiPark.MVVM.Model
             byte[] deleteReviewsDataBuffer = clientParkReviewData.SerializeToByteArray();
             sendPacket.SetPacketBody(deleteReviewsDataBuffer, (uint)deleteReviewsDataBuffer.Length);
 
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
+
+        /*** Send Request for - Delete All Park Reviews */
+        public void SendDeleteAParkRequest(string parkName)
+        {
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.delete_park);
+
+            // Serialize the park name and set as packet body
+            byte[] parkNameBuffer = Encoding.UTF8.GetBytes(parkName);
+            sendPacket.SetPacketBody(parkNameBuffer, (uint)parkNameBuffer.Length);
+
+            // Send the packet
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }

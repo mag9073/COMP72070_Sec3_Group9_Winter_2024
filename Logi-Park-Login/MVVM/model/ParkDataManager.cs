@@ -20,12 +20,9 @@ namespace LogiPark.MVVM.Model
             public string parkAddress = String.Empty;
 
             [ProtoMember(3)]
-            public float parkReview = float.MinValue;
-
-            [ProtoMember(4)]
             public string parkDescription = String.Empty;
 
-            [ProtoMember(5)]
+            [ProtoMember(4)]
             public string parkHours = String.Empty;
 
             public string GetParkName()
@@ -36,11 +33,6 @@ namespace LogiPark.MVVM.Model
             public string GetParkAddress()
             {
                 return this.parkAddress;
-            }
-
-            public float GetParkReview()
-            {
-                return this.parkReview;
             }
 
             public string GetParkDescription()
@@ -61,11 +53,6 @@ namespace LogiPark.MVVM.Model
             public void SetParkAddress(string parkAddress)
             {
                 this.parkAddress = parkAddress;
-            }
-
-            public void SetParkReview(float parkReview)
-            {
-                this.parkReview = parkReview;
             }
 
             public void SetParkDescription(string parkDescription)

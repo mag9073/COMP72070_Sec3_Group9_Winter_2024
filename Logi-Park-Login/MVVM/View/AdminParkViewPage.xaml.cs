@@ -211,19 +211,13 @@ namespace LogiPark.MVVM.View
                 ParkDataManager.ParkData parkData = _client.ReceiveOneParkDataResponse();
                 ParkNameTextBlock.Text = parkData.parkName;
 
-                // Update parkreview rating based on matching park name
-                if (parkData.parkName == _parkName)
-                {
-                    parkData.parkReview = _averageRating;
-                }
-
-                ParkRatingTextBlock.Text = $"Rating: {parkData.parkReview} stars";
+                ParkRatingTextBlock.Text = $"Rating: {_averageRating.ToString("0.0")} stars";
                 ParkHoursTextBox.Text = parkData.parkHours;
                 //ParkReviewsCountTextBlock.Text = $"{parkData.numberOfReviews} reviews";
                 ParkAddressTextBlock.Text = parkData.parkAddress;
 
                 // Dynamically generate star ratings based on the rounded-down rating
-                double roundedRating = Math.Floor(parkData.parkReview);
+                double roundedRating = Math.Floor(_averageRating);
                 List<BitmapImage> stars = new List<BitmapImage>();
                 for (int i = 0; i < roundedRating; i++)
                 {
@@ -325,7 +319,46 @@ namespace LogiPark.MVVM.View
 
         private void DeleteParkButton_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                //// Assuming 'programClient' is your ProgramClient instance
+                //_client.SendDeleteAParkRequest(_parkName);
 
+                //// Now, receive the acknowledgement/response from the server
+                //string serverResponse = _client.ReceiveServerResponse();
+
+                //// Display the server's response (acknowledgement) to the user
+                //MessageBox.Show(serverResponse, "Server Response");
+
+                //if (serverResponse.Contains("Review deleted successfully."))
+                //{
+                //    Window parentWindow = Window.GetWindow(this);
+                //    if (parentWindow != null)
+                //    {
+                //        parentWindow.Close();
+                //    }
+                //}
+
+                _client.SendDeleteAParkRequest(_parkName);
+
+                string serverResponse = _client.ReceiveServerResponse();    
+
+                MessageBox.Show(serverResponse);
+
+                if (serverResponse.Contains($"{_parkName} has been deleted -> (park data, park image, park reviews)"))
+                {
+                    Window parentWindow = Window.GetWindow(this);
+                    if (parentWindow != null)
+                    {
+                        parentWindow.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions, such as network errors
+                MessageBox.Show($"An error occurred while trying to delete the park: {ex.Message}", "Error");
+            }
         }
 
         

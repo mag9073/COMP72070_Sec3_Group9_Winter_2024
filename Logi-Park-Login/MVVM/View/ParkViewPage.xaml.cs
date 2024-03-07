@@ -197,19 +197,13 @@ namespace LogiPark.MVVM.View
                 ParkDataManager.ParkData parkData = _client.ReceiveOneParkDataResponse();
                 ParkNameTextBlock.Text = parkData.parkName;
 
-                // Update parkreview rating based on matching park name
-                if (parkData.parkName == _parkName)
-                {
-                    parkData.parkReview = _averageRating; 
-                }
-
-                ParkRatingTextBlock.Text = $"Rating: {parkData.parkReview} stars";
+                ParkRatingTextBlock.Text = $"Rating: {_averageRating.ToString("0.0")} stars";
                 ParkHoursTextBox.Text = parkData.parkHours;
                 //ParkReviewsCountTextBlock.Text = $"{parkData.numberOfReviews} reviews";
                 ParkAddressTextBlock.Text = parkData.parkAddress;
 
                 // Dynamically generate star ratings based on the rounded-down rating
-                double roundedRating = Math.Floor(parkData.parkReview);
+                double roundedRating = Math.Floor(_averageRating);
                 List<BitmapImage> stars = new List<BitmapImage>();
                 for (int i = 0; i < roundedRating; i++)
                 {
