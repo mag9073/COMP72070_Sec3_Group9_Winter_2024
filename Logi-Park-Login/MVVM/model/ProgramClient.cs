@@ -246,6 +246,7 @@ namespace LogiPark.MVVM.Model
             }
         }
 
+        /*** Send Request for -> Add A Park Review ***/
         public void SendAddAParkReviewRequest(ParkReviewManager.ParkReviewData parkReviewData)
         {
             this.clientParkReviewData = parkReviewData;
@@ -259,6 +260,45 @@ namespace LogiPark.MVVM.Model
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
             stream.Write(packetBuffer, 0, packetBuffer.Length);
 
+        }
+
+        /*** Send Request for -> Eidt A Park Data ***/
+        public void SendEditAParkDataRequest(ParkDataManager.ParkData parkData, string imagePath)
+        {
+            // Park Data
+
+            Packet parkDataPacket = new Packet();
+            parkDataPacket.SetPacketHead(1, 2, Types.edit_park);
+
+            //Serialize park data
+            byte[] serializedParkData = parkData.SerializeToByteArray();
+            parkDataPacket.SetPacketBody(serializedParkData, (uint)serializedParkData.Length);
+
+            byte[] parkDataBuffer = parkDataPacket.SerializeToByteArray();
+            stream.Write(parkDataBuffer, 0, parkDataBuffer.Length);
+
+            // Basically reuse the same implmenetations as Add a Park Data -> Image part
+            if (string.IsNullOrEmpty(imagePath) != true)
+            {
+                int chunkSize = 1024 * 1024;
+                using (FileStream fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
+                {
+                    byte[] buffer = new byte[chunkSize];
+                    int bytesToRead;
+                    while ((bytesToRead = fs.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        // First send the size of the chunk
+                        byte[] sizeBuffer = BitConverter.GetBytes(bytesToRead);
+                        stream.Write(sizeBuffer, 0, 4);
+
+                        // Then send the chunk itself
+                        stream.Write(buffer, 0, bytesToRead);
+                    }
+
+                    // Finally, send the end of data signal
+                    stream.Write(BitConverter.GetBytes(0), 0, 4);
+                }
+            }
         }
 
         /**************************************************************************************************************
@@ -491,7 +531,6 @@ namespace LogiPark.MVVM.Model
 
             return image;
         }
-
 
 
         /**************************************************************************************************************

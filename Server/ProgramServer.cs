@@ -174,6 +174,11 @@ namespace Server
                 case Types.add_review:
                     ProcessAddAParkReviewPacket(stream, packet);
                     break;
+
+                // ADMIN - Edit a Park Info
+                case Types.edit_park:
+                    ProcessEditAParkInfoPacket(stream, packet);
+                    break;
             }
         }
 
@@ -505,6 +510,29 @@ namespace Server
 
         }
 
+        public static void ProcessEditAParkInfoPacket(NetworkStream stream, Packet receivedPacket)
+        {
+            try
+            {
+                ParkDataManager.ParkData parkData = Serializer.Deserialize<ParkDataManager.ParkData>(new MemoryStream(receivedPacket.GetBody().buffer));
+
+                EditAParkDataToFile(Constants.ParkData_FilePath, parkData);
+
+                if (stream.DataAvailable)
+                {
+                    // We reuse the method we did with add a park image
+                    SaveParkImageToImagesFolder(stream, parkData.parkName);
+                }
+
+                SendAcknowledgement(stream, $"{parkData.parkName} has been successfully updated");
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Something went wrong while adding park data /o\\" + ex.ToString());
+            }
+        }
+
 
         /**************************************************************************************************************
          *                                    Helper Methods to Process Packet Type                                   *
@@ -638,26 +666,6 @@ namespace Server
             File.WriteAllLines(Constants.ParkReviews_FilePath, updatedContent);
         }
 
-
-        private static void AppendParkDataToFile(string filePath, ParkDataManager.ParkData parkData)
-        {
-            try
-            {
-                StringBuilder parkDataBuffer = new StringBuilder();
-                parkDataBuffer.AppendLine(parkData.parkName);
-                parkDataBuffer.AppendLine(parkData.parkAddress);
-                parkDataBuffer.AppendLine(parkData.parkDescription);
-                parkDataBuffer.Append(parkData.parkHours);
-
-                File.AppendAllText(filePath, parkDataBuffer.ToString());
-            }
-            catch(Exception e) 
-            { 
-                Console.WriteLine("Error while attempt to append park data to text file!!! " + e.ToString());
-            }
-
-        }
-
         private static void SaveParkImageToImagesFolder(NetworkStream stream, string parkName)
         {
             string imagePath = Path.Combine(Constants.ParkImages_FilePath, $"{parkName}.jpg");
@@ -714,13 +722,34 @@ namespace Server
                     fileStream.Write(buffer, 0, totalBytesToRead);
                 }
             }
-    }
+        }
+
+        private static void AppendParkDataToFile(string filePath, ParkDataManager.ParkData parkData)
+        {
+            try
+            {
+                StringBuilder parkDataBuffer = new StringBuilder();
+                parkDataBuffer.AppendLine(parkData.parkName);
+                parkDataBuffer.AppendLine(parkData.parkAddress);
+                parkDataBuffer.AppendLine(parkData.parkDescription);
+                parkDataBuffer.Append(parkData.parkHours);
+
+                File.AppendAllText(filePath, parkDataBuffer.ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error while attempt to append park data to text file!!! " + e.ToString());
+            }
+
+        }
 
 
         private static void AppendReviewDataToFile(string filePath, ParkReviewManager.ParkReviewData parkReviewData)
         {
             try
             {
+                // https://www.c-sharpcorner.com/blogs/date-and-time-format-in-c-sharp-programming1
+                // Convert DateTime Format
                 StringBuilder reviewDataBuffer = new StringBuilder();
                 reviewDataBuffer.AppendLine($"ParkName: {parkReviewData.ParkName}");
                 reviewDataBuffer.AppendLine($"Username: {parkReviewData.UserName} | Park Rating: {parkReviewData.Rating} | DateOfPosting: {parkReviewData.DateOfPosting.ToString("MM/dd/yyyy hh:mm tt")} | Review: {parkReviewData.Review}");
@@ -733,6 +762,42 @@ namespace Server
 
         }
 
+        private static void EditAParkDataToFile(string filePath, ParkDataManager.ParkData updatedParkData)
+        {
+            try
+            {
+
+                ParkDataManager.ParkData[] parks = ReadAllParkDataFromFile(filePath);
+
+                // Find the park to update and modify its information
+                for (int i = 0; i < parks.Length; i++)
+                {
+                    if (parks[i].parkName.Equals(updatedParkData.parkName))
+                    {
+                        parks[i].parkAddress = updatedParkData.parkAddress;
+                        parks[i].parkDescription = updatedParkData.parkDescription;
+                        parks[i].parkHours = updatedParkData.parkHours;
+                        return;
+                    }
+                }
+
+                // Rewrite the file with updated parks data
+                using (StreamWriter file = new StreamWriter(filePath))
+                {
+                    foreach (ParkDataManager.ParkData park in parks)
+                    {
+                        file.WriteLine(park.parkName);
+                        file.WriteLine(park.parkAddress);
+                        file.WriteLine(park.parkDescription);
+                        file.WriteLine(park.parkHours);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while trying to update the park data: {ex.Message}");
+            }
+        }
 
 
 

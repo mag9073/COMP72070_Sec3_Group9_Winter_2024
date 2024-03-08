@@ -240,6 +240,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\temp\" />
     <Folder Include="Fonts\" />
   </ItemGroup>
   <ItemGroup>
