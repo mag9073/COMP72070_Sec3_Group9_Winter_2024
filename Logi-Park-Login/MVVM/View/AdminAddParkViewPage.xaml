@@ -26,23 +26,23 @@
             <StackPanel VerticalAlignment="Center" Grid.Column="0" Margin="30">
 
                 <StackPanel>
-                    <TextBlock Text="Park Name" Margin="45,100,45,0" FontSize="20" FontWeight="Bold"/>
-                    <TextBox Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
+                    <TextBlock Text="Park Name" FontSize="20" FontWeight="Bold"/>
+                    <TextBox x:Name="ParkNameTextBox" Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
                 </StackPanel>
 
                 <StackPanel>
                     <TextBlock Text="Park Address" Height="30" Width="350" FontSize="20" FontWeight="Bold"/>
-                    <TextBox Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
+                    <TextBox x:Name="ParkAddressTextBox" Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
                 </StackPanel>
 
                 <StackPanel>
-                    <TextBlock Text="Park Number (If applicable)" Height="30" Width="350" FontSize="20" FontWeight="Bold"/>
-                    <TextBox Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
+                    <TextBlock Text="Park Descriptions" Height="30" Width="350" FontSize="20" FontWeight="Bold"/>
+                    <TextBox x:Name="ParkDescriptionsTextBox" Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
                 </StackPanel>
 
                 <StackPanel>
                     <TextBlock Text="Open Hours (Eg. 7:00 am - 10:00pm)" Height="30" Width="350" FontSize="20" FontWeight="Bold"/>
-                    <TextBox Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
+                    <TextBox x:Name="ParkHoursTextBox" Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
                 </StackPanel>
 
                 <Border Margin="0,30,0,0">
@@ -65,8 +65,7 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-                <Image Source="../../Assets/Images/NoImage.png" Grid.Row="0" Height="370"/>
-
+                <Image x:Name="ParkImage" Source="../../Assets/Images/NoImage.png" Grid.Row="0" Height="370" />
                 <Button Grid.Row="1" Background="#00A3FF" Content="Upload Photo" HorizontalAlignment="Center" Margin="0,20,0,0"  Click="UplaodButton_Click" Padding="15" FontSize="20">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">

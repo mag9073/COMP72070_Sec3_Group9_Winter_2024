@@ -73,6 +73,14 @@ namespace Server
                 }
             }
 
+            public ParkDataManager.ParkData deserializeParkData(byte[] buffer)
+            {
+                using (MemoryStream memStream = new MemoryStream(buffer))
+                {
+                    return Serializer.Deserialize<ParkDataManager.ParkData>(memStream);
+                }
+            }
+
         }
 
         // Get all park data from the text file
