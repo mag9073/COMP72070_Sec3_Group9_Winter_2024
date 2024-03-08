@@ -13,6 +13,10 @@ using System.Windows.Threading;
 
 namespace LogiPark.MVVM.Model
 {
+    public static class UserSession
+    {
+        public static string currentUsername = String.Empty;
+    }
     public class ProgramClient
     {
 
@@ -23,6 +27,8 @@ namespace LogiPark.MVVM.Model
         private ParkReviewManager.ParkReviewData clientParkReviewData = new ParkReviewManager.ParkReviewData();
         private NetworkStream stream;
         private TcpConnectionManager connectionManager;
+
+        public string activeUsername = String.Empty;
 
         public ProgramClient()
         {
@@ -238,6 +244,21 @@ namespace LogiPark.MVVM.Model
                     stream.Write(BitConverter.GetBytes(0), 0, 4);
                 }
             }
+        }
+
+        public void SendAddAParkReviewRequest(ParkReviewManager.ParkReviewData parkReviewData)
+        {
+            this.clientParkReviewData = parkReviewData;
+
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.add_review);
+
+            byte[] parkReviewBuffer = clientParkReviewData.SerializeToByteArray();
+            sendPacket.SetPacketBody(parkReviewBuffer, (uint)parkReviewBuffer.Length);
+
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+
         }
 
         /**************************************************************************************************************

@@ -147,7 +147,7 @@ namespace LogiPark.MVVM.View
                 // Add more contents and properties into the rating date panel
                 ratingDatePanel.Children.Add(new TextBlock 
                 { 
-                    Text = review.DateOfPosting.ToString("MMM dd, yyyy"), 
+                    Text = review.DateOfPosting.ToString("M/d/yyyy h:mm:ss tt"), 
                     Margin = new Thickness(10, 0, 0, 0) 
                 });
 
@@ -222,6 +222,7 @@ namespace LogiPark.MVVM.View
 
                 SetParkImage(parkImage);
             });
+            Console.WriteLine($"Current username: {UserSession.currentUsername}");
         }
 
         // Helper methods
@@ -240,6 +241,40 @@ namespace LogiPark.MVVM.View
         private void ReviewButton_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine($"park name: { _parkName}");
+            ReviewInputGrid.Visibility = Visibility.Visible;
+        }
+
+        private void SubmitReview_Click(object sender, RoutedEventArgs e)
+        {
+            string reviewText = userReviewTextBox.Text;
+
+            int rating = 1;
+
+            if (RatingComboBox.SelectedItem is ComboBoxItem selectedRatingItem)
+            {
+                // Extract the first character as the rating number, assuming the content is like "5 Stars"
+                string ratingText = selectedRatingItem.Content.ToString();
+                int.TryParse(ratingText[0].ToString(), out rating); // Parses the rating, defaults to 1 if it fails.
+            }
+
+            ParkReviewManager.ParkReviewData parkReviewData = new ParkReviewManager.ParkReviewData
+            {
+                UserName = UserSession.currentUsername,
+                ParkName = _parkName,
+                Review = reviewText,
+                Rating = rating,
+                DateOfPosting = DateTime.Now
+            };
+
+            _client.SendAddAParkReviewRequest(parkReviewData);
+
+            ReviewInputGrid.Visibility = Visibility.Collapsed;
+        }
+
+        private void CancelReview_Click(Object sender, RoutedEventArgs e)
+        {
+
+            ReviewInputGrid.Visibility = Visibility.Collapsed;
         }
     }
 }

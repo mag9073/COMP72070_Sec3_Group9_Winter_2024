@@ -169,6 +169,11 @@ namespace Server
                 case Types.add_park:
                     ProcessAddAParkPacket(stream, packet);
                     break;
+
+                // CLIENT - Add a Park Review
+                case Types.add_review:
+                    ProcessAddAParkReviewPacket(stream, packet);
+                    break;
             }
         }
 
@@ -192,6 +197,7 @@ namespace Server
 
                 string message = PerformLogin(loginData);
                 SendAcknowledgement(stream, message);
+
             }
             else
             {
@@ -481,6 +487,25 @@ namespace Server
 
         }
 
+        /*** Process Packet Type -> Add a Park Review ***/
+        public static void ProcessAddAParkReviewPacket(NetworkStream stream, Packet receivedPacket)
+        {
+            try
+            {
+                ParkReviewManager.ParkReviewData parkReviewData = Serializer.Deserialize<ParkReviewManager.ParkReviewData>(new MemoryStream( receivedPacket.GetBody().buffer));
+
+                AppendReviewDataToFile(Constants.ParkReviews_FilePath, parkReviewData);
+
+                SendAcknowledgement(stream, "Review added successfully");
+            } 
+            catch ( Exception ex )
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+        }
+
+
         /**************************************************************************************************************
          *                                    Helper Methods to Process Packet Type                                   *
          * ************************************************************************************************************/
@@ -689,8 +714,24 @@ namespace Server
                     fileStream.Write(buffer, 0, totalBytesToRead);
                 }
             }
-        
     }
+
+
+        private static void AppendReviewDataToFile(string filePath, ParkReviewManager.ParkReviewData parkReviewData)
+        {
+            try
+            {
+                StringBuilder reviewDataBuffer = new StringBuilder();
+                reviewDataBuffer.AppendLine($"ParkName: {parkReviewData.ParkName}");
+                reviewDataBuffer.AppendLine($"Username: {parkReviewData.UserName} | Park Rating: {parkReviewData.Rating} | DateOfPosting: {parkReviewData.DateOfPosting.ToString("MM/dd/yyyy hh:mm tt")} | Review: {parkReviewData.Review}");
+
+                File.AppendAllText( filePath, reviewDataBuffer.ToString() );
+            } catch ( Exception e )
+            {
+                Console.WriteLine( e.ToString() );
+            }
+
+        }
 
 
 

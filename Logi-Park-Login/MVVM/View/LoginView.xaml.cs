@@ -129,9 +129,7 @@ namespace LogiPark.MVVM.View
                     messageTextBlock.Text = "Login Successful";
                     messageTextBlock.Foreground = Brushes.Green;
 
-                    //AdminHomeView adminHomeView = new AdminHomeView();
-                    //adminHomeView.Show();
-                    //this.Close();
+                    UserSession.currentUsername = username;
 
                     ClientHomeView clientHomeView = new ClientHomeView();
                     clientHomeView.Show();

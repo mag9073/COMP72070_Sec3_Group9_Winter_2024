@@ -24,6 +24,7 @@ namespace LogiPark.MVVM.View
         //private string address = "127.0.0.1";
         //private int portnumber = 13000;
         private ProgramClient client;
+        private string _username;
         public ClientHomeView()
         {
             this.client = new ProgramClient();

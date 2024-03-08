@@ -110,12 +110,15 @@ namespace Server
 
                     foreach (Match match in Regex.Matches(reviewLines + "\n\n", reviewPattern, RegexOptions.Singleline))
                     {
+                        // Add a specific part review post time format
+                        string dateFormat = "M/d/yyyy h:mm:ss tt";
+
                         reviews.Add(new ParkReviewData
                         {
                             ParkName = parkName,
                             UserName = match.Groups[1].Value.Trim(),
                             Rating = float.Parse(match.Groups[2].Value.Trim()),
-                            DateOfPosting = DateTime.ParseExact(match.Groups[3].Value.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                            DateOfPosting = DateTime.ParseExact(match.Groups[3].Value.Trim(), dateFormat, CultureInfo.InvariantCulture),
                             Review = match.Groups[4].Value.Trim().Replace("\n", " ") // Replace newline characters to maintain review structure
                         });
                     }
