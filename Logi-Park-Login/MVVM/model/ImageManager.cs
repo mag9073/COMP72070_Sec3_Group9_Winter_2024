@@ -12,6 +12,5 @@ namespace LogiPark.MVVM.Model
         public string FileName { get; set; }
         public byte[] Data { get; set; }
         public BitmapImage Image { get; set; }
-
     }
 }

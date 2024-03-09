@@ -14,6 +14,7 @@ namespace Server
         public const string ParkData_FilePath = "../../../Database/ParkData.txt";
         public const string ParkReviews_FilePath = "../../../Database/ParkReview.txt";
         public const string UserDB_FilePath = "../../../Database/UserDB.txt";
+        public const string AdminDB_FilePath = "../../../Database/AdminDB.txt";
         public const string ParkImages_FilePath = "../../../Assets/ParkImages/";
     }
 
@@ -121,8 +122,8 @@ namespace Server
                     break;
 
                 // Not sure if we need at all? 
-                case Types.log:
-
+                case Types.login_admin:
+                    ProcessLoginAdminPacket(packet, stream, client);
                     break;
 
                 // All Park Data State
@@ -169,6 +170,16 @@ namespace Server
                 case Types.add_park:
                     ProcessAddAParkPacket(stream, packet);
                     break;
+
+                // CLIENT - Add a Park Review
+                case Types.add_review:
+                    ProcessAddAParkReviewPacket(stream, packet);
+                    break;
+
+                // ADMIN - Edit a Park Info
+                case Types.edit_park:
+                    ProcessEditAParkInfoPacket(stream, packet);
+                    break;
             }
         }
 
@@ -192,6 +203,28 @@ namespace Server
 
                 string message = PerformLogin(loginData);
                 SendAcknowledgement(stream, message);
+
+            }
+            else
+            {
+                Console.WriteLine("Packet bodyBuffer is empty or null");
+                stream.Close();
+                client.Close();
+            }
+        }
+
+        /*** Process Packet Type -> Admin Login ***/
+        private static void ProcessLoginAdminPacket(Packet packet, NetworkStream stream, TcpClient client)
+        {
+            byte[] buffer = packet.GetBody().buffer;
+            if (buffer != null && buffer.Length > 0)
+            {
+                UserDataManager.LoginData loginData = new UserDataManager.LoginData();
+                loginData = loginData.deserializeLoginData(buffer);
+
+                string message = PerformAdminLogin(loginData);
+                SendAcknowledgement(stream, message);
+
             }
             else
             {
@@ -271,7 +304,18 @@ namespace Server
 
 
         /*** Process Packet Type -> All Park Image ***/
+        private static void ProcessAllParkImagesPacket(NetworkStream stream)
+        {
 
+            // Count how many images are in the Assets/ParkImages/ folder
+
+            // Based on that create a while loop
+
+            // Within the loop -> 
+
+
+
+        }
 
 
 
@@ -481,6 +525,48 @@ namespace Server
 
         }
 
+        /*** Process Packet Type -> Add a Park Review ***/
+        public static void ProcessAddAParkReviewPacket(NetworkStream stream, Packet receivedPacket)
+        {
+            try
+            {
+                ParkReviewManager.ParkReviewData parkReviewData = Serializer.Deserialize<ParkReviewManager.ParkReviewData>(new MemoryStream( receivedPacket.GetBody().buffer));
+
+                AppendReviewDataToFile(Constants.ParkReviews_FilePath, parkReviewData);
+
+                SendAcknowledgement(stream, "Review added successfully");
+            } 
+            catch ( Exception ex )
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+        }
+
+        public static void ProcessEditAParkInfoPacket(NetworkStream stream, Packet receivedPacket)
+        {
+            try
+            {
+                ParkDataManager.ParkData parkData = Serializer.Deserialize<ParkDataManager.ParkData>(new MemoryStream(receivedPacket.GetBody().buffer));
+
+                EditAParkDataToFile(Constants.ParkData_FilePath, parkData);
+
+                if (stream.DataAvailable)
+                {
+                    // We reuse the method we did with add a park image
+                    SaveParkImageToImagesFolder(stream, parkData.parkName);
+                }
+
+                SendAcknowledgement(stream, $"{parkData.parkName} has been successfully updated");
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Something went wrong while adding park data /o\\" + ex.ToString());
+            }
+        }
+
+
         /**************************************************************************************************************
          *                                    Helper Methods to Process Packet Type                                   *
          * ************************************************************************************************************/
@@ -492,6 +578,15 @@ namespace Server
 
             Login login = new Login(loginData);
             return login.LoginUser(Constants.UserDB_FilePath);
+        }
+
+        private static string PerformAdminLogin(UserDataManager.LoginData loginData)
+        {
+            Console.WriteLine($"Username: {loginData.GetUserName()}");
+            Console.WriteLine($"Password: {loginData.GetPassword()}");
+
+            Login login = new Login(loginData);
+            return login.LoginUser(Constants.AdminDB_FilePath);
         }
 
         private static string PerformSignUp(UserDataManager.SignUpData signUpData)
@@ -613,26 +708,6 @@ namespace Server
             File.WriteAllLines(Constants.ParkReviews_FilePath, updatedContent);
         }
 
-
-        private static void AppendParkDataToFile(string filePath, ParkDataManager.ParkData parkData)
-        {
-            try
-            {
-                StringBuilder parkDataBuffer = new StringBuilder();
-                parkDataBuffer.AppendLine(parkData.parkName);
-                parkDataBuffer.AppendLine(parkData.parkAddress);
-                parkDataBuffer.AppendLine(parkData.parkDescription);
-                parkDataBuffer.Append(parkData.parkHours);
-
-                File.AppendAllText(filePath, parkDataBuffer.ToString());
-            }
-            catch(Exception e) 
-            { 
-                Console.WriteLine("Error while attempt to append park data to text file!!! " + e.ToString());
-            }
-
-        }
-
         private static void SaveParkImageToImagesFolder(NetworkStream stream, string parkName)
         {
             string imagePath = Path.Combine(Constants.ParkImages_FilePath, $"{parkName}.jpg");
@@ -689,9 +764,82 @@ namespace Server
                     fileStream.Write(buffer, 0, totalBytesToRead);
                 }
             }
-        
-    }
+        }
 
+        private static void AppendParkDataToFile(string filePath, ParkDataManager.ParkData parkData)
+        {
+            try
+            {
+                StringBuilder parkDataBuffer = new StringBuilder();
+                parkDataBuffer.AppendLine(parkData.parkName);
+                parkDataBuffer.AppendLine(parkData.parkAddress);
+                parkDataBuffer.AppendLine(parkData.parkDescription);
+                parkDataBuffer.Append(parkData.parkHours);
+
+                File.AppendAllText(filePath, parkDataBuffer.ToString());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error while attempt to append park data to text file!!! " + e.ToString());
+            }
+
+        }
+
+
+        private static void AppendReviewDataToFile(string filePath, ParkReviewManager.ParkReviewData parkReviewData)
+        {
+            try
+            {
+                // https://www.c-sharpcorner.com/blogs/date-and-time-format-in-c-sharp-programming1
+                // Convert DateTime Format
+                StringBuilder reviewDataBuffer = new StringBuilder();
+                reviewDataBuffer.AppendLine($"ParkName: {parkReviewData.ParkName}");
+                reviewDataBuffer.AppendLine($"Username: {parkReviewData.UserName} | ParkRating: {parkReviewData.Rating} | DateOfPosting: {parkReviewData.DateOfPosting.ToString("MM/dd/yyyy hh:mm:ss tt")} | Review: {parkReviewData.Review}\n");
+
+                File.AppendAllText( filePath, reviewDataBuffer.ToString() );
+            } catch ( Exception e )
+            {
+                Console.WriteLine( e.ToString() );
+            }
+
+        }
+
+        private static void EditAParkDataToFile(string filePath, ParkDataManager.ParkData updatedParkData)
+        {
+            try
+            {
+
+                ParkDataManager.ParkData[] parks = ReadAllParkDataFromFile(filePath);
+
+                // Find the park to update and modify its information
+                for (int i = 0; i < parks.Length; i++)
+                {
+                    if (parks[i].parkName.Equals(updatedParkData.parkName))
+                    {
+                        parks[i].parkAddress = updatedParkData.parkAddress;
+                        parks[i].parkDescription = updatedParkData.parkDescription;
+                        parks[i].parkHours = updatedParkData.parkHours;
+                        return;
+                    }
+                }
+
+                // Rewrite the file with updated parks data
+                using (StreamWriter file = new StreamWriter(filePath))
+                {
+                    foreach (ParkDataManager.ParkData park in parks)
+                    {
+                        file.WriteLine(park.parkName);
+                        file.WriteLine(park.parkAddress);
+                        file.WriteLine(park.parkDescription);
+                        file.WriteLine(park.parkHours);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while trying to update the park data: {ex.Message}");
+            }
+        }
 
 
 

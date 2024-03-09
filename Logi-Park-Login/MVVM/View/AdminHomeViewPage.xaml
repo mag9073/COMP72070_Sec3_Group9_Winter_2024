@@ -45,7 +45,7 @@
             </Grid>
 
             <!-- Dynamically render each park -->
-            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3">
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" Grid.ColumnSpan="3">
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                     <ItemsControl Name="ParksItemsControl" Margin="10">
                         <ItemsControl.ItemsPanel>
