@@ -20,7 +20,9 @@ namespace Server
 
     public class ProgramServer
     {
+
         private static Logger logger = new Logger("../../../Log/ServerLog.txt");
+
         public static void Main(string[] args)
         {
             StartServer();
@@ -33,7 +35,7 @@ namespace Server
             InitializeServer(13000);
         }
 
-        private static TcpListener CreateServer(int portNumber)
+        public static TcpListener CreateServer(int portNumber)
         {
             return new TcpListener(IPAddress.Loopback, portNumber);
         }
