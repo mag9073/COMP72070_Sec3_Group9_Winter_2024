@@ -67,8 +67,8 @@
 
                 <TextBlock Text="Recommended Reviews" FontSize="20" FontWeight="SemiBold" Margin="0,20"/>
                 <!-- ScrollViewer for dynamic review cards -->
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="Auto">
-                    <StackPanel x:Name="ReviewsStackPanel">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="20">
+                    <StackPanel x:Name="ReviewsStackPanel" Margin="0,0,0,20">
                         <!-- Park Reviews Card will be dynamically render here -->
                     </StackPanel>
                 </ScrollViewer>

@@ -55,6 +55,21 @@ namespace LogiPark.MVVM.Model
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
+        /*** Send Request for - Admin Login ***/
+        public void SendAdminLoginRequest(UserDataManager.LoginData loginData)
+        {
+            this.clientLoginData = loginData;
+
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.login_admin);
+
+            byte[] loginDataBuffer = clientLoginData.SerializeToByteArray();
+            sendPacket.SetPacketBody(loginDataBuffer, (uint)loginDataBuffer.Length);
+
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
+
         /*** Send Request for - Sign Up ***/
         public void SendSignUpRequest(UserDataManager.SignUpData signUpData)
         {
@@ -440,26 +455,36 @@ namespace LogiPark.MVVM.Model
 
         public ParkDataManager.ParkData ReceiveOneParkDataResponse()
         {
-            byte[] lengthBuffer = new byte[4];
-
-            // 1. Get the buffer length from the server - the first 4 bytes
-            int bytesRead = stream.Read(lengthBuffer, 0, 4);
-
-            if (bytesRead != 4)
-            { 
-                throw new Exception("Failed to read park data length.");
-            } 
-
-            int dataLength = BitConverter.ToInt32(lengthBuffer, 0);
-            byte[] parkDataBuffer = new byte[dataLength];
-
-            // 2. Get the park data buffer from the server
-            bytesRead = stream.Read(parkDataBuffer, 0, dataLength);
-
-            // We deserialize the stream data we got back from the server into Park Data object
-            using (MemoryStream ms = new MemoryStream(parkDataBuffer))
+            try
             {
-                return Serializer.Deserialize<ParkDataManager.ParkData>(ms);
+
+                byte[] lengthBuffer = new byte[4];
+
+                // 1. Get the buffer length from the server - the first 4 bytes
+                int bytesRead = stream.Read(lengthBuffer, 0, 4);
+
+                if (bytesRead != 4)
+                {
+                    throw new Exception("Failed to read park data length.");
+                }
+
+                int dataLength = BitConverter.ToInt32(lengthBuffer, 0);
+                byte[] parkDataBuffer = new byte[dataLength];
+
+                // 2. Get the park data buffer from the server
+                bytesRead = stream.Read(parkDataBuffer, 0, dataLength);
+
+                // We deserialize the stream data we got back from the server into Park Data object
+                using (MemoryStream ms = new MemoryStream(parkDataBuffer))
+                {
+                    return Serializer.Deserialize<ParkDataManager.ParkData>(ms);
+                }
+            }
+            catch (ProtoException ex)
+            {
+                // Log or handle the detailed Protobuf exception
+                Console.WriteLine($"Protobuf deserialization error: {ex.Message}");
+                throw;
             }
         }
 

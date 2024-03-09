@@ -111,7 +111,7 @@ namespace Server
                     foreach (Match match in Regex.Matches(reviewLines + "\n\n", reviewPattern, RegexOptions.Singleline))
                     {
                         // Add a specific part review post time format
-                        string dateFormat = "M/d/yyyy h:mm:ss tt";
+                        string dateFormat = "MM/dd/yyyy hh:mm:ss tt";
 
                         reviews.Add(new ParkReviewData
                         {
@@ -141,7 +141,7 @@ namespace Server
                     foreach (ParkReviewData? review in group)
                     {
                         fileContent.AppendLine($"ParkName: {group.Key}");
-                        fileContent.AppendLine($"Username: {review.UserName} | ParkRating: {review.Rating} | DateOfPosting: {review.DateOfPosting.ToString("yyyy-MM-dd")} | Review: {review.Review}\n");
+                        fileContent.AppendLine($"Username: {review.UserName} | ParkRating: {review.Rating} | DateOfPosting: {review.DateOfPosting.ToString("MM/dd/yyyy hh:mm:ss tt")} | Review: {review.Review}\n");
                     }
                 }
 

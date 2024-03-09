@@ -150,7 +150,7 @@ namespace LogiPark.MVVM.View
                 // Add more contents and properties into the rating date panel
                 ratingDatePanel.Children.Add(new TextBlock
                 {
-                    Text = review.DateOfPosting.ToString("MMM dd, yyyy"),
+                    Text = review.DateOfPosting.ToString("MM/dd/yyyy hh:mm:ss tt"),
                     Margin = new Thickness(10, 0, 0, 0)
                 });
 
@@ -287,7 +287,7 @@ namespace LogiPark.MVVM.View
                     string parkName = _parkName;
                     string userInfo = review.UserName; 
                     string ratingInfo = $"{review.Rating.ToString("0")}"; 
-                    string dateInfo = review.DateOfPosting.ToString("MMM dd, yyyy");
+                    string dateInfo = review.DateOfPosting.ToString("MM/dd/yyyy hh:mm:ss tt");
                     string reviewText = review.Review; 
 
                     Console.WriteLine($"Park Name: {parkName}, User Info: {userInfo}, Rating: {ratingInfo}, Date: {dateInfo}, Review: {reviewText}");

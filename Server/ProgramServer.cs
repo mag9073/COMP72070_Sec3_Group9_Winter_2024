@@ -14,6 +14,7 @@ namespace Server
         public const string ParkData_FilePath = "../../../Database/ParkData.txt";
         public const string ParkReviews_FilePath = "../../../Database/ParkReview.txt";
         public const string UserDB_FilePath = "../../../Database/UserDB.txt";
+        public const string AdminDB_FilePath = "../../../Database/AdminDB.txt";
         public const string ParkImages_FilePath = "../../../Assets/ParkImages/";
     }
 
@@ -121,8 +122,8 @@ namespace Server
                     break;
 
                 // Not sure if we need at all? 
-                case Types.log:
-
+                case Types.login_admin:
+                    ProcessLoginAdminPacket(packet, stream, client);
                     break;
 
                 // All Park Data State
@@ -212,6 +213,27 @@ namespace Server
             }
         }
 
+        /*** Process Packet Type -> Admin Login ***/
+        private static void ProcessLoginAdminPacket(Packet packet, NetworkStream stream, TcpClient client)
+        {
+            byte[] buffer = packet.GetBody().buffer;
+            if (buffer != null && buffer.Length > 0)
+            {
+                UserDataManager.LoginData loginData = new UserDataManager.LoginData();
+                loginData = loginData.deserializeLoginData(buffer);
+
+                string message = PerformAdminLogin(loginData);
+                SendAcknowledgement(stream, message);
+
+            }
+            else
+            {
+                Console.WriteLine("Packet bodyBuffer is empty or null");
+                stream.Close();
+                client.Close();
+            }
+        }
+
         /*** Process Packet Type -> Sign Up ***/
         private static void ProcessSignUpPacket(Packet packet, NetworkStream stream, TcpClient client)
         {
@@ -282,7 +304,18 @@ namespace Server
 
 
         /*** Process Packet Type -> All Park Image ***/
+        private static void ProcessAllParkImagesPacket(NetworkStream stream)
+        {
 
+            // Count how many images are in the Assets/ParkImages/ folder
+
+            // Based on that create a while loop
+
+            // Within the loop -> 
+
+
+
+        }
 
 
 
@@ -547,6 +580,15 @@ namespace Server
             return login.LoginUser(Constants.UserDB_FilePath);
         }
 
+        private static string PerformAdminLogin(UserDataManager.LoginData loginData)
+        {
+            Console.WriteLine($"Username: {loginData.GetUserName()}");
+            Console.WriteLine($"Password: {loginData.GetPassword()}");
+
+            Login login = new Login(loginData);
+            return login.LoginUser(Constants.AdminDB_FilePath);
+        }
+
         private static string PerformSignUp(UserDataManager.SignUpData signUpData)
         {
             Console.WriteLine($"Username:  {signUpData.GetUserName()}");
@@ -752,7 +794,7 @@ namespace Server
                 // Convert DateTime Format
                 StringBuilder reviewDataBuffer = new StringBuilder();
                 reviewDataBuffer.AppendLine($"ParkName: {parkReviewData.ParkName}");
-                reviewDataBuffer.AppendLine($"Username: {parkReviewData.UserName} | Park Rating: {parkReviewData.Rating} | DateOfPosting: {parkReviewData.DateOfPosting.ToString("MM/dd/yyyy hh:mm tt")} | Review: {parkReviewData.Review}");
+                reviewDataBuffer.AppendLine($"Username: {parkReviewData.UserName} | ParkRating: {parkReviewData.Rating} | DateOfPosting: {parkReviewData.DateOfPosting.ToString("MM/dd/yyyy hh:mm:ss tt")} | Review: {parkReviewData.Review}\n");
 
                 File.AppendAllText( filePath, reviewDataBuffer.ToString() );
             } catch ( Exception e )

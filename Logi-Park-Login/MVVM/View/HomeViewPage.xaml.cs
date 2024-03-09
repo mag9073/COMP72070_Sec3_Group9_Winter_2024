@@ -43,6 +43,9 @@ namespace LogiPark.MVVM.View
             // Send for all park reviews data
             client.SendAllReviewsRequest();
 
+            // Send for all park images 
+            client.SendAllParkImagesRequest();
+
             // Receive for all park reviews data
             List<ParkReviewManager.ParkReviewData> parkReviews = client.ReceiveParkReviewsResponse();
 

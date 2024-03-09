@@ -68,125 +68,135 @@ namespace LogiPark.MVVM.View
             // Store park review rating 
             float totalRating = 0;
 
-            // Iterate through each review and build a review card
-            foreach (ParkReviewManager.ParkReviewData review in reviews)
+            if (reviews != null && reviews.Any())
             {
-                // get the total rating
-                totalRating += review.Rating;
 
-                // Main container for each review
-                Border reviewCard = new Border
+                // Iterate through each review and build a review card
+                foreach (ParkReviewManager.ParkReviewData review in reviews)
                 {
-                    Padding = new Thickness(10),
-                    Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F0F0F0") as Color? ?? Colors.LightGray),
-                    CornerRadius = new CornerRadius(5),
-                    Height = 126,
-                    Margin = new Thickness(5)
-                };
+                    // get the total rating
+                    totalRating += review.Rating;
 
-                // Instantiate a StackPannel for the review content
-                StackPanel reviewContent = new StackPanel();
+                    // Main container for each review
+                    Border reviewCard = new Border
+                    {
+                        Padding = new Thickness(10),
+                        Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F0F0F0") as Color? ?? Colors.LightGray),
+                        CornerRadius = new CornerRadius(5),
+                        Height = 126,
+                        Margin = new Thickness(5)
+                    };
 
-                // Instantiate a StackPannel for the user info with properties inside
-                StackPanel userInfoPanel = new StackPanel 
-                { 
-                    Orientation = Orientation.Horizontal, 
-                    Height = 36 
-                };
-                
-                // Instantiate an Ellipse shape to represent a user icon with properties inside
-                Ellipse userIcon = new Ellipse
+                    // Instantiate a StackPannel for the review content
+                    StackPanel reviewContent = new StackPanel();
+
+                    // Instantiate a StackPannel for the user info with properties inside
+                    StackPanel userInfoPanel = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Height = 36
+                    };
+
+                    // Instantiate an Ellipse shape to represent a user icon with properties inside
+                    Ellipse userIcon = new Ellipse
+                    {
+                        Width = 30,
+                        Height = 29,
+                        Fill = new SolidColorBrush(Colors.LightBlue),
+                        Margin = new Thickness(0, 0, 10, 0)
+                    };
+
+                    // Instantiate StackPannel for the username location with properties inside
+                    StackPanel userNameLocationPanel = new StackPanel
+                    {
+                        Width = 120
+                    };
+
+                    // Add contents and extra properties to user name location panel 
+                    userNameLocationPanel.Children.Add(new TextBlock
+                    {
+                        Text = review.UserName,
+                        FontWeight = FontWeights.Bold
+                    });
+
+                    // Add more contents and properties to user name location pannel
+                    userNameLocationPanel.Children.Add(new TextBlock
+                    {
+                        Text = "Waterloo, ON",
+                        FontStyle = FontStyles.Italic
+                    });
+
+                    // Add user icon object into user info panel
+                    userInfoPanel.Children.Add(userIcon);
+
+                    // Add username location panel object into user info panel
+                    userInfoPanel.Children.Add(userNameLocationPanel);
+
+                    // Instantiate Stack Panel for rating date panel with properties inside
+                    StackPanel ratingDatePanel = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal,
+                        Margin = new Thickness(0, 10, 0, 0)
+                    };
+
+                    // Add more contents and properties into the rating date panel 
+                    ratingDatePanel.Children.Add(new TextBlock
+                    {
+                        Text = $"{review.Rating.ToString("0")} / 5 stars",
+                        FontWeight = FontWeights.Bold,
+                        Foreground = new SolidColorBrush(Colors.OrangeRed)
+                    });
+
+                    // Add more contents and properties into the rating date panel
+                    ratingDatePanel.Children.Add(new TextBlock
+                    {
+                        Text = review.DateOfPosting.ToString("MM/dd/yyyy hh:mm:ss tt"),
+                        Margin = new Thickness(10, 0, 0, 0)
+                    });
+
+                    // Instantiate TextBlock for review text with contents and properties inside
+                    TextBlock reviewTextBlock = new TextBlock
+                    {
+                        Text = review.Review,
+                        TextWrapping = TextWrapping.Wrap,
+                        Width = 250,
+                        Margin = new Thickness(0, 10, 0, 0)
+                    };
+
+                    // Building the card with different children components (userinfo + rating date + review text) => One review card
+                    reviewContent.Children.Add(userInfoPanel);
+                    reviewContent.Children.Add(ratingDatePanel);
+                    reviewContent.Children.Add(reviewTextBlock);
+
+                    reviewCard.Child = reviewContent;
+
+                    // Finally, Add the card to the StackPanel
+                    ReviewsStackPanel.Children.Add(reviewCard);
+                }
+
+                // Calculate for average park rating 
+                float averageRating = 0;
+
+                if (reviews.Count > 0)
                 {
-                    Width = 30,
-                    Height = 29,
-                    Fill = new SolidColorBrush(Colors.LightBlue),
-                    Margin = new Thickness(0, 0, 10, 0)
-                };
+                    averageRating = totalRating / reviews.Count;
+                }
 
-                // Instantiate StackPannel for the username location with properties inside
-                StackPanel userNameLocationPanel = new StackPanel 
-                { 
-                    Width = 120 
-                };
-
-                // Add contents and extra properties to user name location panel 
-                userNameLocationPanel.Children.Add(new TextBlock 
-                { 
-                    Text = review.UserName, 
-                    FontWeight = FontWeights.Bold 
-                });
-
-                // Add more contents and properties to user name location pannel
-                userNameLocationPanel.Children.Add(new TextBlock 
-                { 
-                    Text = "Waterloo, ON", 
-                    FontStyle = FontStyles.Italic 
-                }); 
-
-                // Add user icon object into user info panel
-                userInfoPanel.Children.Add(userIcon);
-
-                // Add username location panel object into user info panel
-                userInfoPanel.Children.Add(userNameLocationPanel);
-
-                // Instantiate Stack Panel for rating date panel with properties inside
-                StackPanel ratingDatePanel = new StackPanel 
-                { 
-                    Orientation = Orientation.Horizontal, 
-                    Margin = new Thickness(0, 10, 0, 0) 
-                };
-
-                // Add more contents and properties into the rating date panel 
-                ratingDatePanel.Children.Add(new TextBlock 
-                { 
-                    Text = $"{review.Rating.ToString("0")} / 5 stars", 
-                    FontWeight = FontWeights.Bold, 
-                    Foreground = new SolidColorBrush(Colors.OrangeRed) 
-                });
-
-                // Add more contents and properties into the rating date panel
-                ratingDatePanel.Children.Add(new TextBlock 
-                { 
-                    Text = review.DateOfPosting.ToString("M/d/yyyy h:mm:ss tt"), 
-                    Margin = new Thickness(10, 0, 0, 0) 
-                });
-
-                // Instantiate TextBlock for review text with contents and properties inside
-                TextBlock reviewTextBlock = new TextBlock
+                this.Dispatcher.Invoke(() =>
                 {
-                    Text = review.Review,
-                    TextWrapping = TextWrapping.Wrap,
-                    Width = 250,
-                    Margin = new Thickness(0, 10, 0, 0)
-                };
+                    ParkReviewsCountTextBlock.Text = $"{reviews.Count} reviews";
 
-                // Building the card with different children components (userinfo + rating date + review text) => One review card
-                reviewContent.Children.Add(userInfoPanel);
-                reviewContent.Children.Add(ratingDatePanel);
-                reviewContent.Children.Add(reviewTextBlock);
+                    // In here, we will update our average rating for each park
+                    UpdateAverageRating(averageRating);
 
-                reviewCard.Child = reviewContent;
-
-                // Finally, Add the card to the StackPanel
-                ReviewsStackPanel.Children.Add(reviewCard);
+                });
+            } else
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    ParkReviewsCountTextBlock.Text = "No reviews /o\\";
+                });
             }
-
-            // Calculate for average park rating 
-            float averageRating = 0;
-
-            if (reviews.Count > 0)
-            {
-                averageRating = totalRating / reviews.Count;
-            }
-
-            this.Dispatcher.Invoke(() =>
-            {
-                ParkReviewsCountTextBlock.Text = $"{reviews.Count} reviews";
-
-                // In here, we will update our average rating for each park
-                UpdateAverageRating(averageRating);
-
-            });
         }
     
 
@@ -252,9 +262,11 @@ namespace LogiPark.MVVM.View
 
             if (RatingComboBox.SelectedItem is ComboBoxItem selectedRatingItem)
             {
-                // Extract the first character as the rating number, assuming the content is like "5 Stars"
+                // Extract the first character as the rating number because our rating contain stars after integer value
                 string ratingText = selectedRatingItem.Content.ToString();
-                int.TryParse(ratingText[0].ToString(), out rating); // Parses the rating, defaults to 1 if it fails.
+                // https://stackoverflow.com/questions/67107637/how-can-i-use-int-tryparse-in-comparison-instruction-c-sharp-wpf
+                // Parses the rating, defaults to 1 if it fails.
+                int.TryParse(ratingText[0].ToString(), out rating); 
             }
 
             ParkReviewManager.ParkReviewData parkReviewData = new ParkReviewManager.ParkReviewData
@@ -269,6 +281,13 @@ namespace LogiPark.MVVM.View
             _client.SendAddAParkReviewRequest(parkReviewData);
 
             ReviewInputGrid.Visibility = Visibility.Collapsed;
+
+            // Close the current view page after the save button is clicked
+            Window parentWindow = Window.GetWindow(this);
+            if (parentWindow != null)
+            {
+                parentWindow.Close();
+            }
         }
 
         private void CancelReview_Click(Object sender, RoutedEventArgs e)
