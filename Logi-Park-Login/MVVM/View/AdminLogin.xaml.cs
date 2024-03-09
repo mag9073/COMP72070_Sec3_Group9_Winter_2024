@@ -69,7 +69,7 @@ namespace LogiPark.MVVM.View
             }
         }
 
-        private async Task LoginButton_ClickAsync(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             if (attempts >= maxAttempts)
             {
