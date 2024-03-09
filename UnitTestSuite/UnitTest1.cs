@@ -10,15 +10,10 @@ namespace UnitTestSuite
         public void TestMethod1()
         {
             //Arrange
-            bool expected = true;
-            byte[] data = { (byte)'a', (byte)'b' };
-            Logger logger = new Logger("../../../TestLog.txt");
 
             //Act
-            bool result = logger.Log(data);
 
             //Assert
-            Assert.AreEqual(expected, result);
         }
     }
 
@@ -29,11 +24,15 @@ namespace UnitTestSuite
         public void UT_LOG_001()
         {
             //Arrange
+            bool expected = true;
+            byte[] data = { (byte)'a', (byte)'b' };
+            Logger logger = new Logger("../../../TestLog.txt");
 
             //Act
+            bool result = logger.Log(data);
 
             //Assert
-            Assert.AreEqual(1, 1);
+            Assert.AreEqual(expected, result);
         }
     }
 }
