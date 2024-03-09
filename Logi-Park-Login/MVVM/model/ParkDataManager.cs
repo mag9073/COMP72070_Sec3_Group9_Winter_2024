@@ -14,19 +14,16 @@ namespace LogiPark.MVVM.Model
         public class ParkData
         {
             [ProtoMember(1)]
-            public string parkName;
+            public string parkName = String.Empty;
 
             [ProtoMember(2)]
-            public string parkAddress;
+            public string parkAddress = String.Empty;
 
             [ProtoMember(3)]
-            public float parkReview;
+            public string parkDescription = String.Empty;
 
             [ProtoMember(4)]
-            public string parkDescription;
-
-            [ProtoMember(5)]
-            public uint numberOfReviews;
+            public string parkHours = String.Empty;
 
             public string GetParkName()
             {
@@ -38,19 +35,14 @@ namespace LogiPark.MVVM.Model
                 return this.parkAddress;
             }
 
-            public float GetParkReview()
-            {
-                return this.parkReview;
-            }
-
             public string GetParkDescription()
             {
                 return this.parkDescription;
             }
 
-            public uint GetNumberOfReviews()
+            public string GetParkHours()
             {
-                return this.numberOfReviews;
+                return this.parkHours;
             }
 
             public void SetParkName(string parkName)
@@ -63,19 +55,14 @@ namespace LogiPark.MVVM.Model
                 this.parkAddress = parkAddress;
             }
 
-            public void SetParkReview(float parkReview)
-            {
-                this.parkReview = parkReview;
-            }
-
             public void SetParkDescription(string parkDescription)
             {
                 this.parkDescription = parkDescription;
             }
 
-            public void SetNumberOfReviews(uint numberOfReviews)
+            public void SetParkHours(string parkHours)
             {
-                this.numberOfReviews = numberOfReviews;
+                this.parkHours = parkHours;
             }
 
             public byte[] SerializeToByteArray()
@@ -86,17 +73,7 @@ namespace LogiPark.MVVM.Model
                     return stream.ToArray();
                 }
             }
-
-            public ParkData deserializeLoginData(byte[] buffer)
-            {
-                using (MemoryStream memStream = new MemoryStream(buffer))
-                {
-                    return Serializer.Deserialize<ParkData>(memStream);
-                }
-            }
-
         }
 
     }
-
 }
