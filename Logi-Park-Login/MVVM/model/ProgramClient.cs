@@ -7,11 +7,16 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace LogiPark.MVVM.Model
 {
+    public static class UserSession
+    {
+        public static string currentUsername = String.Empty;
+    }
     public class ProgramClient
     {
 
@@ -19,8 +24,11 @@ namespace LogiPark.MVVM.Model
         private UserDataManager.SignUpData clientSignUpData = new UserDataManager.SignUpData();
         private UserDataManager.LoginData clientLoginData = new UserDataManager.LoginData();
         private ParkDataManager.ParkData clientParkData = new ParkDataManager.ParkData();
+        private ParkReviewManager.ParkReviewData clientParkReviewData = new ParkReviewManager.ParkReviewData();
         private NetworkStream stream;
         private TcpConnectionManager connectionManager;
+
+        public string activeUsername = String.Empty;
 
         public ProgramClient()
         {
@@ -39,6 +47,21 @@ namespace LogiPark.MVVM.Model
 
             Packet sendPacket = new Packet();
             sendPacket.SetPacketHead(1, 2, Types.login);
+
+            byte[] loginDataBuffer = clientLoginData.SerializeToByteArray();
+            sendPacket.SetPacketBody(loginDataBuffer, (uint)loginDataBuffer.Length);
+
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
+
+        /*** Send Request for - Admin Login ***/
+        public void SendAdminLoginRequest(UserDataManager.LoginData loginData)
+        {
+            this.clientLoginData = loginData;
+
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.login_admin);
 
             byte[] loginDataBuffer = clientLoginData.SerializeToByteArray();
             sendPacket.SetPacketBody(loginDataBuffer, (uint)loginDataBuffer.Length);
@@ -83,14 +106,19 @@ namespace LogiPark.MVVM.Model
         }
 
         /*** Send Request for -> a Specific Park Data ***/
-        public void SendOneParkDataRequest()
+        public void SendOneParkDataRequest(string parkname)
         {
             Packet sendPacket = new Packet();
             sendPacket.SetPacketHead(1, 2, Types.a_park);
 
-            // We dont need to send body in this request 
+            // convert string to bytes array
+            byte[] parknameBuffer = Encoding.UTF8.GetBytes(parkname);
+            sendPacket.SetPacketBody(parknameBuffer, (uint)parknameBuffer.Length);
+
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
             stream.Write(packetBuffer, 0, packetBuffer.Length);
+
+            Console.WriteLine("One Park Data sent from client");
         }
 
         /**************************************************************************************************************
@@ -149,6 +177,143 @@ namespace LogiPark.MVVM.Model
             // Send the packet
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
             stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
+
+        /*** Send Request for - All Park Reviews */
+        public void SendAllReviewsRequest()
+        {
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.all_reviews);
+
+            // We dont need to send body in this request 
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+
+            Console.WriteLine("All reviews data request sent from client");
+        }
+
+        /*** Send Request for - Delete Individual Park Reviews */
+        public void SendDeleteReviewRequest(ParkReviewManager.ParkReviewData parkReviewData)
+        {
+            //// Send an object of the delete reviews (username, address, rating, date of posting, review)
+            this.clientParkReviewData = parkReviewData;
+
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.delete_review);
+
+            byte[] deleteReviewsDataBuffer = clientParkReviewData.SerializeToByteArray();
+            sendPacket.SetPacketBody(deleteReviewsDataBuffer, (uint)deleteReviewsDataBuffer.Length);
+
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
+
+        /*** Send Request for - Delete All Park Reviews */
+        public void SendDeleteAParkRequest(string parkName)
+        {
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.delete_park);
+
+            // Serialize the park name and set as packet body
+            byte[] parkNameBuffer = Encoding.UTF8.GetBytes(parkName);
+            sendPacket.SetPacketBody(parkNameBuffer, (uint)parkNameBuffer.Length);
+
+            // Send the packet
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+        }
+
+        /*** Send Request for -> Add A Park ***/
+        public void SendAddAParkDataRequest(ParkDataManager.ParkData parkData, string imagePath)
+        {
+            // Park Data
+
+            Packet parkDataPacket = new Packet();
+            parkDataPacket.SetPacketHead(1, 2, Types.add_park);
+
+            //Serialize park data
+            byte[] serializedParkData = parkData.SerializeToByteArray();
+            parkDataPacket.SetPacketBody(serializedParkData, (uint)serializedParkData.Length);
+
+            byte[] parkDataBuffer = parkDataPacket.SerializeToByteArray();
+            stream.Write(parkDataBuffer, 0, parkDataBuffer.Length);
+
+            if (string.IsNullOrEmpty(imagePath) != true)
+            {
+                int chunkSize = 1024 * 1024;
+                using (FileStream fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
+                {
+                    byte[] buffer = new byte[chunkSize];
+                    int bytesToRead;
+                    while ((bytesToRead = fs.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        // First send the size of the chunk
+                        byte[] sizeBuffer = BitConverter.GetBytes(bytesToRead);
+                        stream.Write(sizeBuffer, 0, 4);
+
+                        // Then send the chunk itself
+                        stream.Write(buffer, 0, bytesToRead);
+                    }
+
+                    // Finally, send the end of data signal
+                    stream.Write(BitConverter.GetBytes(0), 0, 4);
+                }
+            }
+        }
+
+        /*** Send Request for -> Add A Park Review ***/
+        public void SendAddAParkReviewRequest(ParkReviewManager.ParkReviewData parkReviewData)
+        {
+            this.clientParkReviewData = parkReviewData;
+
+            Packet sendPacket = new Packet();
+            sendPacket.SetPacketHead(1, 2, Types.add_review);
+
+            byte[] parkReviewBuffer = clientParkReviewData.SerializeToByteArray();
+            sendPacket.SetPacketBody(parkReviewBuffer, (uint)parkReviewBuffer.Length);
+
+            byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            stream.Write(packetBuffer, 0, packetBuffer.Length);
+
+        }
+
+        /*** Send Request for -> Eidt A Park Data ***/
+        public void SendEditAParkDataRequest(ParkDataManager.ParkData parkData, string imagePath)
+        {
+            // Park Data
+
+            Packet parkDataPacket = new Packet();
+            parkDataPacket.SetPacketHead(1, 2, Types.edit_park);
+
+            //Serialize park data
+            byte[] serializedParkData = parkData.SerializeToByteArray();
+            parkDataPacket.SetPacketBody(serializedParkData, (uint)serializedParkData.Length);
+
+            byte[] parkDataBuffer = parkDataPacket.SerializeToByteArray();
+            stream.Write(parkDataBuffer, 0, parkDataBuffer.Length);
+
+            // Basically reuse the same implmenetations as Add a Park Data -> Image part
+            if (string.IsNullOrEmpty(imagePath) != true)
+            {
+                int chunkSize = 1024 * 1024;
+                using (FileStream fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
+                {
+                    byte[] buffer = new byte[chunkSize];
+                    int bytesToRead;
+                    while ((bytesToRead = fs.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        // First send the size of the chunk
+                        byte[] sizeBuffer = BitConverter.GetBytes(bytesToRead);
+                        stream.Write(sizeBuffer, 0, 4);
+
+                        // Then send the chunk itself
+                        stream.Write(buffer, 0, bytesToRead);
+                    }
+
+                    // Finally, send the end of data signal
+                    stream.Write(BitConverter.GetBytes(0), 0, 4);
+                }
+            }
         }
 
         /**************************************************************************************************************
@@ -263,7 +428,7 @@ namespace LogiPark.MVVM.Model
                     using (MemoryStream ms = new MemoryStream(reviewBuffer))
                     {
                         // Deserialize the review data
-                        var review = Serializer.Deserialize<ParkReviewManager.ParkReviewData>(ms);
+                        ParkReviewManager.ParkReviewData review = Serializer.Deserialize<ParkReviewManager.ParkReviewData>(ms);
                         reviews.Add(review);
                     }
                 }
@@ -288,7 +453,40 @@ namespace LogiPark.MVVM.Model
 
         /*** Receive from Server -> Individual Park Data ***/
 
+        public ParkDataManager.ParkData ReceiveOneParkDataResponse()
+        {
+            try
+            {
 
+                byte[] lengthBuffer = new byte[4];
+
+                // 1. Get the buffer length from the server - the first 4 bytes
+                int bytesRead = stream.Read(lengthBuffer, 0, 4);
+
+                if (bytesRead != 4)
+                {
+                    throw new Exception("Failed to read park data length.");
+                }
+
+                int dataLength = BitConverter.ToInt32(lengthBuffer, 0);
+                byte[] parkDataBuffer = new byte[dataLength];
+
+                // 2. Get the park data buffer from the server
+                bytesRead = stream.Read(parkDataBuffer, 0, dataLength);
+
+                // We deserialize the stream data we got back from the server into Park Data object
+                using (MemoryStream ms = new MemoryStream(parkDataBuffer))
+                {
+                    return Serializer.Deserialize<ParkDataManager.ParkData>(ms);
+                }
+            }
+            catch (ProtoException ex)
+            {
+                // Log or handle the detailed Protobuf exception
+                Console.WriteLine($"Protobuf deserialization error: {ex.Message}");
+                throw;
+            }
+        }
 
 
 
@@ -312,6 +510,18 @@ namespace LogiPark.MVVM.Model
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
         /*** Receive from Server -> Individual Park Image ***/
         public BitmapImage ReceiveOneParkImageResponse()
         {
@@ -330,8 +540,13 @@ namespace LogiPark.MVVM.Model
                 imageStream.Write(buffer, 0, bytesToRead);
             } while (bytesToRead == buffer.Length);
 
+            return ConvertImageStreamToBitmapImage(imageStream);
+        }
+
+        private static BitmapImage ConvertImageStreamToBitmapImage(MemoryStream imageStream)
+        {
             // https://www.codeproject.com/Questions/648495/Convert-byte-to-BitmapImage-in-WPF-application-usi
-            imageStream.Position = 0; 
+            imageStream.Position = 0;
             BitmapImage image = new BitmapImage();
             image.BeginInit();
             image.CacheOption = BitmapCacheOption.OnLoad;
@@ -341,7 +556,6 @@ namespace LogiPark.MVVM.Model
 
             return image;
         }
-
 
 
         /**************************************************************************************************************

@@ -78,7 +78,7 @@ namespace Server
                 }
             }
 
-            public ParkReviewData deserializeLoginData(byte[] buffer)
+            public ParkReviewData deserializeParkReviewData(byte[] buffer)
             {
                 using (MemoryStream memStream = new MemoryStream(buffer))
                 {
@@ -110,12 +110,15 @@ namespace Server
 
                     foreach (Match match in Regex.Matches(reviewLines + "\n\n", reviewPattern, RegexOptions.Singleline))
                     {
+                        // Add a specific part review post time format
+                        string dateFormat = "MM/dd/yyyy hh:mm:ss tt";
+
                         reviews.Add(new ParkReviewData
                         {
                             ParkName = parkName,
                             UserName = match.Groups[1].Value.Trim(),
                             Rating = float.Parse(match.Groups[2].Value.Trim()),
-                            DateOfPosting = DateTime.ParseExact(match.Groups[3].Value.Trim(), "yyyy-MM-dd", CultureInfo.InvariantCulture),
+                            DateOfPosting = DateTime.ParseExact(match.Groups[3].Value.Trim(), dateFormat, CultureInfo.InvariantCulture),
                             Review = match.Groups[4].Value.Trim().Replace("\n", " ") // Replace newline characters to maintain review structure
                         });
                     }
@@ -123,6 +126,29 @@ namespace Server
 
                 return reviews;
             }
+
+            // Overwrite All Park Reviews back to text file after it has been modified -> i.e deleted a review
+            public static void OverwriteAllParkReviewsToFile(string filePath, List<ParkReviewManager.ParkReviewData> reviews)
+            {
+                StringBuilder fileContent = new StringBuilder();
+
+                // Group reviews by ParkName to correctly format them when writing reviews back to the text file
+                IEnumerable<IGrouping<string, ParkReviewData>>? groupedReviews = reviews.GroupBy(review => review.ParkName);
+
+                foreach (IGrouping<string, ParkReviewData> group in groupedReviews)
+                {
+                    
+                    foreach (ParkReviewData? review in group)
+                    {
+                        fileContent.AppendLine($"ParkName: {group.Key}");
+                        fileContent.AppendLine($"Username: {review.UserName} | ParkRating: {review.Rating} | DateOfPosting: {review.DateOfPosting.ToString("MM/dd/yyyy hh:mm:ss tt")} | Review: {review.Review}\n");
+                    }
+                }
+
+                // Finally write every back 
+                File.WriteAllText(filePath, fileContent.ToString());
+            }
+
         }
     }
 }

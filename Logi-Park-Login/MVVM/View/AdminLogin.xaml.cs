@@ -6,21 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace LogiPark.MVVM.View
 {
     /// <summary>
-    /// Interaction logic for LoginView.xaml
+    /// Interaction logic for AdminLogin.xaml
     /// </summary>
-    public partial class LoginView : Window
+    public partial class AdminLogin : Window
     {
         private ProgramClient client;
         private int attempts = 0;
         const int maxAttempts = 3;
-
-        public LoginView()
+        public AdminLogin()
         {
             this.client = new ProgramClient();
             InitializeComponent();
@@ -118,7 +121,7 @@ namespace LogiPark.MVVM.View
                 password = password
             };
 
-            client.SendLoginRequest(loginData);
+            client.SendAdminLoginRequest(loginData);
             string response = client.ReceiveServerResponse();
 
             if (response.Contains("Username and password are Correct!!! \\o/"))
@@ -130,9 +133,10 @@ namespace LogiPark.MVVM.View
 
                     UserSession.currentUsername = username;
 
-                    ClientHomeView clientHomeView = new ClientHomeView();
-                    clientHomeView.Show();
+                    AdminHomeView adminHomeView = new AdminHomeView();
+                    adminHomeView.Show();
                     this.Close();
+
                 });
             }
             else
@@ -166,20 +170,12 @@ namespace LogiPark.MVVM.View
             this.Close();
         }
 
-        private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void ClientButton_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-        private void PasswordTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void AdminButton_Click(object sender, RoutedEventArgs e)
-        {
-            AdminLogin adminLogin = new AdminLogin();
-            adminLogin.Show();
+            LoginView loginView = new LoginView();
+            loginView.Show();
             this.Close();
         }
+
     }
 }

@@ -35,21 +35,52 @@ namespace LogiPark.MVVM.View
         {
             // send request to the server retrieve all the park data info - we send empty body with the header containing flag to get all park data
             client.SendAllParkDataRequest();
-            //client.SendAllParkImagesRequest();
 
             // receive back the response from the server which contains array of park data obj
             ParkDataManager.ParkData[] parks = client.ReceiveAllParkDataResponse();
             //var images = client.RequestAndReceiveImages();
 
+            // Send for all park reviews data
+            client.SendAllReviewsRequest();
+
+            // Send for all park images 
+            client.SendAllParkImagesRequest();
+
+            // Receive for all park reviews data
+            List<ParkReviewManager.ParkReviewData> parkReviews = client.ReceiveParkReviewsResponse();
+
             // We make it annoynmous types which consists of name, address, review
             var parkCards = parks.Select(park =>
             {
+
+                // Here similar to what we did in mySQL, we use where to filter down our results for matching park name and add it to the list 
+                List<ParkReviewManager.ParkReviewData> reviewsForPark = parkReviews.Where(review => review.ParkName == park.GetParkName()).ToList();
+
+                // Calculate average rating; if there are no reviews, default to 0
+                float averageRating = 0;
+
+                // As long there is any reviews from the park
+                if(reviewsForPark.Any())
+                {
+                    float totalRating = 0;
+
+                    // Iterate through each park review and sum up each rating
+                    for(int i = 0; i < reviewsForPark.Count; i++)
+                    {
+                        totalRating += reviewsForPark[i].Rating;
+                    }
+
+                    // Calculate for average rating
+                    averageRating = totalRating / reviewsForPark.Count;
+                }
+
                 //var image = images.FirstOrDefault(img => img.FileName == park.GetParkName() + ".jpg"); // Assuming naming convention
                 return new
                 {
                     Name = park.GetParkName(),
                     Address = park.GetParkAddress(),
-                    Review = $"{park.GetParkReview()} stars",
+                    // Set park reviews calcualate average
+                    AverageRating = averageRating,
                     //ImagePath ?
                 };
             }).ToList();   // Convert it back to list for the xaml card to dynamically rendered.
@@ -63,10 +94,10 @@ namespace LogiPark.MVVM.View
 
         private void OnParkCardClick(object sender, RoutedEventArgs e)
         {
-            var button = sender as FrameworkElement;
+            FrameworkElement button = sender as FrameworkElement;
             if (button != null)
             {
-                var park = button.DataContext;
+                object park = button.DataContext;
                 if (park != null)
                 {
                     // TextBlock -> Text={Binding Name}

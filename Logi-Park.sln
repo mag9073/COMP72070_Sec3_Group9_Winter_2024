@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Logi-Park-Login\C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Server\Server.csproj", "{60E8B0ED-E65B-4685-BB95-7659A9A3A2AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server_Test_Suite", "Server_Test_Suite\Server_Test_Suite.csproj", "{D23FC528-A374-4306-A5BA-D1CF518DE2F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{60E8B0ED-E65B-4685-BB95-7659A9A3A2AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60E8B0ED-E65B-4685-BB95-7659A9A3A2AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60E8B0ED-E65B-4685-BB95-7659A9A3A2AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D23FC528-A374-4306-A5BA-D1CF518DE2F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D23FC528-A374-4306-A5BA-D1CF518DE2F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D23FC528-A374-4306-A5BA-D1CF518DE2F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D23FC528-A374-4306-A5BA-D1CF518DE2F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
