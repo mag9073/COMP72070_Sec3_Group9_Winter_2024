@@ -1,4 +1,5 @@
-﻿using Server.Utilities;
+﻿using Server.DataStructure;
+using Server.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

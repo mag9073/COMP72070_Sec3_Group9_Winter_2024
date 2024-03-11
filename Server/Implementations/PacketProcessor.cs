@@ -17,7 +17,6 @@ namespace Server.Implementations
         private UserDataManager _userDataManager;
         private ParkDataManager _parkDataManager;
         private ParkReviewManager _parkReviewManager;
-        private TransmissionManager _transmissionManager;
         private Logger _logger;
         private ImageManager _imageManager;
         private static ServerState currentState;
