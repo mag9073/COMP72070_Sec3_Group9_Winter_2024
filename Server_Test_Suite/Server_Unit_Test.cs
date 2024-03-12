@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Security.Cryptography.X509Certificates;
 using Server.Implementations;
 using Server.DataStructure;
+using System.Globalization;
 namespace Server_Test_Suite
 {
     [TestClass]
@@ -182,7 +183,8 @@ namespace Server_Test_Suite
                 {
                     _parkDataManager.AppendParkDataToFile(_testNotValidFilePath, testData);
                     Assert.Fail("Expected an exception to be thrown due to an invalid file path, but none was thrown.");
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     Assert.IsNotNull(ex, "An exception should be thrown when attempting to write to an invalid file path.");
                 }
@@ -191,7 +193,7 @@ namespace Server_Test_Suite
             [TestMethod]
             public void DeleteParkData_RemoveSpecificParkData()
             {
-                
+
                 // Arrange
                 ParkData testData = new ParkData
                 {
@@ -215,7 +217,7 @@ namespace Server_Test_Suite
                 Assert.IsFalse(remainingLines.Contains(testData.parkAddress), "Associated Description should be deleted.");
             }
 
-            [TestMethod]    
+            [TestMethod]
             public void EditAParkDataToFile_Rreturn_UpdatedParkData()
             {
                 // Arrange
@@ -318,6 +320,65 @@ namespace Server_Test_Suite
                 Assert.AreEqual(expected, result);
             }
         }
+
+        [TestClass]
+        public class ParkReviewsTests
+        {
+
+            private ParkReviewManager _parkReviewManager;
+
+            [TestInitialize]
+            public void TestInitializer()
+            {
+                _parkReviewManager = new ParkReviewManager();
+            }
+
+            [TestMethod]
+            public void ReadAllParkReviewsFromFile_ReturnsCorrectReviews()
+            {
+                // Arrange
+                ParkReviewData[] expectedReviews = new ParkReviewData[]
+{
+                    new ParkReviewData
+                    {
+                        ParkName = "Waterloo Park",
+                        UserName = "Katherine Slattery",
+                        Rating = 4,
+                        Review = "I have many good memories walking through this park. I like the path around the lake and the trails through the woods. There are some nice flowering trees which are so peaceful to sit under in the summer.",
+
+                    },
+                    new ParkReviewData
+                    {
+                        ParkName = "Clair Lake Park",
+                        UserName = "Barry Smylie",
+                        Rating = 3,
+                        Review = "The trail doesn't follow the banks of the reservoir.  It is a sports park with swimming pool, tennis courts, and field sports.  There is one access to the water",
+                    }
+                };
+
+                // Act
+                List<ParkReviewData> actualReviews = _parkReviewManager.ReadAllParkReviewsFromFile("../../../Database/ParkReview.txt");
+
+                // Assert
+                Assert.IsNotNull(actualReviews);
+                Assert.AreEqual(2, actualReviews.Count);
+
+                // Correct first review
+                Assert.AreEqual(expectedReviews[0].ParkName, actualReviews[0].ParkName);
+                Assert.AreEqual(expectedReviews[0].UserName, actualReviews[0].UserName);
+                Assert.AreEqual(expectedReviews[0].Rating, actualReviews[0].Rating);
+                Assert.AreEqual(DateTime.ParseExact("03/08/2024 12:43:08 AM", "MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture), actualReviews[0].DateOfPosting);
+                Assert.AreEqual(expectedReviews[0].Review, actualReviews[0].Review);
+
+                // Correct second review
+                Assert.AreEqual(expectedReviews[1].ParkName, actualReviews[1].ParkName);
+                Assert.AreEqual(expectedReviews[1].UserName, actualReviews[1].UserName);
+                Assert.AreEqual(expectedReviews[1].Rating, actualReviews[1].Rating);
+                Assert.AreEqual(DateTime.ParseExact("03/08/2024 12:43:08 AM", "MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture), actualReviews[1].DateOfPosting);
+                Assert.AreEqual(expectedReviews[1].Review, actualReviews[1].Review);
+            }
+        }
+
 
 
     }
