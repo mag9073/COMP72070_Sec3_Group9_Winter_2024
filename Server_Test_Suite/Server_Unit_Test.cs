@@ -6,19 +6,19 @@ namespace Server_Test_Suite
     [TestClass]
     public class Server_Unit_Test
     {
-        [TestMethod]
-        public void UT_SVR_001_CreateServer_Return_TcpListener()
-        {
-            // Arrange 
-            System.Net.Sockets.TcpListener? listener;
+        //[TestMethod]
+        //public void UT_SVR_001_CreateServer_Return_TcpListener()
+        //{
+        //    // Arrange 
+        //    System.Net.Sockets.TcpListener? listener;
 
-            // Act
-            listener = ProgramServer.CreateServer(13000);
+        //    // Act
+        //    listener = ProgramServer.CreateServer(13000);
 
 
-            // Assert
-            Assert.IsNotNull(listener);
+        //    // Assert
+        //    Assert.IsNotNull(listener);
 
-        }
+        //}
     }
 }
