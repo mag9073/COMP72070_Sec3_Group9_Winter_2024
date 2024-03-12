@@ -4,22 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server
+namespace Server.Implementations
 {
     public class Logger
     {
         private DateTime timeOfTransmission;
-        private String logFilePath;
+        private string logFilePath;
 
-        public Logger(String logFileName)
+        public Logger(string logFileName)
         {
-            this.logFilePath = logFileName;
+            logFilePath = logFileName;
         }
 
         public bool Log(byte[] message)
         {
             timeOfTransmission = getTime();
-            string output = System.Text.Encoding.Default.GetString(message);
+            string output = Encoding.Default.GetString(message);
             using (StreamWriter writer = File.AppendText(logFilePath))
             {
                 writer.WriteLine(timeOfTransmission.ToString() + ": " + output);
