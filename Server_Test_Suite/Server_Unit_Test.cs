@@ -300,7 +300,25 @@ namespace Server_Test_Suite
             }
         }
 
+        [TestClass]
+        public class LoggerTests
+        {
+            [TestMethod]
+            public void UT_LOG_001()
+            {
+                //Arrange
+                bool expected = true;
+                byte[] data = { (byte)'a', (byte)'b' };
+                Logger logger = new Logger("../../../TestLog.txt");
 
+                //Act
+                bool result = logger.Log(data);
 
+                //Assert
+                Assert.AreEqual(expected, result);
+            }
         }
+
+
+    }
 }
