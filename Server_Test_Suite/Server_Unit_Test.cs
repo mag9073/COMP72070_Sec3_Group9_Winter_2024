@@ -54,6 +54,14 @@ namespace Server_Test_Suite
                     "Open 24 Hours",
                 });
 
+                File.WriteAllLines("/Database/UserDB.txt", new[]
+                {
+                   "hang",
+                   "1234",
+                    "mino",
+                    "12345",
+                });
+
                 _testBadFilePath += Path.GetTempFileName();
 
                 File.WriteAllLines(_testBadFilePath, new string[] { });
@@ -234,7 +242,63 @@ namespace Server_Test_Suite
 
         }
 
+        [TestClass]
+        public class UserDataManagerTests
+        {
+            [TestMethod]
+            public void PerformLogin_ValidUser_ReturnsSuccessMessage()
+            {
+                // Arrange
+                UserDataManager userDataManager = new UserDataManager();
+                UserDataManager.LoginData loginData = new UserDataManager.LoginData
+                {
+                    username = "hang",
+                    password = "1234",
+                };
 
+                // Act
+                string result = userDataManager.PerformLogin(loginData);
+
+                // Assert
+                Assert.AreEqual("Username and password are Correct!!! \\o/", result, "Expected successful login message.");
+            }
+
+            [TestMethod]
+            public void PerformAdminLogin_ValidAdmin_ReturnsSuccessMessage()
+            {
+                // Arrange
+                UserDataManager userDataManager = new UserDataManager();
+                UserDataManager.LoginData loginData = new UserDataManager.LoginData
+                {
+                    username = "admin",
+                    password = "123",
+                };
+
+                // Act
+                string result = userDataManager.PerformAdminLogin(loginData);
+
+                // Assert
+                Assert.AreEqual("Username and password are Correct!!! \\o/", result, "Expected successful admin login message.");
+            }
+
+            [TestMethod]
+            public void PerformSignUp_NewUser_ReturnsSuccessMessage()
+            {
+                // Arrange
+                UserDataManager userDataManager = new UserDataManager();
+                UserDataManager.SignUpData signUpData = new UserDataManager.SignUpData
+                {
+                    username = "ducky12",
+                    password = "1234",
+                };
+
+                // Act
+                string result = userDataManager.PerformSignUp(signUpData);
+
+                // Assert
+                Assert.AreEqual("Please enter username to register!!!! \\o/", result, "Expected successful signup message.");
+            }
+        }
 
 
 
