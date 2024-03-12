@@ -1,16 +1,42 @@
 ﻿using ProtoBuf;
+using Server.Utilities;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server
+namespace Server.Implementations
 {
     public class UserDataManager
     {
-        /************* UserLoginData *************/
+        public string PerformLogin(global::Server.Implementations.UserDataManager.LoginData loginData)
+        {
+            Console.WriteLine($"Username: {loginData.GetUserName()}");
+            Console.WriteLine($"Password: {loginData.GetPassword()}");
+
+            Login login = new Login(loginData);
+            return login.LoginUser(Constants.UserDB_FilePath);
+        }
+
+        public string PerformAdminLogin(global::Server.Implementations.UserDataManager.LoginData loginData)
+        {
+            Console.WriteLine($"Username: {loginData.GetUserName()}");
+            Console.WriteLine($"Password: {loginData.GetPassword()}");
+
+            Login login = new Login(loginData);
+            return login.LoginUser(Constants.AdminDB_FilePath);
+        }
+
+        public string PerformSignUp(global::Server.Implementations.UserDataManager.SignUpData signUpData)
+        {
+            Console.WriteLine($"Username:  {signUpData.GetUserName()}");
+            Console.WriteLine($"Password:  {signUpData.GetPassword()}");
+
+            SignUp signUp = new SignUp(signUpData);
+            return signUp.SignUpUser(Constants.UserDB_FilePath);
+        }
+
         [ProtoContract]
         public class LoginData
         {
@@ -29,15 +55,15 @@ namespace Server
                 return this.password;
             }
 
-            public void SetUserName(string username)
-            {
-                this.username = username;
-            }
+            //public void SetUserName(string username)
+            //{
+            //    this.username = username;
+            //}
 
-            public void SetPassword(string password)
-            {
-                this.password = password;
-            }
+            //public void SetPassword(string password)
+            //{
+            //    this.password = password;
+            //}
 
             public byte[] SerializeToByteArray()
             {
@@ -55,6 +81,7 @@ namespace Server
                     return Serializer.Deserialize<LoginData>(memStream);
                 }
             }
+
         }
 
         /************* Login *************/
@@ -62,21 +89,21 @@ namespace Server
         {
             private LoginData loginData;
 
-            public Login(LoginData data)
+            public Login(UserDataManager.LoginData data)
             {
                 loginData = data;
             }
 
-            public LoginData GetUserData()
-            {
-                return loginData;
-            }
+            //public LoginData GetUserData()
+            //{
+            //    return loginData;
+            //}
 
-            public void SetUserData(string username, string password)
-            {
-                loginData.username = username;
-                loginData.password = password;
-            }
+            //public void SetUserData(string username, string password)
+            //{
+            //    loginData.username = username;
+            //    loginData.password = password;
+            //}
 
             public string LoginUser(string filename)
             {
@@ -115,9 +142,6 @@ namespace Server
             }
         }
 
-
-
-
         /***************** Sign Up *****************/
 
         /************* UserSignUpData *************/
@@ -139,24 +163,24 @@ namespace Server
                 return this.password;
             }
 
-            public void SetUserName(string username)
-            {
-                this.username = username;
-            }
+            //public void SetUserName(string username)
+            //{
+            //    this.username = username;
+            //}
 
-            public void SetPassword(string password)
-            {
-                this.password = password;
-            }
+            //public void SetPassword(string password)
+            //{
+            //    this.password = password;
+            //}
 
-            public byte[] SerializeToByteArray()
-            {
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    Serializer.Serialize(stream, this);
-                    return stream.ToArray();
-                }
-            }
+            //public byte[] SerializeToByteArray()
+            //{
+            //    using (MemoryStream stream = new MemoryStream())
+            //    {
+            //        Serializer.Serialize(stream, this);
+            //        return stream.ToArray();
+            //    }
+            //}
 
             public SignUpData deserializeSignUpData(byte[] buffer)
             {
@@ -179,16 +203,16 @@ namespace Server
             }
 
 
-            public SignUpData GetSignUpData()
-            {
-                return this.signUpData;
-            }
+            //public SignUpData GetSignUpData()
+            //{
+            //    return this.signUpData;
+            //}
 
-            public void SetSignUpData(string username, string password)
-            {
-                this.signUpData.username = username;
-                this.signUpData.password = password;
-            }
+            //public void SetSignUpData(string username, string password)
+            //{
+            //    this.signUpData.username = username;
+            //    this.signUpData.password = password;
+            //}
             // 
             // check if username already exists
             // if (SignUpData.username == loginData.username) 
@@ -231,7 +255,8 @@ namespace Server
                         // helper function should return string back if signup was successful to signUpUser()
 
                         // public string SignUp(string filename)
-                        if (!userNameExists) {
+                        if (!userNameExists)
+                        {
                             using (StreamWriter outputFile = new StreamWriter(filePath, true))
                             {
                                 outputFile.WriteLine();
@@ -252,7 +277,8 @@ namespace Server
                 return signUpMessage;
             }
         }
+
+
+
     }
 }
-
-
