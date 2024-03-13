@@ -8,5 +8,3 @@ ron
 9999
 venda
 0000
-ducky12
-1234

@@ -1,4 +1,5 @@
-﻿using Server.Utilities;
+﻿using Server.Interfaces;
+using Server.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Server.Implementations
 {
     public class ImageManager
     {
-        public void SaveParkImageToImagesFolder(NetworkStream stream, string parkName)
+        public void SaveParkImageToImagesFolder(ICommunicationChannel stream, string parkName)
         {
             string imagePath = Path.Combine(Constants.ParkImages_FilePath, $"{parkName}.jpg");
 

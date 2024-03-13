@@ -214,6 +214,22 @@ namespace Server.DataStructure
                 }
             }
 
+            public static Packet DeserializeFromByteArray(byte[] data)
+            {
+                try
+                {
+                    using (MemoryStream stream = new MemoryStream(data))
+                    {
+                        return Serializer.Deserialize<Packet>(stream);
+                    }
+                }
+                catch
+                {
+                    // Log error
+                    throw;
+                }
+            }
+
         }
     }
 }

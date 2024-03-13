@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Server.Implementations;
 using ProtoBuf;
 using static Server.DataStructure.PacketData;
+using Server.Interfaces;
 
 namespace Server
 {
@@ -20,7 +21,7 @@ namespace Server
         private static ParkReviewManager parkReviewManager = new ParkReviewManager();
         private static Logger logger = new Logger("log.txt"); // Adjust the path as necessary
         private static ImageManager imageManager = new ImageManager();
-        private static PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, logger, imageManager);
+        private static PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
 
         static void Main(string[] args)
         {
@@ -49,7 +50,7 @@ namespace Server
         {
             try
             {
-                using (NetworkStream stream = client.GetStream())
+                ICommunicationChannel stream = new NetworkStreamCommunication(client.GetStream());
                 {
                     while (client.Connected)
                     {
