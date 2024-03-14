@@ -11,7 +11,7 @@ using static Server.DataStructure.PacketData;
 
 namespace Server
 {
-    internal class ProgramServer
+    public class ProgramServer
     {
         private static TcpListener _tcpListener;
         private static bool _isRunning;

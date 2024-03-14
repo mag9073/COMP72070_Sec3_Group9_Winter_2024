@@ -83,7 +83,6 @@ namespace LogiPark.MVVM.View
                     Padding = new Thickness(10),
                     Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F0F0F0") as Color? ?? Colors.LightGray),
                     CornerRadius = new CornerRadius(5),
-                    Height = 150,
                     Margin = new Thickness(5)
                 };
 
