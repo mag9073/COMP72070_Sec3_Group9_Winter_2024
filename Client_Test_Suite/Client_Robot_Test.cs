@@ -22,7 +22,7 @@ namespace Client_Test_Suite
         public void GUI_Test_ClientSuccussfulLogin()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\Hangsihak Sin\Pictures\LogiPark\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("hang");
@@ -30,17 +30,15 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Login").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(500);
-
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
 
             // if the ClientHomeView window name is found, that means the login was successful
-            string actual = winDriver.FindElementByName("ClientHomeView").Text;
+            string actual = winDriver.FindElementByName("ClientHomeView (hang)").Text;
 
-            Assert.AreEqual("ClientHomeView", actual);
+            Assert.AreEqual("ClientHomeView (hang)", actual);
 
             winDriver.CloseApp();
         }
@@ -57,12 +55,9 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Login").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(500);
-
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
-
 
             // if the ClientHomeView window name isnt found, that means the login failed
             string actual = winDriver.FindElementByName("Login").Text;
@@ -81,8 +76,8 @@ namespace Client_Test_Suite
 
             winDriver.FindElementByName("Admin Mode").Click();
 
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("admin");
@@ -90,12 +85,9 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Login").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(500);
-
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
-
 
             // if the AdminHomeView window name is found, that means the login was successful
             string actual = winDriver.FindElementByName("AdminHomeView").Text;
@@ -114,8 +106,8 @@ namespace Client_Test_Suite
 
             winDriver.FindElementByName("Admin Mode").Click();
 
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("abc");
@@ -123,12 +115,9 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Login").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(500);
-
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
-
 
             // if the AdminHomeView window name isnt found, that means the login failed
             string actual = winDriver.FindElementByName("Login").Text;
@@ -153,19 +142,17 @@ namespace Client_Test_Suite
 
             winDriver.FindElementByName("Sign Up").Click();
 
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
-            winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("abcd");
-            winDriver.FindElementByAccessibilityId("passwordTextBox").SendKeys("1234");
+            winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("abcde");
+            winDriver.FindElementByAccessibilityId("passwordTextBox").SendKeys("12345");
             winDriver.FindElementByName("Sign Up").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(500);
-
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             // if the Login button name is found, that means the signup was successful
@@ -185,8 +172,8 @@ namespace Client_Test_Suite
 
             winDriver.FindElementByName("Sign Up").Click();
 
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             // not typing anything into username should cuase a fail
@@ -196,10 +183,8 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Sign Up").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(500);
-
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             // if the Login button name isnt found, that means the signup failed
@@ -221,14 +206,14 @@ namespace Client_Test_Suite
 
             winDriver.FindElementByName("Admin Mode").Click();
 
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByName("Sign Up").Click();
 
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("ADMIN");
@@ -236,10 +221,8 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Sign Up").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(500);
-
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             // if the Login button name is found, that means the signup was successful
@@ -259,14 +242,14 @@ namespace Client_Test_Suite
 
             winDriver.FindElementByName("Admin Mode").Click();
 
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByName("Sign Up").Click();
 
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("abc");
@@ -277,10 +260,8 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Sign Up").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(500);
-
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             // if the Login button name isnt found, that means the signup failed
@@ -309,13 +290,13 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Login").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(800);
-
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByName("Waterloo Park").Click();
 
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
@@ -324,12 +305,13 @@ namespace Client_Test_Suite
 
             Assert.AreEqual("Write Review", actual);
 
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByName("Close").Click();
 
-            System.Threading.Thread.Sleep(500);
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
@@ -348,20 +330,20 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Login").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(500);
-
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByName("Map").Click();
 
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             // if the write review button is found, the park view page opened up
-            string actual = winDriver.FindElementByName("Map View").Text;
+            string actual = winDriver.FindElementByName("MapView").Text;
 
-            Assert.AreEqual("Map View", actual);
+            Assert.AreEqual("MapView", actual);
 
             winDriver.CloseApp();
 
@@ -379,7 +361,7 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Login").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(500);
+            System.Threading.Thread.Sleep(300);
 
             var allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
@@ -416,7 +398,7 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Login").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(500);
+            System.Threading.Thread.Sleep(300);
 
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
@@ -439,13 +421,13 @@ namespace Client_Test_Suite
         public void GUI_Test_AdminParkCard()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\Hangsihak Sin\Pictures\LogiPark\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByName("Admin Mode").Click();
 
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("admin");
@@ -453,13 +435,13 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Login").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(800);
-
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByName("Waterloo Park").Click();
 
+            System.Threading.Thread.Sleep(50);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
@@ -468,12 +450,13 @@ namespace Client_Test_Suite
 
             Assert.AreEqual("Edit Park Info", actual);
 
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByName("Close").Click();
 
-            System.Threading.Thread.Sleep(500);
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
@@ -489,8 +472,8 @@ namespace Client_Test_Suite
 
             winDriver.FindElementByName("Admin Mode").Click();
 
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("admin");
@@ -498,27 +481,48 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Login").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(800);
-
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByName("Add Park").Click();
 
+            System.Threading.Thread.Sleep(300);
+            allWindowHandles = winDriver.WindowHandles;
+            winDriver.SwitchTo().Window(allWindowHandles[0]);
+
+            winDriver.FindElementByName("Upload Photo").Click();
+
+            System.Threading.Thread.Sleep(300);
+            allWindowHandles = winDriver.WindowHandles;
+            winDriver.SwitchTo().Window(allWindowHandles[0]);
+
+            winDriver.FindElementByName("MINI OWEN").Click();
+            winDriver.FindElementByName("Open").Click();
+
+            winDriver.FindElementByAccessibilityId("ParkNameTextBox").SendKeys("Test");
+            winDriver.FindElementByAccessibilityId("ParkAddressTextBox").SendKeys("Test");
+            winDriver.FindElementByAccessibilityId("ParkDescriptionsTextBox").SendKeys("Test");
+            winDriver.FindElementByAccessibilityId("ParkHoursTextBox").SendKeys("Test");
+
+            winDriver.FindElementByName("Save").Click();
+
+            System.Threading.Thread.Sleep(300);
+            allWindowHandles = winDriver.WindowHandles;
+            winDriver.SwitchTo().Window(allWindowHandles[0]);
+
+            winDriver.FindElementByName("OK").Click();
+
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             // if the write review button is found, the park view page opened up
-            string actual = winDriver.FindElementByName("Upload Photo").Text;
+            string actual = winDriver.FindElementByName("AdminHomeView").Text;
 
-            Assert.AreEqual("Upload Photo", actual);
+            Assert.AreEqual("AdminHomeView", actual);
 
-            allWindowHandles = winDriver.WindowHandles;
-            winDriver.SwitchTo().Window(allWindowHandles[0]);
-
-            winDriver.FindElementByName("Close").Click();
-
-            System.Threading.Thread.Sleep(500);
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
@@ -541,13 +545,19 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Login").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(1000);
-
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
-            winDriver.FindElementByName("Waterloo Park").Click();
+            winDriver.FindElementByName("Maximize").Click();
 
+            System.Threading.Thread.Sleep(300);
+            allWindowHandles = winDriver.WindowHandles;
+            winDriver.SwitchTo().Window(allWindowHandles[0]);
+
+            winDriver.FindElementByName("Test").Click();
+
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
@@ -561,15 +571,14 @@ namespace Client_Test_Suite
 
             winDriver.FindElementByName("Leave Review").Click();
 
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             // if the review username is found, the review was successfully made
-            string actual = winDriver.FindElementByName("ClientHomeView").Text;
+            string actual = winDriver.FindElementByName("ClientHomeView (hang)").Text;
 
-            System.Threading.Thread.Sleep(500);
-
-            Assert.AreEqual("ClientHomeView", actual);
+            Assert.AreEqual("ClientHomeView (hang)", actual);
 
             winDriver.CloseApp();
         }
@@ -583,8 +592,8 @@ namespace Client_Test_Suite
 
             winDriver.FindElementByName("Admin Mode").Click();
 
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("admin");
@@ -592,32 +601,56 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Login").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(800);
-
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
-            winDriver.FindElementByName("Waterloo Park").Click();
+            winDriver.FindElementByName("Maximize").Click();
 
+            System.Threading.Thread.Sleep(300);
+            allWindowHandles = winDriver.WindowHandles;
+            winDriver.SwitchTo().Window(allWindowHandles[0]);
+
+            winDriver.FindElementByName("Test").Click();
+
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByName("Edit Park Info").Click();
 
+            System.Threading.Thread.Sleep(300);
+            allWindowHandles = winDriver.WindowHandles;
+            winDriver.SwitchTo().Window(allWindowHandles[0]);
+
+            winDriver.FindElementByAccessibilityId("ParkAddressTextBox").SendKeys("Updated - ");
+            winDriver.FindElementByAccessibilityId("ParkDescriptionsTextBox").SendKeys("Updated - ");
+            winDriver.FindElementByAccessibilityId("ParkHoursTextBox").SendKeys("Updated - ");
+
+            winDriver.FindElementByName("Save").Click();
+
+            System.Threading.Thread.Sleep(300);
+            allWindowHandles = winDriver.WindowHandles;
+            winDriver.SwitchTo().Window(allWindowHandles[0]);
+
+            winDriver.FindElementByName("OK").Click();
+
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             // if the write Change Photo button is found, the park edit page opened up
-            string actual = winDriver.FindElementByName("Change Photo").Text;
+            string actual = winDriver.FindElementByName("AdminHomeView").Text;
 
-            Assert.AreEqual("Change Photo", actual);
+            Assert.AreEqual("AdminHomeView", actual);
 
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
-            winDriver.FindElementByName("Close").Click();
+            winDriver.FindElementByName("Logout").Click();
 
-            System.Threading.Thread.Sleep(500);
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
@@ -633,8 +666,8 @@ namespace Client_Test_Suite
 
             winDriver.FindElementByName("Admin Mode").Click();
 
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("admin");
@@ -642,35 +675,41 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Login").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(800);
-
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
-            winDriver.FindElementByName("Waterloo Park").Click();
+            winDriver.FindElementByName("Maximize").Click();
 
+            System.Threading.Thread.Sleep(300);
+            allWindowHandles = winDriver.WindowHandles;
+            winDriver.SwitchTo().Window(allWindowHandles[0]);
+
+            winDriver.FindElementByName("Test").Click();
+
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByName("Delete Park").Click();
 
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             // if the OK button is found, the delete confirmation window popped up
-            string actual = winDriver.FindElementByName("OK").Text;
+            string actual = winDriver.FindElementByName("Test has been deleted -> (park data, park image, park reviews)").Text;
         
-            Assert.AreEqual("OK", actual);
+            Assert.AreEqual("Test has been deleted -> (park data, park image, park reviews)", actual);
 
             winDriver.FindElementByName("OK").Click();
 
-            System.Threading.Thread.Sleep(500);
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.CloseApp();
         }
-        
         
         [TestMethod]
         public void GUI_Test_AdminDeleteReview()
@@ -681,8 +720,8 @@ namespace Client_Test_Suite
 
             winDriver.FindElementByName("Admin Mode").Click();
 
+            System.Threading.Thread.Sleep(300);
             var allWindowHandles = winDriver.WindowHandles;
-
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("admin");
@@ -690,18 +729,25 @@ namespace Client_Test_Suite
             winDriver.FindElementByName("Login").Click();
 
             // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(800);
-
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
-            winDriver.FindElementByName("Waterloo Park").Click();
+            winDriver.FindElementByName("Maximize").Click();
 
+            System.Threading.Thread.Sleep(300);
+            allWindowHandles = winDriver.WindowHandles;
+            winDriver.SwitchTo().Window(allWindowHandles[0]);
+
+            winDriver.FindElementByName("Test").Click();
+
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByName("Delete Review").Click();
 
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
@@ -710,11 +756,13 @@ namespace Client_Test_Suite
 
             Assert.AreEqual("Review deleted successfully.", actual);
 
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
             winDriver.FindElementByName("OK").Click();
 
+            System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
         

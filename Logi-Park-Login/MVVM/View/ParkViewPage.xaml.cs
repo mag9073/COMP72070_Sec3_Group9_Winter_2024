@@ -83,7 +83,6 @@ namespace LogiPark.MVVM.View
                         Padding = new Thickness(10),
                         Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F0F0F0") as Color? ?? Colors.LightGray),
                         CornerRadius = new CornerRadius(5),
-                        Height = 126,
                         Margin = new Thickness(5)
                     };
 
@@ -159,7 +158,6 @@ namespace LogiPark.MVVM.View
                     {
                         Text = review.Review,
                         TextWrapping = TextWrapping.Wrap,
-                        Width = 250,
                         Margin = new Thickness(0, 10, 0, 0)
                     };
 
