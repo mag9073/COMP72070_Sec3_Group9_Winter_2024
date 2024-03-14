@@ -80,7 +80,7 @@
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="20" Height="Auto">
                     <StackPanel x:Name="ReviewsStackPanel" Margin="0,0,0,10">
                         <!-- Review items will be dynamically added here in the code-behind -->
-
+                        <Button Content="Delete Review" Style="{StaticResource DeleteButtonStyle}" Click="DeleteReviewButton_Click" CommandParameter="{Binding}" Width="114" />
                     </StackPanel>
                 </ScrollViewer>
             </StackPanel>

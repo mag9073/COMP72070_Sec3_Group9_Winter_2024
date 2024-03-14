@@ -29,6 +29,12 @@ namespace LogiPark.MVVM.View
         {
             this.client = new ProgramClient();
             InitializeComponent();
+
+            if (UserSession.currentUsername != "")
+            {
+                this.Title = "ClientHomeView (" + UserSession.currentUsername + ")";
+            }
+
         }
 
         private void MapRadioButton_Checked(object sender, RoutedEventArgs e)
