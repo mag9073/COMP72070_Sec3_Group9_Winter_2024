@@ -1,6 +1,8 @@
 ﻿using LogiPark.MVVM.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +21,7 @@ namespace LogiPark.MVVM.View
         private ProgramClient client;
         private int attempts = 0;
         const int maxAttempts = 3;
+        private bool bImageLoaded = false;
 
         public LoginView()
         {
@@ -180,6 +183,41 @@ namespace LogiPark.MVVM.View
             AdminLogin adminLogin = new AdminLogin();
             adminLogin.Show();
             this.Close();
+        }
+
+        private void CreateParkImageFolder()
+        {
+            string imageFolder = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"ParkImages");
+
+            // Check if the directory already exists
+            if (!Directory.Exists(imageFolder))
+            {
+                try
+                {
+                    Directory.CreateDirectory(imageFolder);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error creating directory: {ex.Message}");
+                }
+            }
+        }
+
+        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            // Send for all park images 
+            client.SendAllParkImagesRequest();
+            client.ReceiveParkImagesFromServer();
+
+        }
+
+        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // This method is called when the background work is completed
+            if (e.Error == null)
+            {
+                bImageLoaded = true;
+            }
         }
     }
 }

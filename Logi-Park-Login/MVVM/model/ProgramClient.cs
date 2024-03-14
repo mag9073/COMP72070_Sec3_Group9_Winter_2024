@@ -529,6 +529,37 @@ namespace LogiPark.MVVM.Model
             return;
         }
 
+        public void ReceiveParkImagesFromServer()
+        {
+            try
+            {
+                byte[] nameBuffer = new byte[8192];
+                int nameBytesRead = stream.Read(nameBuffer, 0, nameBuffer.Length);
+                if (nameBytesRead == 0)
+                    return;
+
+                string imageNameBuf = Encoding.UTF8.GetString(nameBuffer, 0, nameBytesRead).TrimEnd('\0');
+
+                string[] imageNames = imageNameBuf.Split('|');
+                foreach (var name in imageNames)
+                {
+                    if (name == "")
+                        continue;
+
+                    string imagefile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"ParkImages/" + name + ".jpg");
+                    if (!File.Exists(imagefile))
+                    {
+                        SendOneParkImageRequest(name);
+                        ReceiveOneParkImageResponseToFile(imagefile);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
 
         /*** Receive from Server -> Individual Park Image ***/
         public BitmapImage ReceiveOneParkImageResponse()
