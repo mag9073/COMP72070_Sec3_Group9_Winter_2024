@@ -12,6 +12,10 @@ using Server.Implementations;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
 using static Server_Test_Suite.PacketProcessorIntegrationTests;
 using ProtoBuf;
+using Server;
+using Server.Interfaces;
+using ProtoBuf;
+
 
 namespace Server_Test_Suite
 {
@@ -63,12 +67,13 @@ namespace Server_Test_Suite
             }
         }
 
+        // Attempt to deserilizeParkData to a list
         public List<ParkData> DeserializeParkDataList(byte[] data, int offset, int size)
         {
             using (MemoryStream ms = new MemoryStream(data, offset, size))
             {
-                var list = Serializer.Deserialize<List<ParkData>>(ms);
-                return list;
+                List<ParkData> listParkData = Serializer.Deserialize<List<ParkData>>(ms);
+                return listParkData;
             }
         }
 
@@ -190,42 +195,46 @@ namespace Server_Test_Suite
         [TestMethod]
         public void IT_004_ProcessAllParkDataPacketTest()
         {
-            // Arrange
-            //FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
-            //UserDataManager userDataManager = new UserDataManager();
-            //ParkDataManager parkDataManager = new ParkDataManager();
-            //ParkReviewManager parkReviewManager = new ParkReviewManager();
-            //ImageManager imageManager = new ImageManager();
+           //Arrange
+            FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
+            UserDataManager userDataManager = new UserDataManager();
+            ParkDataManager parkDataManager = new ParkDataManager();
+            ParkReviewManager parkReviewManager = new ParkReviewManager();
+            ImageManager imageManager = new ImageManager();
 
-            //List<ParkData> expectedParkData = new List<ParkData>
-            //{
-            //    new ParkData
-            //    {
-            //        parkName = "Kitchener Park",
-            //        parkAddress = "Kitchener Park",
-            //        parkDescription = "This is a beautiful with a lot of trash",
-            //        parkHours = "9:00 AM - 5:00 PM"
-            //    },
-            //    new ParkData
-            //    {
-            //        parkName = "Cambridge Park",
-            //        parkAddress = "123 Fountain St",
-            //        parkDescription = "This is Loo Park",
-            //        parkHours = "Open 24 Hours",
-            //    }
-            //};
+            List<ParkData> expectedParkData = new List<ParkData>
+            {
+                new ParkData
+                {
+                    parkName = "Kitchener Park",
+                    parkAddress = "Kitchener Park",
+                    parkDescription = "This is a beautiful with a lot of trash",
+                    parkHours = "9:00 AM - 5:00 PM"
+                },
+                new ParkData
+                {
+                    parkName = "Cambridge Park",
+                    parkAddress = "123 Fountain St",
+                    parkDescription = "This is Loo Park",
+                    parkHours = "Open 24 Hours",
+                }
+            };
 
-            //PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+            List<ParkData> actualParkData = new List<ParkData> ();
+
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
 
             // Act
-            //PacketData.Packet packet = new PacketData.Packet();
-            //packet.SetPacketHead(1, 2, Server.DataStructure.PacketData.Types.allparkdata);
-            //packetProcessor.ProcessPacket(packet, fakeChannel, null);
+            PacketData.Packet packet = new PacketData.Packet();
+            packet.SetPacketHead(1, 2, Server.DataStructure.PacketData.Types.allparkdata);
+            packetProcessor.ProcessPacket(packet, fakeChannel, null);
+            actualParkData = DeserializeParkDataList(fakeChannel.WrittenBytes, fakeChannel.WrittenOffset, fakeChannel.WrittenSize);
+
 
             // Assert
 
+            // Implement assertions
 
-            // Need to be implemented
         }
 
         [TestMethod]
@@ -470,6 +479,8 @@ namespace Server_Test_Suite
 
 
         }
+
+
 
 
     }

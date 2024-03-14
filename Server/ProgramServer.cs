@@ -25,63 +25,12 @@ namespace Server
 
         static void Main(string[] args)
         {
-            StartServer(13000);
+            IServer server = new Server.Implementations.Server(); 
+
+            server.StartServer(13000);
             Console.WriteLine("Server is running. Press Enter to stop.");
             Console.ReadLine();
-            StopServer();
-        }
-
-        private static void StartServer(int port)
-        {
-            _isRunning = true;
-            _tcpListener = new TcpListener(IPAddress.Loopback, port);
-            _tcpListener.Start();
-            Console.WriteLine($"Server started on port {port}.");
-
-            while (_isRunning)
-            {
-                TcpClient client = _tcpListener.AcceptTcpClient();
-                Console.WriteLine("Client connected.");
-                HandleClient(client);
-            }
-        }
-
-        private static void HandleClient(TcpClient client)
-        {
-            try
-            {
-                ICommunicationChannel stream = new NetworkStreamCommunication(client.GetStream());
-                {
-                    while (client.Connected)
-                    {
-                        byte[] buffer = new byte[1024];
-                        int bytesRead = stream.Read(buffer, 0, buffer.Length);
-
-                        Packet packet;
-                        using (MemoryStream ms = new MemoryStream(buffer, 0, bytesRead))
-                        {
-                            packet = Serializer.Deserialize<Packet>(ms);
-                        }
-
-                        packetProcessor.ProcessPacket(packet, stream, client);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-            finally
-            {
-                client.Close();
-            }
-        }
-
-        private static void StopServer()
-        {
-            _isRunning = false;
-            _tcpListener.Stop();
-            Console.WriteLine("Server stopped.");
+            server.StopServer();
         }
     }
 }

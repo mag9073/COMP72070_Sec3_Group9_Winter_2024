@@ -73,7 +73,7 @@ namespace Server_Test_Suite
             }
 
             [TestMethod]
-            public void ReadOneParkDataFromFile_Return_CorrectParkData()
+            public void UT_SVR_041_ReadOneParkDataFromFile_Return_CorrectParkData()
             {
                 // Arrange
                 ParkData expectedResult = new ParkData
@@ -95,7 +95,7 @@ namespace Server_Test_Suite
             }
 
             [TestMethod]
-            public void ReadOneParkDataFromFile_WithNoMatchingName_ReturnsNull()
+            public void UT_SVR_042_ReadOneParkDataFromFile_WithNoMatchingName_ReturnsNull()
             {
                 // Act
                 ParkData result = _parkDataManager.ReadOneParkDataFromFile(_testGoodFilePath, "South Park");
@@ -105,7 +105,7 @@ namespace Server_Test_Suite
             }
 
             [TestMethod]
-            public void ReadOneParkDataFromFile_NonExistentFile_CatchesException()
+            public void UT_SVR_045_ReadOneParkDataFromFile_NonExistentFile_CatchesException()
             {
                 // Arrange
                 string parkName = "South Park";
@@ -118,7 +118,7 @@ namespace Server_Test_Suite
             }
 
             [TestMethod]
-            public void ReadAllParkDataFromFile_ReturnsCorrectParkDataArray()
+            public void UT_SVR_043_ReadAllParkDataFromFile_ReturnsCorrectParkDataArray()
             {
                 // Arrange
                 ParkData expectedResult = new ParkData
@@ -142,7 +142,7 @@ namespace Server_Test_Suite
             }
 
             [TestMethod]
-            public void AppendParkDataToFile_Returns_ValidData()
+            public void UT_SVR_046_AppendParkDataToFile_Returns_ValidData()
             {
                 // Arrange
                 string newFilePath = Path.GetTempFileName();
@@ -167,7 +167,7 @@ namespace Server_Test_Suite
 
 
             [TestMethod]
-            public void AppendParkDataToFile_Returns_InValidData()
+            public void UT_SVR_047_AppendParkDataToFile_Returns_InValidData()
             {
                 // Arrange
                 ParkData testData = new ParkData
@@ -191,7 +191,7 @@ namespace Server_Test_Suite
             }
 
             [TestMethod]
-            public void DeleteParkData_RemoveSpecificParkData()
+            public void UT_SVR_048_DeleteParkData_RemoveSpecificParkData()
             {
 
                 // Arrange
@@ -218,7 +218,7 @@ namespace Server_Test_Suite
             }
 
             [TestMethod]
-            public void EditAParkDataToFile_Rreturn_UpdatedParkData()
+            public void UT_SVR_049_EditAParkDataToFile_Rreturn_UpdatedParkData()
             {
                 // Arrange
                 ParkData updatedParkData = new ParkData
@@ -248,7 +248,7 @@ namespace Server_Test_Suite
         public class UserDataManagerTests
         {
             [TestMethod]
-            public void PerformLogin_ValidUser_ReturnsSuccessMessage()
+            public void UT_SVR_032_PerformLogin_ValidUser_ReturnsSuccessMessage()
             {
                 // Arrange
                 UserDataManager userDataManager = new UserDataManager();
@@ -266,7 +266,7 @@ namespace Server_Test_Suite
             }
 
             [TestMethod]
-            public void PerformAdminLogin_ValidAdmin_ReturnsSuccessMessage()
+            public void UT_SVR_033_PerformAdminLogin_ValidAdmin_ReturnsSuccessMessage()
             {
                 // Arrange
                 UserDataManager userDataManager = new UserDataManager();
@@ -284,7 +284,7 @@ namespace Server_Test_Suite
             }
 
             [TestMethod]
-            public void PerformSignUp_NewUser_ReturnsSuccessMessage()
+            public void UT_SVR_034_PerformSignUp_NewUser_ReturnsSuccessMessage()
             {
                 // Arrange
                 UserDataManager userDataManager = new UserDataManager();
@@ -334,7 +334,7 @@ namespace Server_Test_Suite
             }
 
             [TestMethod]
-            public void ReadAllParkReviewsFromFile_ReturnsCorrectReviews()
+            public void UT_SVR_050_ReadAllParkReviewsFromFile_ReturnsCorrectReviews()
             {
                 // Arrange
                 ParkReviewData[] expectedReviews = new ParkReviewData[]
@@ -379,6 +379,11 @@ namespace Server_Test_Suite
             }
         }
 
+        [TestMethod]
+        public void UT_SVR_057_()
+        {
+
+        }
 
 
     }
