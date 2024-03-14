@@ -4,6 +4,7 @@ using Server.Interfaces;
 using Server.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -32,79 +33,79 @@ namespace Server.Implementations
             _imageManager = imageManager;
         }
 
-        public void ProcessPacket(Packet packet, ICommunicationChannel channel, TcpClient client)
+        public void ProcessPacket(Packet packet, ICommunicationChannel stream, TcpClient client)
         {
             // Process packets based on type
             switch (packet.GetPacketHeader().GetType())
             {
                 // Login State
                 case Types.login:
-                    ProcessLoginPacket(packet, channel, client);
+                    ProcessLoginPacket(packet, stream, client);
                     break;
 
                 // Register State
                 case Types.register:
-                    ProcessSignUpPacket(packet, channel, client);
+                    ProcessSignUpPacket(packet, stream, client);
                     break;
 
                 // Not sure if we need at all? 
                 case Types.login_admin:
-                    ProcessLoginAdminPacket(packet, channel, client);
+                    ProcessLoginAdminPacket(packet, stream, client);
                     break;
 
                 // All Park Data State
                 case Types.allparkdata:
-                    ProcessAllParkDataPacket(channel);
+                    ProcessAllParkDataPacket(stream);
                     break;
 
                 // Individual Park Data State
                 case Types.a_park:
-                    ProcessOneParkDataPacket(channel, packet);
+                    ProcessOneParkDataPacket(stream, packet);
                     break;
 
                 // All Park Images State
                 case Types.allparkimages:
-                    //ProcessAllParkImagePacket(stream);
+                    ProcessAllParkImagesPacket(stream);
                     break;
 
                 // Individual Park Image State
                 case Types.an_image:
-                    ProcessOneParkImagePacket(channel, packet);
+                    ProcessOneParkImagePacket(stream, packet);
                     break;
 
                 // All Park Reviews
                 case Types.all_reviews:
-                    ProcessAllReviewsPacket(channel);
+                    ProcessAllReviewsPacket(stream);
                     break;
 
                 // Individual Park Reviews State
                 case Types.review:
-                    ProcessParkReviewPacket(channel, packet);
+                    ProcessParkReviewPacket(stream, packet);
                     break;
 
                 // ADMIN - Request delete a park review
                 case Types.delete_review:
-                    ProcessDeleteParkReviewPacket(channel, packet);
+                    ProcessDeleteParkReviewPacket(stream, packet);
                     break;
 
                 // ADMIN - Delete a park (Park Data, Park Reviews, Park Image)
                 case Types.delete_park:
-                    ProcessDeleteAParkPacket(channel, packet, Get_parkReviewManager());
+                    ProcessDeleteAParkPacket(stream, packet, Get_parkReviewManager());
                     break;
 
                 // ADMIN - Add a Park -- Stopped here 
                 case Types.add_park:
-                    ProcessAddAParkPacket(channel, packet);
+                    ProcessAddAParkPacket(stream, packet);
                     break;
 
                 // CLIENT - Add a Park Review
                 case Types.add_review:
-                    ProcessAddAParkReviewPacket(channel, packet);
+                    ProcessAddAParkReviewPacket(stream, packet);
                     break;
 
                 // ADMIN - Edit a Park Info
                 case Types.edit_park:
-                    ProcessEditAParkInfoPacket(channel, packet);
+                    ProcessEditAParkInfoPacket(stream, packet);
                     break;
             }
 
@@ -230,19 +231,49 @@ namespace Server.Implementations
             }
         }
 
+        static List<string> GetImages(string imgdir)
+        {
+            List<string> images = new List<string>();
+
+            // Iterate through the folder
+            foreach (string imagePath in Directory.GetFiles(imgdir))
+            {
+                if (imagePath.IndexOf(".jpg") == -1)
+                {
+                    continue;
+                }
+
+                string imageName = Path.GetFileNameWithoutExtension(imagePath);
+                
+                // Add it to the list of images
+                images.Add(imageName);
+            }
+
+            return images;
+        }
+
 
         /*** Process Packet Type -> All Park Image ***/
-        private static void ProcessAllParkImagesPacket(NetworkStream stream)
+        private static void ProcessAllParkImagesPacket(ICommunicationChannel stream)
         {
+            // Get the image path
+            string imageFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "../../../Assets/ParkImages/");
 
-            // Count how many images are in the Assets/ParkImages/ folder
+            // Get list of images
+            List<string> images = GetImages(imageFolder);
 
-            // Based on that create a while loop
+            string buffer = "";
+            foreach (string imageName in images)
+            {
+                buffer += imageName;
+                buffer += "|";
+            }
 
-            // Within the loop -> 
+            // Need to be splitted to 1MB chunk
 
-
-
+            // Send the images name list
+            byte[] nameBytes = System.Text.Encoding.UTF8.GetBytes(buffer);
+            stream.WriteAsync(nameBytes, 0, nameBytes.Length);
         }
 
 

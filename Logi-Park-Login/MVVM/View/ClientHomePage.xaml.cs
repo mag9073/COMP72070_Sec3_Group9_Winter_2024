@@ -31,10 +31,7 @@ namespace LogiPark.MVVM.View
             InitializeComponent();
 
             if (UserSession.currentUsername != "")
-            {
                 this.Title = "ClientHomeView (" + UserSession.currentUsername + ")";
-            }
-
         }
 
         private void MapRadioButton_Checked(object sender, RoutedEventArgs e)
@@ -51,7 +48,6 @@ namespace LogiPark.MVVM.View
         {
             // Handle back to main menu label clicked
             LoginView loginView = new LoginView();
-
             loginView.Show();
 
             this.Close();

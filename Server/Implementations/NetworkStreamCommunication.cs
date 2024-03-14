@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -18,6 +19,7 @@ namespace Server.Implementations
         }
 
         public void Write(byte[] buffer, int offset, int size) => _stream.Write(buffer, offset, size);
+        public async Task WriteAsync(byte[] buffer, int offset, int size) => await _stream.WriteAsync(buffer, offset, size);
 
         public int Read(byte[] buffer, int offset, int size) => _stream.Read(buffer, offset, size);
 

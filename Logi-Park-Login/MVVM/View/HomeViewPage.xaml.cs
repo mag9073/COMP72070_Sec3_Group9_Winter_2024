@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -44,16 +45,12 @@ namespace LogiPark.MVVM.View
             // Send for all park reviews data
             client.SendAllReviewsRequest();
 
-            // Send for all park images 
-            client.SendAllParkImagesRequest();
-
             // Receive for all park reviews data
-            List<ParkReviewManager.ParkReviewData> parkReviews = client.ReceiveParkReviewsResponse();
+            List <ParkReviewManager.ParkReviewData> parkReviews = client.ReceiveParkReviewsResponse();
 
             // We make it annoynmous types which consists of name, address, review
             var parkCards = parks.Select(park =>
             {
-
                 // Here similar to what we did in mySQL, we use where to filter down our results for matching park name and add it to the list 
                 List<ParkReviewManager.ParkReviewData> reviewsForPark = parkReviews.Where(review => review.ParkName == park.GetParkName()).ToList();
 
@@ -61,12 +58,12 @@ namespace LogiPark.MVVM.View
                 float averageRating = 0;
 
                 // As long there is any reviews from the park
-                if(reviewsForPark.Any())
+                if (reviewsForPark.Any())
                 {
                     float totalRating = 0;
 
                     // Iterate through each park review and sum up each rating
-                    for(int i = 0; i < reviewsForPark.Count; i++)
+                    for (int i = 0; i < reviewsForPark.Count; i++)
                     {
                         totalRating += reviewsForPark[i].Rating;
                     }
@@ -82,15 +79,13 @@ namespace LogiPark.MVVM.View
                     client.ReceiveOneParkImageResponseToFile(imagefile);
                 }
 
-
-                //var image = images.FirstOrDefault(img => img.FileName == park.GetParkName() + ".jpg"); // Assuming naming convention
                 return new
                 {
                     Name = park.GetParkName(),
                     Address = park.GetParkAddress(),
                     // Set park reviews calcualate average
                     AverageRating = averageRating,
-                    //ImagePath ?
+                    ImagePath = imagefile, 
                 };
             }).ToList();   // Convert it back to list for the xaml card to dynamically rendered.
 

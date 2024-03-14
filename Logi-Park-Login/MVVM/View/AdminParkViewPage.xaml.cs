@@ -83,6 +83,7 @@ namespace LogiPark.MVVM.View
                     Padding = new Thickness(10),
                     Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F0F0F0") as Color? ?? Colors.LightGray),
                     CornerRadius = new CornerRadius(5),
+                    Height = 150,
                     Margin = new Thickness(5)
                 };
 
@@ -169,7 +170,7 @@ namespace LogiPark.MVVM.View
                     Style = (Style)Resources["DeleteButtonStyle"],
                     Width = 114,
                     CommandParameter = review,
-                    Margin = new Thickness(5, 0, 0, 0) 
+                    Margin = new Thickness(5, 0, 0, 0)
                 };
 
                 deleteButton.Click += DeleteReviewButton_Click;
@@ -279,15 +280,15 @@ namespace LogiPark.MVVM.View
             {
                 // https://learn.microsoft.com/en-us/dotnet/api/system.windows.controls.primitives.buttonbase.commandparameter?view=windowsdesktop-8.0
                 // Here we are trying to type case the CommandParameter back into review object type
-                ParkReviewManager.ParkReviewData review = button.CommandParameter as ParkReviewManager.ParkReviewData; 
+                ParkReviewManager.ParkReviewData review = button.CommandParameter as ParkReviewManager.ParkReviewData;
 
                 if (review != null)
                 {
                     string parkName = _parkName;
-                    string userInfo = review.UserName; 
-                    string ratingInfo = $"{review.Rating.ToString("0")}"; 
+                    string userInfo = review.UserName;
+                    string ratingInfo = $"{review.Rating.ToString("0")}";
                     string dateInfo = review.DateOfPosting.ToString("MM/dd/yyyy hh:mm:ss tt");
-                    string reviewText = review.Review; 
+                    string reviewText = review.Review;
 
                     Console.WriteLine($"Park Name: {parkName}, User Info: {userInfo}, Rating: {ratingInfo}, Date: {dateInfo}, Review: {reviewText}");
 
@@ -324,27 +325,10 @@ namespace LogiPark.MVVM.View
         {
             try
             {
-                //// Assuming 'programClient' is your ProgramClient instance
-                //_client.SendDeleteAParkRequest(_parkName);
-
-                //// Now, receive the acknowledgement/response from the server
-                //string serverResponse = _client.ReceiveServerResponse();
-
-                //// Display the server's response (acknowledgement) to the user
-                //MessageBox.Show(serverResponse, "Server Response");
-
-                //if (serverResponse.Contains("Review deleted successfully."))
-                //{
-                //    Window parentWindow = Window.GetWindow(this);
-                //    if (parentWindow != null)
-                //    {
-                //        parentWindow.Close();
-                //    }
-                //}
 
                 _client.SendDeleteAParkRequest(_parkName);
 
-                string serverResponse = _client.ReceiveServerResponse();    
+                string serverResponse = _client.ReceiveServerResponse();
 
                 MessageBox.Show(serverResponse);
 
@@ -364,6 +348,6 @@ namespace LogiPark.MVVM.View
             }
         }
 
-        
+
     }
 }

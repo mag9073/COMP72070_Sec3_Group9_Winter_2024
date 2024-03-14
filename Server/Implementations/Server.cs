@@ -21,10 +21,12 @@ namespace Server.Implementations
         private static Logger logger = new Logger("log.txt"); 
         private static ImageManager imageManager = new ImageManager();
         private static PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+        private static List<TcpClient> clients = new List<TcpClient>();     // To store client connections in a list of pool 
 
         public Server()
         {
             _isRunning = true;
+            // Need to integrate state machine here too
         }
 
         public void StartServer(int port)
@@ -34,21 +36,28 @@ namespace Server.Implementations
             _tcpListener.Start();
             Console.WriteLine($"Server started on port {port}.");
 
-            while (_isRunning)
+            _ = ThreadPool.QueueUserWorkItem(new WaitCallback(AcceptClients));
+        }
+
+        private static void AcceptClients(object state)
+        {
+            while (true)
             {
                 TcpClient client = _tcpListener.AcceptTcpClient();
-                Console.WriteLine("Client connected.");
-                HandleClient(client);
+                clients.Add(client);
+                ThreadPool.QueueUserWorkItem(new WaitCallback(HandleClient), client);
             }
         }
 
-        private void HandleClient(TcpClient client)
+
+        private static void HandleClient(Object state)
         {
+            TcpClient client = (TcpClient)state;
+
             try
             {
                 ICommunicationChannel stream = new NetworkStreamCommunication(client.GetStream());
-                {
-                    while (client.Connected)
+                while (client.Connected)
                     {
                         byte[] buffer = new byte[1024];
                         int bytesRead = stream.Read(buffer, 0, buffer.Length);
@@ -61,7 +70,7 @@ namespace Server.Implementations
 
                         packetProcessor.ProcessPacket(packet, stream, client);
                     }
-                }
+                
             }
             catch (Exception ex)
             {
@@ -69,6 +78,8 @@ namespace Server.Implementations
             }
             finally
             {
+                // Remove connection
+                clients.Remove(client);
                 client.Close();
             }
         }

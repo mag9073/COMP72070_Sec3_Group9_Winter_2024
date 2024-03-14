@@ -14,5 +14,6 @@ namespace Server.Interfaces
         void Close();
 
         void Flush();
+        Task WriteAsync(byte[] nameBytes, int v, int length);
     }
 }

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,15 +19,25 @@ namespace LogiPark.MVVM.View
     /// </summary>
     public partial class LoginView : Window
     {
+        const int maxAttempts = 3;
+        private BackgroundWorker backgroundWorker;
         private ProgramClient client;
         private int attempts = 0;
-        const int maxAttempts = 3;
         private bool bImageLoaded = false;
 
         public LoginView()
         {
+            CreateParkImageFolder();
+
             this.client = new ProgramClient();
             InitializeComponent();
+
+            // https://stackoverflow.com/questions/1862590/how-to-update-gui-with-backgroundworker
+            // helps update GUI in the background
+            backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += BackgroundWorker_DoWork;
+            backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
+            backgroundWorker.RunWorkerAsync();
         }
 
         private void UsernameTextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -71,6 +82,7 @@ namespace LogiPark.MVVM.View
 
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+
             if (attempts >= maxAttempts)
             {
                 messageTextBlock.Text = "Maximum login attempts exceeded.";
@@ -208,7 +220,6 @@ namespace LogiPark.MVVM.View
             // Send for all park images 
             client.SendAllParkImagesRequest();
             client.ReceiveParkImagesFromServer();
-
         }
 
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

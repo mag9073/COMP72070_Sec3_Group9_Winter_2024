@@ -37,6 +37,3 @@ Username: Clara Esteves | ParkRating: 4 | DateOfPosting: 03/08/2024 12:43:08 AM 
 ParkName: Laurel Creek Conservation Area Park
 Username: Kathy Brookes | ParkRating: 5 | DateOfPosting: 03/08/2024 12:43:08 AM | Review: So pretty of a walk, and the birds are so much fun. Note if you want  to drive in and park, there is a fee
 
-ParkName: Laurel Creek Conservation Area Park
-Username: Terence McGuire | ParkRating: 4 | DateOfPosting: 03/08/2024 12:43:08 AM | Review: I've never camped her but used this area many times for hiking and photography. Sunrise and sunsets are great over the lake. Autumn is such a great time to hike the trails before the snow flies.
-
