@@ -507,20 +507,27 @@ namespace LogiPark.MVVM.Model
 
         /*** Receive from Server -> All Park Image ***/
 
+        public void ReceiveOneParkImageResponseToFile(string filepath)
+        {
+            FileStream fs = File.Create(filepath);
 
+            int chunkSize = 1024 * 1024; // 1 MB sent at a time for large image transfer/stream
 
+            byte[] buffer = new byte[chunkSize];
 
+            int bytesToRead = 0;
 
+            // We receive stream of byte [] in chunk of 1 MB at a time -> will read til there is nothing left 
+            do
+            {
+                bytesToRead = stream.Read(buffer, 0, buffer.Length);
+                fs.Write(buffer, 0, bytesToRead);
+            } while (bytesToRead == buffer.Length);
 
+            fs.Close();
 
-
-
-
-
-
-
-
-
+            return;
+        }
 
 
         /*** Receive from Server -> Individual Park Image ***/

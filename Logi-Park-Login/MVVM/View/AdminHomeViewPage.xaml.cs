@@ -1,6 +1,7 @@
 ﻿using LogiPark.MVVM.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -83,6 +84,13 @@ namespace LogiPark.MVVM.View
 
                     // Calculate for average rating
                     averageRating = totalRating / reviewsForPark.Count;
+                }
+
+                string imagefile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"ParkImages/" + park.GetParkName() + ".jpg");
+                if (!File.Exists(imagefile))
+                {
+                    client.SendOneParkImageRequest(park.GetParkName());
+                    client.ReceiveOneParkImageResponseToFile(imagefile);
                 }
 
                 //var image = images.FirstOrDefault(img => img.FileName == park.GetParkName() + ".jpg"); // Assuming naming convention
