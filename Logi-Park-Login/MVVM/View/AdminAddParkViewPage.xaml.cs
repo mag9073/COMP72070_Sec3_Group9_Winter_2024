@@ -32,20 +32,23 @@ namespace LogiPark.MVVM.View
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
 
-            if(string.IsNullOrEmpty(ParkNameTextBox.Text))
+            if (string.IsNullOrEmpty(ParkNameTextBox.Text))
             {
                 MessageBox.Show("Please fill out Park Name field.", "Missing Information", MessageBoxButton.OK, MessageBoxImage.Warning);
-            } else if (string.IsNullOrEmpty(ParkAddressTextBox.Text))
+            }
+            else if (string.IsNullOrEmpty(ParkAddressTextBox.Text))
             {
                 MessageBox.Show("Please fill out Park Address field.", "Missing Information", MessageBoxButton.OK, MessageBoxImage.Warning);
-            } else if (string.IsNullOrEmpty(ParkDescriptionsTextBox.Text))
+            }
+            else if (string.IsNullOrEmpty(ParkDescriptionsTextBox.Text))
             {
                 MessageBox.Show("Please fill out Park Descriptions field.", "Missing Information", MessageBoxButton.OK, MessageBoxImage.Warning);
-            } else if (string.IsNullOrEmpty(ParkHoursTextBox.Text))
+            }
+            else if (string.IsNullOrEmpty(ParkHoursTextBox.Text))
             {
                 MessageBox.Show("Please fill out Park Hours field.", "Missing Information", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            
+
 
             // Assemble our data into packet
             ParkDataManager.ParkData parkData = new ParkDataManager.ParkData
@@ -120,7 +123,8 @@ namespace LogiPark.MVVM.View
             if (extension == ".jpg")
             {
                 isValid = true;
-            } else
+            }
+            else
             {
                 isValid = false;
             }

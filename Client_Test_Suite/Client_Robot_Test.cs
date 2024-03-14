@@ -22,7 +22,7 @@ namespace Client_Test_Suite
         public void GUI_Test_ClientSuccussfulLogin()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            appiumOptions.AddAdditionalCapability("app", @"C:\Users\Hangsihak Sin\Pictures\LogiPark\Logi-Park-Login\bin\Debug\LogiPark.exe");
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("hang");
@@ -439,7 +439,7 @@ namespace Client_Test_Suite
         public void GUI_Test_AdminParkCard()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            appiumOptions.AddAdditionalCapability("app", @"C:\Users\Hangsihak Sin\Pictures\LogiPark\Logi-Park-Login\bin\Debug\LogiPark.exe");
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByName("Admin Mode").Click();
@@ -719,7 +719,7 @@ namespace Client_Test_Suite
             winDriver.SwitchTo().Window(allWindowHandles[0]);
         
             winDriver.CloseApp();
-        }\
+        }
         //*********************** PARK VIEW TESTS ***********************
     }
 }

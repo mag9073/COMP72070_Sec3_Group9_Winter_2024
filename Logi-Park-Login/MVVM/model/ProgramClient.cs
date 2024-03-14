@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using LogiPark.MVVM.Model;
 
 namespace LogiPark.MVVM.Model
 {
@@ -506,20 +507,58 @@ namespace LogiPark.MVVM.Model
 
         /*** Receive from Server -> All Park Image ***/
 
+        public void ReceiveOneParkImageResponseToFile(string filepath)
+        {
+            FileStream fs = File.Create(filepath);
 
+            int chunkSize = 1024 * 1024; // 1 MB sent at a time for large image transfer/stream
 
+            byte[] buffer = new byte[chunkSize];
 
+            int bytesToRead = 0;
 
+            // We receive stream of byte [] in chunk of 1 MB at a time -> will read til there is nothing left 
+            do
+            {
+                bytesToRead = stream.Read(buffer, 0, buffer.Length);
+                fs.Write(buffer, 0, bytesToRead);
+            } while (bytesToRead == buffer.Length);
 
+            fs.Close();
 
+            return;
+        }
 
+        public void ReceiveParkImagesFromServer()
+        {
+            try
+            {
+                byte[] nameBuffer = new byte[8192];
+                int nameBytesRead = stream.Read(nameBuffer, 0, nameBuffer.Length);
+                if (nameBytesRead == 0)
+                    return;
 
+                string imageNameBuf = Encoding.UTF8.GetString(nameBuffer, 0, nameBytesRead).TrimEnd('\0');
 
+                string[] imageNames = imageNameBuf.Split('|');
+                foreach (var name in imageNames)
+                {
+                    if (name == "")
+                        continue;
 
-
-
-
-
+                    string imagefile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"ParkImages/" + name + ".jpg");
+                    if (!File.Exists(imagefile))
+                    {
+                        SendOneParkImageRequest(name);
+                        ReceiveOneParkImageResponseToFile(imagefile);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
 
 
         /*** Receive from Server -> Individual Park Image ***/

@@ -67,52 +67,40 @@
                     <TextBlock x:Name="ParkHoursTextBox" Text="07:00 a.m. - 11:00 p.m" FontSize="14" Width="180"/>
                 </StackPanel>
 
-                <Button Content="Edit Park Info" Margin="0,20" Height="40" Background="#00A3FF" Foreground="White" Width="186" HorizontalAlignment="Left" Click="EditButton_Click">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="10"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                <Button Content="Edit Park Info" Margin="0,20" Height="40" Background="#00A3FF" Foreground="White" Width="186" HorizontalAlignment="Left" Click="EditButton_Click"/>
 
                 <TextBlock Text="Recommended Reviews" FontSize="20" FontWeight="SemiBold" Margin="0,20"/>
                 <!-- ScrollViewer for dynamic review cards with admin delete button -->
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="20" Height="Auto">
-                    <StackPanel x:Name="ReviewsStackPanel" Margin="0,0,0,10">
+                    <StackPanel x:Name="ReviewsStackPanel" Margin="0,0,0,20">
                         <!-- Review items will be dynamically added here in the code-behind -->
-
+                        <Button Content="Delete Review" Style="{StaticResource DeleteButtonStyle}" Click="DeleteReviewButton_Click" CommandParameter="{Binding}" Width="114" />
                     </StackPanel>
                 </ScrollViewer>
             </StackPanel>
 
             <!-- Right Column Content -->
-            <Grid Margin="20,50,20,20" Grid.Column="1">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-
-                <Button Grid.Row="0" Content="Delete Park" Margin="0,0,10,10" Height="40" Background="#CF0909" Foreground="White" Width="122" HorizontalAlignment="Right" Click="DeleteParkButton_Click">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="10"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+            <StackPanel Grid.Column="1" Margin="20,20,20,20">
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Content="Delete Park" Margin="0,0,10,0" Height="40" Background="#CF0909" Foreground="White" Width="122" HorizontalAlignment="Right" Click="DeleteParkButton_Click"/>
+                </Grid>
 
                 <!-- Park Image -->
-                <Image VerticalAlignment="Center" Grid.Row="1" x:Name="ParkImage"  Height="400" Margin="0,0,0,20"/>
+                <Image x:Name="ParkImage"  Source="/Assets/ParkImages/Waterloo Park.jpg" Stretch="Uniform" Height="345" Margin="0,0,0,20"/>
+                <Image />
 
                 <!-- Phone number and address -->
-                <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Height="98" Width="360">
+                <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="10" Height="98" Width="360">
                     <StackPanel Margin="10">
                         <TextBlock Text="(519) 725-0511" FontSize="18" HorizontalAlignment="Center" Margin="0,5,0,10"/>
                         <TextBlock x:Name="ParkAddressTextBlock" Text="50 Young St W, Waterloo, ON" FontSize="18" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Border>
-            </Grid>
+            </StackPanel>
         </Grid>
     </Border>
 </UserControl>

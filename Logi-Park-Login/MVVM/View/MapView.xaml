@@ -3,11 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LogiPark.MVVM.View"
+        xmlns:viewModel="clr-namespace:LogiPark.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="Map View" Height="760" Width="1280"
+        Title="Logi-Park" Height="760" Width="1280"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         >
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
 
     <Border Background="White"
             CornerRadius="20">

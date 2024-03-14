@@ -4,8 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LogiPark.MVVM.View" xmlns:core="clr-namespace:LogiPark.Core" d:DataContext="{d:DesignInstance Type=core:ObservableObject}"
-             mc:Ignorable="d" 
-             d:DesignHeight="569" d:DesignWidth="950"
+             mc:Ignorable="d" Height="569" Width="950"
              >
 
     <Border Background="#D9D9D9" CornerRadius="10">
@@ -23,7 +22,7 @@
 
 
             <!-- Left Column Content -->
-            <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="30">
+            <StackPanel Grid.Column="0" Margin="10,110,0,0">
 
                 <StackPanel>
                     <TextBlock Text="Park Name" Height="30" Width="350" FontSize="20" FontWeight="Bold"/>
@@ -60,15 +59,17 @@
             </StackPanel>
 
             <!-- Right Column Content -->
-            <Grid VerticalAlignment="Center" Grid.Column="1" Margin="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
+            <StackPanel Grid.Column="1" Margin="20,20,20,20">
+                <Grid Width="465">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
 
-                <Image Grid.Row="0" Name="ParkImage" Source="../../Assets/ParkImages/Clair Lake Park.jpg" Height="370"/>
+                <Image x:Name="ParkImage" Source="../../Assets/ParkImages/Clair Lake Park.jpg" Stretch="Fill" Height="370" Margin="0,50,0,0"/>
 
-                <Button Grid.Row="1"  Background="#00A3FF" Content="Change Photo" HorizontalAlignment="Center" Margin="0,20,0,0"  Click="ChangePhotoButton_Click" Padding="15" FontSize="20">
+                <Button Background="#00A3FF" Content="Change Photo" HorizontalAlignment="Center" Margin="0,20,0,0"  Click="ChangePhotoButton_Click" Padding="15" FontSize="20">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -76,7 +77,7 @@
                     </Button.Resources>
                 </Button>
 
-            </Grid>
+            </StackPanel>
         </Grid>
     </Border>
 </UserControl>
