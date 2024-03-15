@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using LogiPark.MVVM.Model;
 
 namespace LogiPark.MVVM.Model
 {

@@ -21,28 +21,28 @@ namespace Client_Test_Suite
         [TestMethod]
         public void GUI_Test_ClientSuccussfulLogin()
         {
-            var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\Hangsihak Sin\Pictures\LogiPark\Logi-Park-Login\bin\Debug\LogiPark.exe");
-            var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
+                var appiumOptions = new AppiumOptions();
+                appiumOptions.AddAdditionalCapability("app", @"C:\Users\Hangsihak Sin\Pictures\LogiPark\Logi-Park-Login\bin\Debug\LogiPark.exe");
+                var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
-            winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("hang");
-            winDriver.FindElementByAccessibilityId("passwordTextBox").SendKeys("1234");
-            winDriver.FindElementByName("Login").Click();
+                winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("hang");
+                winDriver.FindElementByAccessibilityId("passwordTextBox").SendKeys("1234");
+                winDriver.FindElementByName("Login").Click();
 
-            // allows the windows to actually open before trying to access them
-            System.Threading.Thread.Sleep(500);
+                // allows the windows to actually open before trying to access them
+                System.Threading.Thread.Sleep(500);
 
-            var allWindowHandles = winDriver.WindowHandles;
+                var allWindowHandles = winDriver.WindowHandles;
 
-            winDriver.SwitchTo().Window(allWindowHandles[0]);
+                winDriver.SwitchTo().Window(allWindowHandles[0]);
 
 
-            // if the ClientHomeView window name is found, that means the login was successful
-            string actual = winDriver.FindElementByName("ClientHomeView").Text;
+                // if the ClientHomeView window name is found, that means the login was successful
+                string actual = winDriver.FindElementByName("ClientHomeView").Text;
 
-            Assert.AreEqual("ClientHomeView", actual);
+                Assert.AreEqual("ClientHomeView", actual);
 
-            winDriver.CloseApp();
+                winDriver.CloseApp();
         }
 
         [TestMethod]

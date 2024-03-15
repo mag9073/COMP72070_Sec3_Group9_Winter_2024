@@ -4,6 +4,9 @@ using System.Security.Cryptography.X509Certificates;
 using Server.Implementations;
 using Server.DataStructure;
 using System.Globalization;
+using LogiPark.MVVM.Model;
+using UserDataManager = Server.Implementations.UserDataManager;
+using ParkDataManager = Server.Implementations.ParkDataManager;
 namespace Server_Test_Suite
 {
     [TestClass]
@@ -16,7 +19,7 @@ namespace Server_Test_Suite
             private string _testGoodFilePath = string.Empty;
             private string _testBadFilePath = string.Empty;
             private string _testNotValidFilePath = string.Empty;
-            private ParkDataManager _parkDataManager;
+            private Server.Implementations.ParkDataManager _parkDataManager;
 
             [TestInitialize]
             public void TestInitializer()
@@ -247,6 +250,8 @@ namespace Server_Test_Suite
         [TestClass]
         public class UserDataManagerTests
         {
+            
+
             [TestMethod]
             public void UT_SVR_032_PerformLogin_ValidUser_ReturnsSuccessMessage()
             {
@@ -325,12 +330,12 @@ namespace Server_Test_Suite
         public class ParkReviewsTests
         {
 
-            private ParkReviewManager _parkReviewManager;
+            private Server.Implementations.ParkReviewManager _parkReviewManager;
 
             [TestInitialize]
             public void TestInitializer()
             {
-                _parkReviewManager = new ParkReviewManager();
+                _parkReviewManager = new Server.Implementations.ParkReviewManager();
             }
 
             [TestMethod]
@@ -379,9 +384,375 @@ namespace Server_Test_Suite
             }
         }
 
-        [TestMethod]
-        public void UT_SVR_057_()
+        [TestClass]
+        public class PacketData
         {
+            [TestMethod]
+            public void UT_SVR_057_SetHeaderSourceID_Return_Valid_SourceID()
+            {
+                // Arrange
+                byte expectedSourceID = 1;
+                Header header = new Header();
+
+                // Act
+                header.SetHeaderSourceID(expectedSourceID); 
+                byte actualSourceID = header.sourceID;
+
+                // Assert
+                Assert.AreEqual(expectedSourceID, actualSourceID);
+
+            }
+
+            [TestMethod]
+            public void UT_SVR_058_SetDestinationID_Return_Valid_DestinationID()
+            {
+                // Arrange
+                byte expectedDestinationID = 1;
+                Header header = new Header();
+
+                // Act
+                header.SetHeaderDestinationID(expectedDestinationID);
+                byte actualDestinationID = header.destinationID;
+
+                // Assert
+                Assert.AreEqual(expectedDestinationID, actualDestinationID);
+            }
+
+            [TestMethod]
+            public void UT_SVR_059_SetHeaderSequenceNumber_Return_ValidSeqID()
+            {
+                // Arrange
+                uint expectedSequenceNumber = 1;
+                Header header = new Header();
+
+                // Act
+                header.SetHeaderSequenceNumber(expectedSequenceNumber);
+                uint actualSequenceNumber = header.sequenceNumber;
+
+                // Assert
+                Assert.AreEqual(expectedSequenceNumber, actualSequenceNumber);
+            }
+
+            [TestMethod]
+            public void UT_SVR_060_SetHeaderBodyLength_Return_ValidBodyLength()
+            {
+                // Arrange
+                uint expectedBodyLength = 8;
+                Header header = new Header();
+
+                // Act
+                header.SetHeaderBodyLength(expectedBodyLength);
+                uint actualBodyLength = header.GetHeaderBodyLength();
+
+                // Assert
+                Assert.AreEqual(expectedBodyLength, actualBodyLength);
+            }
+
+
+            [TestMethod]
+            public void UT_SVR_061_GetHeaderSourceID_Return_ValidSourceID()
+            {
+                // Arrange
+                byte expectedSourceID = 2;
+                Header header = new Header();
+
+                // Act
+                header.SetHeaderSourceID(expectedSourceID);
+                uint actualSourceID = header.GetHeaderSourceID();
+
+                // Assert
+                Assert.AreEqual(expectedSourceID, actualSourceID);
+            }
+
+            [TestMethod]
+            public void UT_SVR_062_GetHeaderDestinationID_Return_ValidDestinationID()
+            {
+                // Arrange
+                byte expectedDestinationID = 2;
+                Header header = new Header();
+
+                // Act
+                header.SetHeaderDestinationID(expectedDestinationID);
+                uint actualDestinationID = header.GetHeaderDestinationID();
+
+                // Assert
+                Assert.AreEqual(expectedDestinationID, actualDestinationID);
+            }
+
+            [TestMethod]
+            public void UT_SVR_063_GetHeaderSequenceNumber_Return_ValidSequenceNumber()
+            {
+                // Arrange
+                byte expectedSequenceNumber = 2;
+                Header header = new Header();
+
+                // Act
+                header.SetHeaderSequenceNumber(expectedSequenceNumber);
+                uint actualSequenceNumber = header.GetHeaderSequenceNumber();
+
+                // Assert
+                Assert.AreEqual(expectedSequenceNumber, actualSequenceNumber);
+            }
+
+            [TestMethod]
+            public void UT_SVR_064_GetHeaderBodyLength_Return_ValidBodyLength()
+            {
+                // Arrange
+                uint expectedBodyLength = 10;
+                Header header = new Header();
+
+                // Act
+                header.SetHeaderBodyLength(expectedBodyLength);
+                uint actualBodyLength = header.GetHeaderBodyLength();
+
+                // Assert
+                Assert.AreEqual(expectedBodyLength, actualBodyLength);
+            }
+
+
+            [TestMethod]
+            public void UT_SVR_065_SetHeaderType_Log_Return_ValidHeaderType_Log()
+            {
+                // Arrange
+                Types expectedHeaderType = Types.log;
+                Header header = new Header();
+
+                // Act
+                header.SetType(expectedHeaderType);
+                Types actualHeaderType = header.type;
+
+                // Assert
+                Assert.AreEqual(expectedHeaderType, actualHeaderType);
+            }
+
+
+            [TestMethod]
+            public void UT_SVR_066_GetHeaderType_Register_Return_ValidHeaderType_Register()
+            {
+                // Arrange
+                Types expectedHeaderType = Types.register;
+                Header header = new Header();
+
+                // Act
+                header.SetType(expectedHeaderType);
+                Types actualHeaderType = header.GetType();
+
+                // Assert
+                Assert.AreEqual(expectedHeaderType, actualHeaderType);
+            }
+
+            [TestMethod]
+            public void UT_SVR_067_SetBodyBuffer_Return_Valid_BodyBuffer()
+            {
+                // Arrange
+                UserDataManager.LoginData loginData = new UserDataManager.LoginData
+                {
+                    username = "mino",
+                    password = "12345",
+                };
+
+                Body body = new Body();
+                byte[] expectedBodyBuffer = loginData.SerializeToByteArray();
+
+                // Act 
+                body.SetBodyBuffer(expectedBodyBuffer);
+                byte[] actualBodyBuffer = body.buffer;
+
+                // Assert
+                Assert.AreEqual(expectedBodyBuffer, actualBodyBuffer);
+            }
+
+            [TestMethod]
+            public void UT_SVR_068_GetBodyBuffer_Return_Valid_BodyBuffer()
+            {
+                // Arrange
+                UserDataManager.LoginData loginData = new UserDataManager.LoginData
+                {
+                    username = "hang",
+                    password = "1234",
+                };
+
+                Body body = new Body();
+                byte[] expectedBodyBuffer = loginData.SerializeToByteArray();
+
+                // Act 
+                body.SetBodyBuffer(expectedBodyBuffer);
+                byte[] actualBodyBuffer = body.GetBodyBuffer();
+
+                // Assert
+                Assert.AreEqual(expectedBodyBuffer, actualBodyBuffer);
+            }
+
+            [TestMethod]
+            public void UT_SVR_069_SetPacketHead_Return_Valid_PacketHead()
+            {
+                // Arrange
+                Packet packet = new Packet();
+                byte expectedSourceID = 1;
+                byte expectedDestinationID = 2;
+                Types expectedType = Types.review;
+
+                // Act
+                packet.SetPacketHead(expectedSourceID, expectedDestinationID, expectedType);
+                byte actualSourceID = packet.GetPacketHeader().sourceID;
+                byte actualDestinationID = packet.GetPacketHeader().destinationID;
+                Types actualType = packet.GetPacketHeader().type;
+
+                // Assert
+                Assert.AreEqual(expectedSourceID, actualSourceID);
+                Assert.AreEqual(expectedDestinationID, actualDestinationID);
+                Assert.AreEqual(expectedType, actualType);
+            }
+
+            [TestMethod]
+            public void UT_SVR_070_GetPacketHead_Return_Valid_PacketHead()
+            {
+                // Arrange
+                Packet packet = new Packet();
+                byte expectedSourceID = 1;
+                byte expectedDestinationID = 2;
+                Types expectedType = Types.review;
+
+                // Act
+                packet.SetPacketHead(expectedSourceID, expectedDestinationID, expectedType);
+                Header actualHeader = packet.GetPacketHeader();
+                byte actualSourceID = actualHeader.GetHeaderSourceID();
+                byte actualDestinationID = actualHeader.GetHeaderDestinationID();
+                Types actualType = actualHeader.GetType();
+
+                // Assert
+                Assert.AreEqual(expectedSourceID, actualSourceID);
+                Assert.AreEqual(expectedDestinationID, actualDestinationID);
+                Assert.AreEqual(expectedType, actualType);
+            }
+
+            [TestMethod]
+            public void UT_SVR_076_SetParkName_Return_Valid_ParkName()
+            {
+                // Arrange
+                ParkData parkData = new ParkData();
+                string expectedParkName = "Waterloo Park";
+
+
+                // Act
+                parkData.SetParkName(expectedParkName);
+                string actualParkName = parkData.GetParkName();
+
+                // Arrange
+                Assert.AreEqual(expectedParkName, actualParkName);   
+            }
+
+            [TestMethod]
+            public void UT_SVR_078_SetParkAddress_Return_Valid_ParkName()
+            {
+                // Arrange
+                ParkData parkData = new ParkData();
+                string expectedParkAddress = "123 Liverpool Street, Manchester, UK";
+
+
+                // Act
+                parkData.SetParkAddress(expectedParkAddress);
+                string actualParkAddress = parkData.GetParkAddress();
+
+                // Arrange
+                Assert.AreEqual(expectedParkAddress, actualParkAddress);
+            }
+
+            [TestMethod]
+            public void UT_SVR_080_SetParkDescription_Return_Valid_ParkDescription()
+            {
+                // Arrange
+                ParkData parkData = new ParkData();
+                string expectedParkDescription = "This is Liverpool Park, it's full of trash!";
+
+
+                // Act
+                parkData.SetParkDescription(expectedParkDescription);
+                string actualParkDescription = parkData.GetParkDescription();
+
+                // Arrange
+                Assert.AreEqual(expectedParkDescription, actualParkDescription);
+            }
+
+            [TestMethod]
+            public void UT_SVR_082_SetParkHours_Return_Valid_ParkHours()
+            {
+                // Arrange
+                ParkData parkData = new ParkData();
+                string expectedHours = "Open 24 Hours";
+
+
+                // Act
+                parkData.SetParkHours(expectedHours);
+                string actualParkHours = parkData.GetParkHours();
+
+                // Arrange
+                Assert.AreEqual(expectedHours, actualParkHours);
+            }
+
+
+            [TestMethod]
+            public void UT_SVR_086_SetUserName_Return_Valid_UserName()
+            {
+                // Arrange
+                ParkReviewData parkReviewData = new ParkReviewData();
+                string expectedUserName = "madiera";
+
+
+                // Act
+                parkReviewData.SetUserName(expectedUserName);
+                string actualUserName = parkReviewData.GetUserName();
+
+                // Arrange
+                Assert.AreEqual(expectedUserName, actualUserName);  
+            }
+
+            [TestMethod]
+            public void UT_SVR_088_SetParkRating_Return_Valid_UserName()
+            {
+                // Arrange
+                ParkReviewData parkReviewData = new ParkReviewData();
+                float expectedParkRating = 4;
+
+
+                // Act
+                parkReviewData.SetParkRating(expectedParkRating);
+                float actualParkRating = parkReviewData.GetParkRating();
+
+                // Arrange
+                Assert.AreEqual(expectedParkRating, actualParkRating);
+            }
+
+            [TestMethod]
+            public void UT_SVR_090_SetDateOfPosting_Return_Valid_DateOfPosting()
+            {
+                // Arrange
+                ParkReviewData parkReviewData = new ParkReviewData();
+                DateTime expectedDateOfPosting = new DateTime(2024, 2, 29, 10, 30, 50);
+
+                // Act
+                parkReviewData.SetDateOfPosting(expectedDateOfPosting);
+                DateTime actualDateOfPosting = parkReviewData.GetDateOfPosting();
+
+                // Arrange
+                Assert.AreEqual(expectedDateOfPosting, actualDateOfPosting);
+            }
+
+            [TestMethod]
+            public void UT_SVR_090_SetParkReview_Return_Valid_ParkReview()
+            {
+                // Arrange
+                ParkReviewData parkReviewData = new ParkReviewData();
+                string expectedParkReview = "This park is a hidden gem. Highly Recommended!!!";
+
+                // Act
+                parkReviewData.SetReview(expectedParkReview);
+                string actualParkReview = parkReviewData.GetReview();
+
+                // Arrange
+                Assert.AreEqual(expectedParkReview, actualParkReview);
+            }
+
 
         }
 
