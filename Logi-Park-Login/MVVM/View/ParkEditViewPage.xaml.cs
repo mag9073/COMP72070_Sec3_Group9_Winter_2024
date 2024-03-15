@@ -112,7 +112,7 @@ namespace LogiPark.MVVM.View
             Window parentWindow = Window.GetWindow(this);
             if (parentWindow != null)
             {
-               parentWindow.Close();
+                parentWindow.Close();
             }
 
         }
@@ -162,7 +162,7 @@ namespace LogiPark.MVVM.View
             return isValid;
         }
 
-       
+
 
     }
 }

@@ -190,7 +190,8 @@ namespace LogiPark.MVVM.View
                     UpdateAverageRating(averageRating);
 
                 });
-            } else
+            }
+            else
             {
                 this.Dispatcher.Invoke(() =>
                 {
@@ -198,7 +199,7 @@ namespace LogiPark.MVVM.View
                 });
             }
         }
-    
+
 
         private void DisplayParkData()
         {
@@ -250,7 +251,7 @@ namespace LogiPark.MVVM.View
 
         private void ReviewButton_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine($"park name: { _parkName}");
+            Console.WriteLine($"park name: {_parkName}");
             ReviewInputGrid.Visibility = Visibility.Visible;
         }
 
@@ -266,7 +267,7 @@ namespace LogiPark.MVVM.View
                 string ratingText = selectedRatingItem.Content.ToString();
                 // https://stackoverflow.com/questions/67107637/how-can-i-use-int-tryparse-in-comparison-instruction-c-sharp-wpf
                 // Parses the rating, defaults to 1 if it fails.
-                int.TryParse(ratingText[0].ToString(), out rating); 
+                int.TryParse(ratingText[0].ToString(), out rating);
             }
 
             ParkReviewManager.ParkReviewData parkReviewData = new ParkReviewManager.ParkReviewData
@@ -288,6 +289,7 @@ namespace LogiPark.MVVM.View
             {
                 parentWindow.Close();
             }
+            DisplayParkReviews();
         }
 
         private void CancelReview_Click(Object sender, RoutedEventArgs e)

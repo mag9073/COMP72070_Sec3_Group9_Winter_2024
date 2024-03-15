@@ -2,7 +2,10 @@ ParkName: Waterloo Park
 Username: Katherine Slattery | ParkRating: 4 | DateOfPosting: 03/08/2024 12:43:08 AM | Review: I have many good memories walking through this park. I like the path around the lake and the trails through the woods. There are some nice flowering trees which are so peaceful to sit under in the summer.
 
 ParkName: Waterloo Park
-Username: hang | ParkRating: 2 | DateOfPosting: 03/08/2024 06:40:20 PM | Review: testing
+Username: hang | ParkRating: 3 | DateOfPosting: 03/11/2024 05:50:38 PM | Review: awefawe
+
+ParkName: Waterloo Park
+Username: hang | ParkRating: 3 | DateOfPosting: 03/12/2024 12:13:34 AM | Review: hello world
 
 ParkName: Clair Lake Park
 Username: Barry Smylie | ParkRating: 3 | DateOfPosting: 03/08/2024 12:43:08 AM | Review: The trail doesn't follow the banks of the reservoir.  It is a sports park with swimming pool, tennis courts, and field sports.  There is one access to the water
@@ -15,6 +18,9 @@ Username: hang | ParkRating: 3 | DateOfPosting: 03/08/2024 08:41:30 PM | Review:
 
 ParkName: Hillside Park
 Username: Bernzie Baby | ParkRating: 5 | DateOfPosting: 03/08/2024 12:43:08 AM | Review: It's a Great day to sit around at the junction and people watch listen and look for signs of Spring
+
+ParkName: Hillside Park
+Username: hang | ParkRating: 3 | DateOfPosting: 03/08/2024 09:11:01 PM | Review: testing
 
 ParkName: Brewmeister Green Park
 Username: Dennis Baker | ParkRating: 4 | DateOfPosting: 03/08/2024 12:43:08 AM | Review: Great place to relax and watch the world go by.
@@ -30,13 +36,4 @@ Username: Clara Esteves | ParkRating: 4 | DateOfPosting: 03/08/2024 12:43:08 AM 
 
 ParkName: Laurel Creek Conservation Area Park
 Username: Kathy Brookes | ParkRating: 5 | DateOfPosting: 03/08/2024 12:43:08 AM | Review: So pretty of a walk, and the birds are so much fun. Note if you want  to drive in and park, there is a fee
-
-ParkName: Laurel Creek Conservation Area Park
-Username: Terence McGuire | ParkRating: 4 | DateOfPosting: 03/08/2024 12:43:08 AM | Review: I've never camped her but used this area many times for hiking and photography. Sunrise and sunsets are great over the lake. Autumn is such a great time to hike the trails before the snow flies.
-
-ParkName: Hillside Park
-Username: hang | ParkRating: 3 | DateOfPosting: 03/08/2024 09:11:01 PM | Review: testing
-
-ParkName: Waterloo Park
-Username: hang | ParkRating: 3 | DateOfPosting: 03/11/2024 05:50:38 PM | Review: awefawe
 

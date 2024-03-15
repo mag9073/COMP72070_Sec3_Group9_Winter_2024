@@ -1,8 +1,10 @@
 ﻿using ProtoBuf;
 using Server.DataStructure;
+using Server.Interfaces;
 using Server.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -17,22 +19,21 @@ namespace Server.Implementations
         private UserDataManager _userDataManager;
         private ParkDataManager _parkDataManager;
         private ParkReviewManager _parkReviewManager;
-        private Logger _logger;
+        //private Logger _logger;
         private ImageManager _imageManager;
         private static ServerState currentState;
 
         private Action _stopServerCallback;
 
-        public PacketProcessor(UserDataManager userDataManager, ParkDataManager parkDataManager, ParkReviewManager parkReviewManager, Logger logger, ImageManager imageManager)
+        public PacketProcessor(UserDataManager userDataManager, ParkDataManager parkDataManager, ParkReviewManager parkReviewManager, ImageManager imageManager)
         {
             _userDataManager = userDataManager;
             _parkDataManager = parkDataManager;
             _parkReviewManager = parkReviewManager;
-            _logger = logger;
             _imageManager = imageManager;
         }
 
-        public void ProcessPacket(Packet packet, NetworkStream stream, TcpClient client)
+        public void ProcessPacket(Packet packet, ICommunicationChannel stream, TcpClient client)
         {
             // Process packets based on type
             switch (packet.GetPacketHeader().GetType())
@@ -64,7 +65,7 @@ namespace Server.Implementations
 
                 // All Park Images State
                 case Types.allparkimages:
-                    //ProcessAllParkImagePacket(stream);
+                    ProcessAllParkImagesPacket(stream);
                     break;
 
                 // Individual Park Image State
@@ -92,7 +93,7 @@ namespace Server.Implementations
                     ProcessDeleteAParkPacket(stream, packet, Get_parkReviewManager());
                     break;
 
-                // ADMIN - Add a Park 
+                // ADMIN - Add a Park -- Stopped here 
                 case Types.add_park:
                     ProcessAddAParkPacket(stream, packet);
                     break;
@@ -121,7 +122,7 @@ namespace Server.Implementations
          * ************************************************************************************************************/
 
         /*** Process Packet Type -> Login ***/
-        public void ProcessLoginPacket(Packet packet, NetworkStream stream, TcpClient client)
+        public void ProcessLoginPacket(Packet packet, ICommunicationChannel stream, TcpClient client)
         {
             byte[] buffer = packet.GetBody().buffer;
             if (buffer != null && buffer.Length > 0)
@@ -142,7 +143,7 @@ namespace Server.Implementations
         }
 
         /*** Process Packet Type -> Admin Login ***/
-        private void ProcessLoginAdminPacket(Packet packet, NetworkStream stream, TcpClient client)
+        private void ProcessLoginAdminPacket(Packet packet, ICommunicationChannel stream, TcpClient client)
         {
             byte[] buffer = packet.GetBody().buffer;
             if (buffer != null && buffer.Length > 0)
@@ -163,7 +164,7 @@ namespace Server.Implementations
         }
 
         /*** Process Packet Type -> Sign Up ***/
-        private void ProcessSignUpPacket(Packet packet, NetworkStream stream, TcpClient client)
+        private void ProcessSignUpPacket(Packet packet, ICommunicationChannel stream, TcpClient client)
         {
             byte[] buffer = packet.GetBody().buffer;
             if (buffer != null && buffer.Length > 0)
@@ -183,7 +184,7 @@ namespace Server.Implementations
         }
 
         /*** Process Packet Type -> All Park Data ***/
-        private void ProcessAllParkDataPacket(NetworkStream stream)
+        private void ProcessAllParkDataPacket(ICommunicationChannel stream)
         {
             ParkData[] allParkData = _parkDataManager.ReadAllParkDataFromFile(Constants.ParkData_FilePath);
 
@@ -205,7 +206,7 @@ namespace Server.Implementations
         }
 
         /*** Process Packet Type -> Individual Park Data ***/
-        private void ProcessOneParkDataPacket(NetworkStream stream, Packet receivedPacket)
+        private void ProcessOneParkDataPacket(ICommunicationChannel stream, Packet receivedPacket)
         {
             string parkName = Encoding.UTF8.GetString(receivedPacket.GetBody().buffer);
             ParkData? parkData = _parkDataManager.ReadOneParkDataFromFile(Constants.ParkData_FilePath, parkName);
@@ -230,19 +231,49 @@ namespace Server.Implementations
             }
         }
 
+        static List<string> GetImages(string imgdir)
+        {
+            List<string> images = new List<string>();
+
+            // Iterate through the folder
+            foreach (string imagePath in Directory.GetFiles(imgdir))
+            {
+                if (imagePath.IndexOf(".jpg") == -1)
+                {
+                    continue;
+                }
+
+                string imageName = Path.GetFileNameWithoutExtension(imagePath);
+                
+                // Add it to the list of images
+                images.Add(imageName);
+            }
+
+            return images;
+        }
+
 
         /*** Process Packet Type -> All Park Image ***/
-        private static void ProcessAllParkImagesPacket(NetworkStream stream)
+        private static void ProcessAllParkImagesPacket(ICommunicationChannel stream)
         {
+            // Get the image path
+            string imageFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "../../../Assets/ParkImages/");
 
-            // Count how many images are in the Assets/ParkImages/ folder
+            // Get list of images
+            List<string> images = GetImages(imageFolder);
 
-            // Based on that create a while loop
+            string buffer = "";
+            foreach (string imageName in images)
+            {
+                buffer += imageName;
+                buffer += "|";
+            }
 
-            // Within the loop -> 
+            // Need to be splitted to 1MB chunk
 
-
-
+            // Send the images name list
+            byte[] nameBytes = System.Text.Encoding.UTF8.GetBytes(buffer);
+            stream.WriteAsync(nameBytes, 0, nameBytes.Length);
         }
 
 
@@ -264,7 +295,7 @@ namespace Server.Implementations
 
         /*** Process Packet Type -> Individual Park Image ***/
 
-        private static void ProcessOneParkImagePacket(NetworkStream stream, Packet receivedPacket)
+        private static void ProcessOneParkImagePacket(ICommunicationChannel stream, Packet receivedPacket)
         {
             string parkName = Encoding.UTF8.GetString(receivedPacket.GetBody().buffer);
             string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "../../../Assets/ParkImages/" + parkName + ".jpg"); // Only .jpg file will work!!!
@@ -293,7 +324,7 @@ namespace Server.Implementations
 
 
         /*** Process Packet Type -> All Park Reviews ***/
-        private void ProcessAllReviewsPacket(NetworkStream stream)
+        private void ProcessAllReviewsPacket(ICommunicationChannel stream)
         {
 
             List<ParkReviewData> allReviews = _parkReviewManager.ReadAllParkReviewsFromFile(Constants.ParkReviews_FilePath);
@@ -321,7 +352,7 @@ namespace Server.Implementations
 
 
         /*** Process Packet Type -> Individual Park Reviews ***/
-        private void ProcessParkReviewPacket(NetworkStream stream, Packet receivedPacket)
+        private void ProcessParkReviewPacket(ICommunicationChannel stream, Packet receivedPacket)
         {
             // Deserialize the packet body to get the park name
             string parkName = Encoding.UTF8.GetString(receivedPacket.GetBody().buffer);
@@ -353,7 +384,7 @@ namespace Server.Implementations
         }
 
         /*** Process Packet Type -> Delete Park Review ***/
-        private void ProcessDeleteParkReviewPacket(NetworkStream stream, Packet receivedPacket)
+        private void ProcessDeleteParkReviewPacket(ICommunicationChannel stream, Packet receivedPacket)
         {
 
             // First, we need to deserialize the packet into ParkReviewData object form
@@ -399,7 +430,7 @@ namespace Server.Implementations
         }
 
         /*** Process Packet Type -> Delete Park Review ***/
-        public void ProcessDeleteAParkPacket(NetworkStream stream, Packet receivedPacket, ParkReviewManager _parkReviewManager)
+        public void ProcessDeleteAParkPacket(ICommunicationChannel stream, Packet receivedPacket, ParkReviewManager _parkReviewManager)
         {
             string parkName = Encoding.UTF8.GetString(receivedPacket.GetBody().buffer);
 
@@ -434,7 +465,7 @@ namespace Server.Implementations
         }
 
         /*** Process Packet Type -> Add a Park ***/
-        public void ProcessAddAParkPacket(NetworkStream stream, Packet receivedPacket)
+        public void ProcessAddAParkPacket(ICommunicationChannel stream, Packet receivedPacket)
         {
             try
             {
@@ -458,7 +489,7 @@ namespace Server.Implementations
         }
 
         /*** Process Packet Type -> Add a Park Review ***/
-        public void ProcessAddAParkReviewPacket(NetworkStream stream, Packet receivedPacket)
+        public void ProcessAddAParkReviewPacket(ICommunicationChannel stream, Packet receivedPacket)
         {
             try
             {
@@ -475,7 +506,7 @@ namespace Server.Implementations
 
         }
 
-        public void ProcessEditAParkInfoPacket(NetworkStream stream, Packet receivedPacket)
+        public void ProcessEditAParkInfoPacket(ICommunicationChannel stream, Packet receivedPacket)
         {
             try
             {
@@ -504,7 +535,7 @@ namespace Server.Implementations
          *                                        Acknowledge Message to Client                                       *
          * ************************************************************************************************************/
 
-        public static void SendAcknowledgement(NetworkStream stream, string message)
+        public static void SendAcknowledgement(ICommunicationChannel stream, string message)
         {
             byte[] messageBytes = Encoding.UTF8.GetBytes(message);
 
