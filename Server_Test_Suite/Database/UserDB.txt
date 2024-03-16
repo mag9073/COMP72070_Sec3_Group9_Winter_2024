@@ -8,9 +8,3 @@ ron
 9999
 venda
 0000
-Owen
-Jan82004
-ADMIN
-1234
-abcd
-1234

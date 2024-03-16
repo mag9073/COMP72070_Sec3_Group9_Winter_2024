@@ -10,7 +10,7 @@ namespace Server.Implementations
 {
     public class UserDataManager
     {
-        public string PerformLogin(global::Server.Implementations.UserDataManager.LoginData loginData)
+        public string PerformLogin(UserDataManager.LoginData loginData)
         {
             Console.WriteLine($"Username: {loginData.GetUserName()}");
             Console.WriteLine($"Password: {loginData.GetPassword()}");
@@ -19,7 +19,7 @@ namespace Server.Implementations
             return login.LoginUser(Constants.UserDB_FilePath);
         }
 
-        public string PerformAdminLogin(global::Server.Implementations.UserDataManager.LoginData loginData)
+        public string PerformAdminLogin(UserDataManager.LoginData loginData)
         {
             Console.WriteLine($"Username: {loginData.GetUserName()}");
             Console.WriteLine($"Password: {loginData.GetPassword()}");
@@ -28,7 +28,7 @@ namespace Server.Implementations
             return login.LoginUser(Constants.AdminDB_FilePath);
         }
 
-        public string PerformSignUp(global::Server.Implementations.UserDataManager.SignUpData signUpData)
+        public string PerformSignUp(UserDataManager.SignUpData signUpData)
         {
             Console.WriteLine($"Username:  {signUpData.GetUserName()}");
             Console.WriteLine($"Password:  {signUpData.GetPassword()}");
@@ -173,14 +173,14 @@ namespace Server.Implementations
             //    this.password = password;
             //}
 
-            //public byte[] SerializeToByteArray()
-            //{
-            //    using (MemoryStream stream = new MemoryStream())
-            //    {
-            //        Serializer.Serialize(stream, this);
-            //        return stream.ToArray();
-            //    }
-            //}
+            public byte[] SerializeToByteArray()
+            {
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    Serializer.Serialize(stream, this);
+                    return stream.ToArray();
+                }
+            }
 
             public SignUpData deserializeSignUpData(byte[] buffer)
             {
@@ -277,6 +277,7 @@ namespace Server.Implementations
                 return signUpMessage;
             }
         }
+
 
 
 
