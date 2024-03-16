@@ -14,7 +14,7 @@ namespace Server.Implementations
     public class Server: IServer
     {
         private static TcpListener _tcpListener;
-        private static bool _isRunning;
+        public bool _isRunning;
         private static UserDataManager userDataManager = new UserDataManager();
         private static ParkDataManager parkDataManager = new ParkDataManager();
         private static ParkReviewManager parkReviewManager = new ParkReviewManager();

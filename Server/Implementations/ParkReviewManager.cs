@@ -75,7 +75,7 @@ namespace Server.Implementations
             File.WriteAllText(filePath, fileContent.ToString());
         }
 
-        public void DeleteParkReviews(string parkNameToDelete)
+        public void DeleteParkReviews(string parkNameToDelete, string filePath)
         {
             // https://stackoverflow.com/questions/29975219/reading-lines-from-text-file-and-add-to-liststring
 
@@ -83,7 +83,7 @@ namespace Server.Implementations
             bool isThisReviewATargetPark = false;
 
             // Read all the lines from the file and store it in the memory as list
-            string[] allLines = File.ReadAllLines(Constants.ParkReviews_FilePath);
+            string[] allLines = File.ReadAllLines(filePath);
             for (int i = 0; i < allLines.Length; i++)
             {
                 string line = allLines[i];
@@ -109,7 +109,7 @@ namespace Server.Implementations
             }
 
             // Write updated file without the file we park we deleted
-            File.WriteAllLines(Constants.ParkReviews_FilePath, updatedContent);
+            File.WriteAllLines(filePath, updatedContent);
         }
 
         public void AppendReviewDataToFile(string filePath, ParkReviewData parkReviewData)

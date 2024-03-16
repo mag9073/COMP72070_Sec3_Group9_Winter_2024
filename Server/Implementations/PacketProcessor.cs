@@ -451,7 +451,7 @@ namespace Server.Implementations
 
                 // Delete park data.
                 _parkDataManager.DeleteParkData(parkName);
-                _parkReviewManager.DeleteParkReviews(parkName);
+                _parkReviewManager.DeleteParkReviews(parkName, Constants.ParkReviews_FilePath);
 
                 // Send a success message back to the client.
                 SendAcknowledgement(stream, $"{parkName} has been deleted -> (park data, park image, park reviews)");
@@ -535,7 +535,7 @@ namespace Server.Implementations
          *                                        Acknowledge Message to Client                                       *
          * ************************************************************************************************************/
 
-        public static void SendAcknowledgement(ICommunicationChannel stream, string message)
+        public void SendAcknowledgement(ICommunicationChannel stream, string message)
         {
             byte[] messageBytes = Encoding.UTF8.GetBytes(message);
 
