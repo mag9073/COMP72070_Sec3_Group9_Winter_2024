@@ -739,7 +739,7 @@ namespace Server_Test_Suite
             }
 
             [TestMethod]
-            public void UT_SVR_090_SetParkReview_Return_Valid_ParkReview()
+            public void UT_SVR_092_SetParkReview_Return_Valid_ParkReview()
             {
                 // Arrange
                 ParkReviewData parkReviewData = new ParkReviewData();

@@ -179,7 +179,7 @@ namespace Server.Implementations
             {
                 Console.WriteLine("Packet bodyBuffer is empty or null");
                 stream.Close();
-                client.Close();
+                //client.Close();
             }
         }
 

@@ -148,7 +148,7 @@
                 <TextBlock Text="Don’t have an account? " Foreground="#FF58745E" VerticalAlignment="Center" Width="128" />
                 <TextBlock Text="Sign Up" Style="{StaticResource HyperlinkStyle}" Foreground="#FF2FB54C" VerticalAlignment="Center" Height="23" Width="59" FontSize="12" MouseLeftButtonDown="Signup_Handler"/>
             </StackPanel>
-            <Button Background="#FF61A9FF" Grid.Column="2" Content="Admin Mode" Margin="0,80,0,0" Click="AdminButton_Click" Width="100" Height="25">
+            <Button x:Name="adminModeButton" Background="#FF61A9FF" Grid.Column="2" Content="Admin Mode" Margin="0,80,0,0" Click="AdminButton_Click" Width="100" Height="25">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
