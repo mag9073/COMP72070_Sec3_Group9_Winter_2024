@@ -91,12 +91,5 @@ namespace Server.DataStructure
             }
         }
 
-        public ParkData[] deserializeParkDataArray(byte[] data, int offset, int size)
-        {
-            using (MemoryStream ms = new MemoryStream(data, offset, size))
-            {
-                return Serializer.Deserialize<ParkData[]>(ms);
-            }
-        }
     }
 }

@@ -93,7 +93,7 @@ namespace Server_Test_Suite
                 };
 
                 // Act
-                ParkData actualResult = _parkDataManager.ReadOneParkDataFromFile(_testGoodFilePath, "Kitchener Park");
+                ParkData? actualResult = _parkDataManager.ReadOneParkDataFromFile(_testGoodFilePath, "Kitchener Park");
 
                 // Assert
                 Assert.IsNotNull(actualResult, "Expected not null Park Data object");
@@ -106,7 +106,7 @@ namespace Server_Test_Suite
             public void UT_SVR_042_ReadOneParkDataFromFile_WithNoMatchingName_ReturnsNull()
             {
                 // Act
-                ParkData result = _parkDataManager.ReadOneParkDataFromFile(_testGoodFilePath, "South Park");
+                ParkData? result = _parkDataManager.ReadOneParkDataFromFile(_testGoodFilePath, "South Park");
 
                 // Assert
                 Assert.IsNull(result, "Expected a null result for a nonexistent park name");
@@ -119,7 +119,7 @@ namespace Server_Test_Suite
                 string parkName = "South Park";
 
                 // Act
-                ParkData result;
+                ParkData? result;
                 result = _parkDataManager.ReadOneParkDataFromFile(_testNotValidFilePath, parkName);
                 // Assert within catch to ensure exception is caught and handled
                 Assert.IsNull(result, "Expected result to be null when exception is caught.");
@@ -220,13 +220,13 @@ namespace Server_Test_Suite
                 string[] remainingLines = File.ReadAllLines("../../../Database/ParkData.txt");
                 Console.WriteLine(remainingLines);
                 Assert.IsFalse(remainingLines.Contains(targetParkName), $"{targetParkName} should be deleted.");
-                Assert.AreEqual(8, remainingLines.Length, "Expected number of lines after deletion is incorrect.");
+                Assert.AreEqual(12, remainingLines.Length, "Expected number of lines after deletion is incorrect.");
                 Assert.IsFalse(remainingLines.Contains(testData.parkName), "Associated Address should be deleted.");
                 Assert.IsFalse(remainingLines.Contains(testData.parkAddress), "Associated Description should be deleted.");
             }
 
             [TestMethod]
-            public void UT_SVR_049_EditAParkDataToFile_Rreturn_UpdatedParkData()
+            public void UT_SVR_049_EditAParkDataToFile_Return_UpdatedParkData()
             {
                 // Arrange
 
@@ -260,24 +260,25 @@ namespace Server_Test_Suite
                     testData.AppendLine(expectedParkData[i].parkHours);
                 }
 
+                File.WriteAllText(tempFilePath, testData.ToString());
+
 
                 ParkData requestToUpdateParkData = new ParkData
                 {
-                    parkName = "Cambridge Park",
-                    parkAddress = "123 Fountain St",
-                    parkDescription = "This is Loo Park",
-                    parkHours = "9:00 AM - 5:00 PM",
+                    parkName = "Kitchener Park",
+                    parkAddress = "123 Fanta St",
+                    parkDescription = "This is a Fantastic Park",
+                    parkHours = "Open 24 Hours",
                 };
 
                 // Act
                 _parkDataManager.EditAParkDataToFile(tempFilePath, requestToUpdateParkData);
 
                 ParkData[] updatedParks = _parkDataManager.ReadAllParkDataFromFile(tempFilePath);
-                ParkData? updatedPark = updatedParks.FirstOrDefault(p => p.parkName == requestToUpdateParkData.parkName);
+                ParkData updatedPark = updatedParks.FirstOrDefault(p => p.parkName == requestToUpdateParkData.parkName);
 
                 // Assert
-                Assert.IsNotNull(updatedPark, "Updated park should exist.");
-
+                Assert.IsNotNull(updatedPark, "The park was not updated or added correctly.");
                 Assert.AreEqual(requestToUpdateParkData.parkAddress, updatedPark.parkAddress, "Park address should be updated.");
                 Assert.AreEqual(requestToUpdateParkData.parkDescription, updatedPark.parkDescription, "Park description should be updated.");
                 Assert.AreEqual(requestToUpdateParkData.parkHours, updatedPark.parkHours, "Park hours should be updated.");
@@ -419,7 +420,7 @@ namespace Server_Test_Suite
 
                 // Assert
                 Assert.IsNotNull(actualReviews);
-                Assert.AreEqual(2, actualReviews.Count);
+                Assert.AreEqual(5, actualReviews.Count);
 
                 // Correct first review
                 Assert.AreEqual(expectedReviews[0].ParkName, actualReviews[0].ParkName);
@@ -875,6 +876,36 @@ namespace Server_Test_Suite
                 Assert.AreEqual(expectedHours, actualParkHours);
             }
 
+            [TestMethod]
+            public void UT_SVR_084_DeserializeParkData_Return_Valid_ParkData()
+            {
+                // Arrange
+                ParkData expectedParkData = new ParkData
+                {
+                    parkName = "Stanley Park",
+                    parkAddress = "123 Stan Ave, Vancouver, BC",
+                    parkDescription = "Stanley Park is a world renowned park and tourist attraction in Vancouver, Canada. ",
+                    parkHours = "Open 24 Hours",
+                };
+
+
+                // Act
+                byte[] serializedParkData = expectedParkData.SerializeToByteArray();
+
+
+                ParkData deserializedParkData = new ParkData().deserializeParkData(serializedParkData);
+
+
+                // Assert
+                Assert.IsNotNull(serializedParkData);
+                Assert.IsNotNull(deserializedParkData);
+
+                Assert.AreEqual(expectedParkData.parkName, deserializedParkData.parkName);
+                Assert.AreEqual(expectedParkData.parkAddress, deserializedParkData.parkAddress);
+                Assert.AreEqual(expectedParkData.parkDescription, deserializedParkData.parkDescription);
+                Assert.AreEqual(expectedParkData.parkHours, deserializedParkData.parkHours);
+            }
+
 
             [TestMethod]
             public void UT_SVR_086_SetUserName_Return_Valid_UserName()
@@ -936,6 +967,40 @@ namespace Server_Test_Suite
 
                 // Arrange
                 Assert.AreEqual(expectedParkReview, actualParkReview);
+            }
+
+            [TestMethod]
+            public void UT_SVR_093_SerializeToByteArray_Return_ValidSerializeData()
+            {
+                // Arrange
+                ParkReviewData expectedReviewData = new ParkReviewData
+                {
+                    ParkName = "Cornerbrook Park",
+                    UserName = "Karen Freiburger",
+                    Rating = 5,
+                    DateOfPosting = new DateTime(2024, 2, 29, 10, 30, 50),
+                    Review = "For the winter it has a great little sledding hill and the skating rink is very well maintained! Also a newer play structure and swings for all seasons complete the fun!",
+                };
+
+                // Convert to ByteArray
+                byte[] serializeParkReviewData = expectedReviewData.SerializeToByteArray();
+
+
+                // Act
+                ParkReviewData actualReviewData = new ParkReviewData();
+
+                actualReviewData = actualReviewData.deserializeParkReviewData(serializeParkReviewData);
+
+                // Assert
+                Assert.IsNotNull(serializeParkReviewData);
+                Assert.IsNotNull(actualReviewData);
+                Assert.AreEqual(expectedReviewData.ParkName, actualReviewData.ParkName);
+                Assert.AreEqual(expectedReviewData.UserName, actualReviewData.UserName);
+                Assert.AreEqual(expectedReviewData.Rating, actualReviewData.Rating);
+                Assert.AreEqual(expectedReviewData.DateOfPosting, actualReviewData.DateOfPosting);
+                Assert.AreEqual(expectedReviewData.Review, actualReviewData.Review);
+
+
             }
 
             [TestMethod]

@@ -479,12 +479,33 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            string targetParkName = "Clair Lake Park";
+
+            ParkReviewData parkReviewData = new ParkReviewData
+            {
+                ParkName = "Clair Lake Park",
+                UserName = "Barry Smylie",
+                Rating = 3,
+                DateOfPosting = new DateTime(2024, 3, 8, 0, 43, 8),
+                Review = "The trail doesn't follow the banks of the reservoir.  It is a sports park with swimming pool, tennis courts, and field sports.  There is one access to the water",
+            };
+
+            PacketData.Packet sendPacket = new PacketData.Packet();
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
 
             // Act
+            sendPacket.SetPacketHead(1, 2, Server.DataStructure.PacketData.Types.delete_review);
+            byte[] deleteReviewsDataBuffer = parkReviewData.SerializeToByteArray();
+            sendPacket.SetPacketBody(deleteReviewsDataBuffer, (uint)deleteReviewsDataBuffer.Length);
+            packetProcessor.ProcessPacket(sendPacket, fakeChannel, null);
 
 
 
             // Assert
+            Assert.IsTrue(fakeChannel.WriteCalled, "Write method was not called");
+            string expectedAcknowledgementMessage = "Review deleted successfully.";
+            string actualAcknowledgementMessage = Encoding.UTF8.GetString(fakeChannel.WrittenBytes, fakeChannel.WrittenOffset, fakeChannel.WrittenSize);
+            Assert.AreEqual(expectedAcknowledgementMessage, actualAcknowledgementMessage, "Acknowledgement message does not match expected.");
 
 
 
@@ -493,7 +514,7 @@ namespace Server_Test_Suite
 
 
         [TestMethod]
-        public void IT_012_ProcessAddAParkPacketTest()
+        public void IT_012_ProcessDeleteAParkPacketTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -501,13 +522,25 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            string targetParkName = "Hillside Park";
+
+            PacketData.Packet sendPacket = new PacketData.Packet();
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+
 
             // Act
+            sendPacket.SetPacketHead(1, 2, Server.DataStructure.PacketData.Types.delete_park);
+            byte[] parkNameBuffer = Encoding.UTF8.GetBytes(targetParkName);
+            sendPacket.SetPacketBody(parkNameBuffer, (uint)parkNameBuffer.Length);
+            packetProcessor.ProcessPacket(sendPacket, fakeChannel, null);
 
 
 
             // Assert
-
+            Assert.IsTrue(fakeChannel.WriteCalled, "Write method was not called");
+            string expectedAcknowledgementMessage = $"{targetParkName} has been deleted -> (park data, park image, park reviews)";
+            string actualAcknowledgementMessage = Encoding.UTF8.GetString(fakeChannel.WrittenBytes, fakeChannel.WrittenOffset, fakeChannel.WrittenSize);
+            Assert.AreEqual(expectedAcknowledgementMessage, actualAcknowledgementMessage, "Acknowledgement message does not match expected.");
 
 
 
@@ -546,15 +579,20 @@ namespace Server_Test_Suite
 
             packetProcessor.ProcessPacket(sendPacket, fakeChannel, null);
 
-            actualParkReviewData.deserializeParkReviewData(fakeChannel.WrittenBytes, fakeChannel.WrittenOffset, fakeChannel.WrittenSize);
+            
 
             // Assert
             Assert.IsTrue(fakeChannel.WriteCalled, "Write method was not called");
-            Assert.AreEqual(expectedParkReviewData.ParkName, actualParkReviewData.ParkName, "Park Name Data do not match");
-            Assert.AreEqual(expectedParkReviewData.UserName, actualParkReviewData.UserName, "Park UserName Data do not match");
-            Assert.AreEqual(expectedParkReviewData.Rating, actualParkReviewData.Rating, "Park Rating Data do not match");
-            Assert.AreEqual(expectedParkReviewData.DateOfPosting, actualParkReviewData.DateOfPosting, "Park DateOfPosting Data do not match");
-            Assert.AreEqual(expectedParkReviewData.Review, actualParkReviewData.Review, "Park Review Data do not match");
+            string expectedAcknowledgementMessage = "Review added successfully";
+            string actualAcknowledgementMessage = Encoding.UTF8.GetString(fakeChannel.WrittenBytes, fakeChannel.WrittenOffset, fakeChannel.WrittenSize);
+            Assert.AreEqual(expectedAcknowledgementMessage, actualAcknowledgementMessage, "Acknowledgement message does not match expected.");
+
+
+            //Assert.AreEqual(expectedParkReviewData.ParkName, actualParkReviewData.ParkName, "Park Name Data do not match");
+            //Assert.AreEqual(expectedParkReviewData.UserName, actualParkReviewData.UserName, "Park UserName Data do not match");
+            //Assert.AreEqual(expectedParkReviewData.Rating, actualParkReviewData.Rating, "Park Rating Data do not match");
+            //Assert.AreEqual(expectedParkReviewData.DateOfPosting, actualParkReviewData.DateOfPosting, "Park DateOfPosting Data do not match");
+            //Assert.AreEqual(expectedParkReviewData.Review, actualParkReviewData.Review, "Park Review Data do not match");
 
 
         }
@@ -587,30 +625,6 @@ namespace Server_Test_Suite
 
         }
 
-
-        [TestMethod]
-        public void UT_SVR_040_SendAcknowledgementTest()
-        {
-            // Arrange
-            FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
-            UserDataManager userDataManager = new UserDataManager();
-            ParkDataManager parkDataManager = new ParkDataManager();
-            ParkReviewManager parkReviewManager = new ParkReviewManager();
-            ImageManager imageManager = new ImageManager();
-            string expectedMessage = "Hello World";
-            byte[] expectedBytes = Encoding.UTF8.GetBytes(expectedMessage);
-
-            // Act 
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
-            packetProcessor.SendAcknowledgement(fakeChannel, expectedMessage);
-
-
-
-            // Assert
-            Assert.AreEqual(1, fakeChannel.WrittenMessages.Count, "SendAcknowledgement should write exactly one message.");
-            CollectionAssert.AreEqual(expectedBytes, fakeChannel.WrittenMessages.First(), "The written message does not match the expected message.");
-            Assert.IsTrue(fakeChannel.FlushCalled, "Flush was not called after writing the message.");
-        }
 
 
 

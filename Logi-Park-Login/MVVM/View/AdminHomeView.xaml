@@ -78,7 +78,14 @@
                      Grid.Column="1"
                      Style="{StaticResource ModernTextbox}"
                      />
-
+            <Button Grid.Column="1" Margin="100,0,0,0" HorizontalAlignment="Left" Background="LightBlue" Content="Refresh" Click="RefreshButton_Click" Width="100" Height="40" FontSize="20">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            
             <ContentControl Grid.Row="1"
                             Grid.Column="1"
                             VerticalAlignment="Center"

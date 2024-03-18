@@ -71,7 +71,7 @@
 
                 <TextBlock Text="Recommended Reviews" FontSize="20" FontWeight="SemiBold" Margin="0,20"/>
                 <!-- ScrollViewer for dynamic review cards with admin delete button -->
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="20" Height="Auto">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden" Margin="20" MaxHeight="450">
                     <StackPanel x:Name="ReviewsStackPanel" Margin="0,0,0,20">
                         <!-- Review items will be dynamically added here in the code-behind -->
                         <Button Content="Delete Review" Style="{StaticResource DeleteButtonStyle}" Click="DeleteReviewButton_Click" CommandParameter="{Binding}" Width="114" />

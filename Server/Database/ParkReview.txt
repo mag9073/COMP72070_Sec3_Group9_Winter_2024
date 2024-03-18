@@ -1,12 +1,6 @@
 ParkName: Waterloo Park
 Username: Katherine Slattery | ParkRating: 4 | DateOfPosting: 03/08/2024 12:43:08 AM | Review: I have many good memories walking through this park. I like the path around the lake and the trails through the woods. There are some nice flowering trees which are so peaceful to sit under in the summer.
 
-ParkName: Waterloo Park
-Username: hang | ParkRating: 3 | DateOfPosting: 03/11/2024 05:50:38 PM | Review: awefawe
-
-ParkName: Waterloo Park
-Username: hang | ParkRating: 3 | DateOfPosting: 03/12/2024 12:13:34 AM | Review: hello world
-
 ParkName: Clair Lake Park
 Username: Barry Smylie | ParkRating: 3 | DateOfPosting: 03/08/2024 12:43:08 AM | Review: The trail doesn't follow the banks of the reservoir.  It is a sports park with swimming pool, tennis courts, and field sports.  There is one access to the water
 
@@ -15,6 +9,9 @@ Username: Amber Clarke | ParkRating: 4 | DateOfPosting: 03/08/2024 12:43:08 AM |
 
 ParkName: Clair Lake Park
 Username: hang | ParkRating: 3 | DateOfPosting: 03/08/2024 08:41:30 PM | Review: awef
+
+ParkName: Clair Lake Park
+Username: hang | ParkRating: 4 | DateOfPosting: 03/18/2024 06:10:36 AM | Review: hello
 
 ParkName: Hillside Park
 Username: Bernzie Baby | ParkRating: 5 | DateOfPosting: 03/08/2024 12:43:08 AM | Review: It's a Great day to sit around at the junction and people watch listen and look for signs of Spring
