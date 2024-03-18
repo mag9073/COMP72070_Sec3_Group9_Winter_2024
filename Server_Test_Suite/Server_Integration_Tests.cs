@@ -25,6 +25,9 @@ namespace Server_Test_Suite
         // This may be moved to its own class
         public class FakeCommunicationChannel : ICommunicationChannel
         {
+
+            NetworkStream _stream;
+
             public byte[] WrittenBytes { get; private set; }
             public int WrittenOffset { get; private set; }
             public int WrittenSize { get; private set; }
@@ -41,6 +44,11 @@ namespace Server_Test_Suite
                 WrittenOffset = offset;
                 WrittenSize = size;
                 WriteCalled = true;
+            }
+
+            public async Task WriteAsync(byte[] nameBytes, int v, int length)
+            {
+                await _stream.WriteAsync(nameBytes, v, length);
             }
 
             // Simulate as how network stream.read is done

@@ -3,6 +3,7 @@ using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using OpenQA.Selenium.Remote;
 using System;
+using System.Collections.Specialized;
 
 namespace Client_Test_Suite
 {
@@ -19,10 +20,11 @@ namespace Client_Test_Suite
 
         //************************ LOGIN TESTS ************************
         [TestMethod]
-        public void GUI_Test_ClientSuccussfulLogin()
+        public void Robot_Test_ClientSuccussfulLogin()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path);
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("hang");
@@ -44,10 +46,11 @@ namespace Client_Test_Suite
         }
 
         [TestMethod]
-        public void GUI_Test_ClientFailureLogin()
+        public void Robot_Test_ClientFailureLogin()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("abcd");
@@ -68,10 +71,11 @@ namespace Client_Test_Suite
         }
 
         [TestMethod]
-        public void GUI_Test_AdminSuccussfulLogin()
+        public void Robot_Test_AdminSuccussfulLogin()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByName("Admin Mode").Click();
@@ -98,10 +102,11 @@ namespace Client_Test_Suite
         }
 
         [TestMethod]
-        public void GUI_Test_AdminFailureLogin()
+        public void Robot_Test_AdminFailureLogin()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByName("Admin Mode").Click();
@@ -134,10 +139,11 @@ namespace Client_Test_Suite
 
         //************************ SIGNUP TESTS ************************
         [TestMethod]
-        public void GUI_Test_ClientSuccussfulSignup()
+        public void Robot_Test_ClientSuccussfulSignup()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByName("Sign Up").Click();
@@ -164,10 +170,11 @@ namespace Client_Test_Suite
         }
 
         [TestMethod]
-        public void GUI_Test_ClientFailureSignup()
+        public void Robot_Test_ClientFailureSignup()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByName("Sign Up").Click();
@@ -198,10 +205,11 @@ namespace Client_Test_Suite
         }
 
         [TestMethod]
-        public void GUI_Test_AdminSuccussfulSignup()
+        public void Robot_Test_AdminSuccussfulSignup()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByName("Admin Mode").Click();
@@ -234,10 +242,11 @@ namespace Client_Test_Suite
         }
 
         [TestMethod]
-        public void GUI_Test_AdminFailureSignup()
+        public void Robot_Test_AdminFailureSignup()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByName("Admin Mode").Click();
@@ -279,10 +288,11 @@ namespace Client_Test_Suite
 
         //*********************** HOME PAGE TESTS ***********************
         [TestMethod]
-        public void GUI_Test_ClientParkCard()
+        public void Robot_Test_ClientParkCard()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("hang");
@@ -319,10 +329,11 @@ namespace Client_Test_Suite
         }
 
         [TestMethod]
-        public void GUI_Test_ClientMapView()
+        public void Robot_Test_ClientMapView()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("hang");
@@ -350,10 +361,11 @@ namespace Client_Test_Suite
         }
 
         [TestMethod]
-        public void GUI_Test_LogoutButton()
+        public void Robot_Test_LogoutButton()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("hang");
@@ -381,10 +393,11 @@ namespace Client_Test_Suite
         }
 
         [TestMethod]
-        public void GUI_Test_AdminLogoutButton()
+        public void Robot_Test_AdminLogoutButton()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByName("Admin Mode").Click();
@@ -418,10 +431,11 @@ namespace Client_Test_Suite
         }
 
         [TestMethod]
-        public void GUI_Test_AdminParkCard()
+        public void Robot_Test_AdminParkCard()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByName("Admin Mode").Click();
@@ -464,10 +478,11 @@ namespace Client_Test_Suite
         }
 
         [TestMethod]
-        public void GUI_Test_AdminAddPark()
+        public void Robot_Test_AdminAddPark()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByName("Admin Mode").Click();
@@ -497,7 +512,7 @@ namespace Client_Test_Suite
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
-            winDriver.FindElementByName("MINI OWEN").Click();
+            winDriver.FindElementByName("PFP").Click();
             winDriver.FindElementByName("Open").Click();
 
             winDriver.FindElementByAccessibilityId("ParkNameTextBox").SendKeys("Test");
@@ -517,10 +532,16 @@ namespace Client_Test_Suite
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[0]);
 
-            // if the write review button is found, the park view page opened up
-            string actual = winDriver.FindElementByName("AdminHomeView").Text;
+            winDriver.FindElementByName("Refresh").Click();
 
-            Assert.AreEqual("AdminHomeView", actual);
+            System.Threading.Thread.Sleep(300);
+            allWindowHandles = winDriver.WindowHandles;
+            winDriver.SwitchTo().Window(allWindowHandles[0]);
+
+            // if the write review button is found, the park view page opened up
+            string actual = winDriver.FindElementByName("Test").Text;
+
+            Assert.AreEqual("Test", actual);
 
             System.Threading.Thread.Sleep(300);
             allWindowHandles = winDriver.WindowHandles;
@@ -534,10 +555,11 @@ namespace Client_Test_Suite
         //*********************** PARK VIEW TESTS ***********************
         
         [TestMethod]
-        public void GUI_Test_ParkViewWriteReview()
+        public void Robot_Test_ParkViewWriteReview()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("hang");
@@ -584,10 +606,11 @@ namespace Client_Test_Suite
         }
        
         [TestMethod]
-        public void GUI_Test_AdminEditParkInfo()
+        public void Robot_Test_AdminEditParkInfo()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByName("Admin Mode").Click();
@@ -658,10 +681,11 @@ namespace Client_Test_Suite
         }
         
         [TestMethod]
-        public void GUI_Test_AdminDeletePark()
+        public void Robot_Test_AdminDeletePark()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByName("Admin Mode").Click();
@@ -712,10 +736,11 @@ namespace Client_Test_Suite
         }
         
         [TestMethod]
-        public void GUI_Test_AdminDeleteReview()
+        public void Robot_Test_AdminDeleteReview()
         {
             var appiumOptions = new AppiumOptions();
-            appiumOptions.AddAdditionalCapability("app", @"C:\Users\OwenA\source\repos\2nd Year 2nd SEMESTER\COMP72070 - Project IV\COMP72070_Sec3_Group9_Winter_2024\Logi-Park-Login\bin\Debug\LogiPark.exe");
+            string path = AppDomain.CurrentDomain.BaseDirectory + "../../../../Logi-Park-Login/bin/Debug/LogiPark.exe";
+            appiumOptions.AddAdditionalCapability("app", path); 
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
             winDriver.FindElementByName("Admin Mode").Click();
