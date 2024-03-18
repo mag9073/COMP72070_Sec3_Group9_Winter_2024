@@ -147,21 +147,14 @@ namespace Server.DataStructure
 
             public Packet(byte[] data)
             {
-                try
+                using (var stream = new MemoryStream(data))
                 {
-                    using (var stream = new MemoryStream(data))
-                    {
-                        Packet packet = Serializer.Deserialize<Packet>(stream);
-                        this.header = packet.header;
-                        this.body = packet.body;
-                        this.tail = packet.tail;
-                    }
+                    Packet packet = Serializer.Deserialize<Packet>(stream);
+                    this.header = packet.header;
+                    this.body = packet.body;
+                    this.tail = packet.tail;
                 }
-                catch
-                {
-                    // Log error
-                    throw;
-                }
+                
             }
 
 
@@ -216,17 +209,9 @@ namespace Server.DataStructure
 
             public static Packet DeserializeFromByteArray(byte[] data)
             {
-                try
+                using (MemoryStream stream = new MemoryStream(data))
                 {
-                    using (MemoryStream stream = new MemoryStream(data))
-                    {
-                        return Serializer.Deserialize<Packet>(stream);
-                    }
-                }
-                catch
-                {
-                    // Log error
-                    throw;
+                    return Serializer.Deserialize<Packet>(stream);
                 }
             }
 

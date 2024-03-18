@@ -101,6 +101,13 @@ namespace Server.Implementations
             try
             {
                 StringBuilder parkDataBuffer = new StringBuilder();
+
+
+                if (File.Exists(filePath) && new FileInfo(filePath).Length > 0)
+                {
+                    parkDataBuffer.AppendLine();
+                }
+
                 parkDataBuffer.AppendLine(parkData.parkName);
                 parkDataBuffer.AppendLine(parkData.parkAddress);
                 parkDataBuffer.AppendLine(parkData.parkDescription);

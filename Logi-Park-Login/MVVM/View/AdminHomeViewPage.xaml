@@ -35,7 +35,7 @@
                            FontSize="28"
                            VerticalAlignment="Center"
                            Margin="30,0,0,0" Height="70"/>
-                <Button HorizontalAlignment="Right" Margin="0,0,30,0" Background="Green" Content="Add Park" Click="AddButton_Click" Width="100" Height="40" FontSize="20">
+                <Button x:Name="addParkButton" HorizontalAlignment="Right" Margin="0,0,30,0" Background="Green" Content="Add Park" Click="AddButton_Click" Width="100" Height="40" FontSize="20">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="10"/>

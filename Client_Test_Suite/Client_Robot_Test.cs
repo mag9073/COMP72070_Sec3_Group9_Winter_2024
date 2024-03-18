@@ -27,9 +27,9 @@ namespace Client_Test_Suite
             appiumOptions.AddAdditionalCapability("app", path);
             var winDriver = new WindowsDriver<WindowsElement>(new Uri(WindowsApplicationDriverUrl), appiumOptions);
 
-            winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("hang");
-            winDriver.FindElementByAccessibilityId("passwordTextBox").SendKeys("1234");
-            winDriver.FindElementByName("Login").Click();
+                winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("hang");
+                winDriver.FindElementByAccessibilityId("passwordTextBox").SendKeys("1234");
+                winDriver.FindElementByName("Login").Click();
 
             // allows the windows to actually open before trying to access them
             System.Threading.Thread.Sleep(300);
@@ -42,7 +42,7 @@ namespace Client_Test_Suite
 
             Assert.AreEqual("ClientHomeView (hang)", actual);
 
-            winDriver.CloseApp();
+                winDriver.CloseApp();
         }
 
         [TestMethod]
