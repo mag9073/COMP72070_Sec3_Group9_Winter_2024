@@ -37,6 +37,3 @@ Username: Clara Esteves | ParkRating: 4 | DateOfPosting: 03-08-2024 12:43:08 AM 
 ParkName: Laurel Creek Conservation Area Park
 Username: Kathy Brookes | ParkRating: 5 | DateOfPosting: 03-08-2024 12:43:08 AM | Review: So pretty of a walk, and the birds are so much fun. Note if you want  to drive in and park, there is a fee
 
-ParkName: Waterloo Park
-Username: hang | ParkRating: 3 | DateOfPosting: 03-18-2024 10:33:40 AM | Review: FINALLY!!
-

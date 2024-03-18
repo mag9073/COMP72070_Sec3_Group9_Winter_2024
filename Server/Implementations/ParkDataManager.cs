@@ -170,7 +170,7 @@ namespace Server.Implementations
                         parks[i].parkAddress = updatedParkData.parkAddress;
                         parks[i].parkDescription = updatedParkData.parkDescription;
                         parks[i].parkHours = updatedParkData.parkHours;
-                        return;
+                        break;
                     }
                 }
 

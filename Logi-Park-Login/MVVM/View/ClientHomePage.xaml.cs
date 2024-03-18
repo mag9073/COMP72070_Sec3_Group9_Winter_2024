@@ -55,9 +55,9 @@ namespace LogiPark.MVVM.View
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            AdminHomeView adminHomeView = new AdminHomeView();
+            ClientHomeView clientHomeView = new ClientHomeView();
 
-            adminHomeView.Show();
+            clientHomeView.Show();
 
             this.Close();
         }

@@ -19,10 +19,20 @@
         </Style>
 
         <Style x:Key="DeleteButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="Red"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="1"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="#CF0909" 
+                                BorderBrush="Black" BorderThickness="0.5">
+                            <ContentPresenter x:Name="contentPresenter"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </UserControl.Resources>
 
