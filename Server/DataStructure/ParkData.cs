@@ -78,5 +78,25 @@ namespace Server.DataStructure
                 return Serializer.Deserialize<ParkData>(memStream);
             }
         }
+
+        public void deserializeParkData(byte[] data, int offset, int size)
+        {
+            using (MemoryStream ms = new MemoryStream(data, offset, size))
+            {
+                ParkData deserializedData = Serializer.Deserialize<ParkData>(ms);
+                this.parkName = deserializedData.parkName;
+                this.parkAddress = deserializedData.parkAddress;
+                this.parkDescription = deserializedData.parkDescription;
+                this.parkHours = deserializedData.parkHours;
+            }
+        }
+
+        public ParkData[] deserializeParkDataArray(byte[] data, int offset, int size)
+        {
+            using (MemoryStream ms = new MemoryStream(data, offset, size))
+            {
+                return Serializer.Deserialize<ParkData[]>(ms);
+            }
+        }
     }
 }

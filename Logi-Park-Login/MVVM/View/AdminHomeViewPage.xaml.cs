@@ -1,6 +1,7 @@
 ﻿using LogiPark.MVVM.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,14 +86,20 @@ namespace LogiPark.MVVM.View
                     averageRating = totalRating / reviewsForPark.Count;
                 }
 
-                //var image = images.FirstOrDefault(img => img.FileName == park.GetParkName() + ".jpg"); // Assuming naming convention
+                string imagefile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"ParkImages/" + park.GetParkName() + ".jpg");
+                if (!File.Exists(imagefile))
+                {
+                    client.SendOneParkImageRequest(park.GetParkName());
+                    client.ReceiveOneParkImageResponseToFile(imagefile);
+                }
+
                 return new
                 {
                     Name = park.GetParkName(),
                     Address = park.GetParkAddress(),
                     // Set park reviews calcualate average
                     AverageRating = averageRating,
-                    //ImagePath ?
+                    ImagePath = imagefile,
                 };
             }).ToList();   // Convert it back to list for the xaml card to dynamically rendered.
 
@@ -104,28 +111,28 @@ namespace LogiPark.MVVM.View
         }
 
         private void OnParkCardClick(object sender, RoutedEventArgs e)
-    {
-        var button = sender as FrameworkElement;
-        if (button != null)
         {
-            var park = button.DataContext;
-            if (park != null)
+            var button = sender as FrameworkElement;
+            if (button != null)
             {
-                // TextBlock -> Text={Binding Name}
-                string parkName = park.GetType().GetProperty("Name")?.GetValue(park, null)?.ToString();
-                if (!string.IsNullOrEmpty(parkName))
+                var park = button.DataContext;
+                if (park != null)
                 {
-                    AdminParkViewPage parkViewPage = new AdminParkViewPage(parkName);
-                    Window window = new Window
+                    // TextBlock -> Text={Binding Name}
+                    string parkName = park.GetType().GetProperty("Name")?.GetValue(park, null)?.ToString();
+                    if (!string.IsNullOrEmpty(parkName))
                     {
-                        Content = parkViewPage,
-                        SizeToContent = SizeToContent.WidthAndHeight,
-                        WindowStartupLocation = WindowStartupLocation.CenterScreen
-                    };
-                    window.Show();  // Right now, im creating this 
+                        AdminParkViewPage parkViewPage = new AdminParkViewPage(parkName);
+                        Window window = new Window
+                        {
+                            Content = parkViewPage,
+                            SizeToContent = SizeToContent.WidthAndHeight,
+                            WindowStartupLocation = WindowStartupLocation.CenterScreen
+                        };
+                        window.Show();  // Right now, im creating this 
+                    }
                 }
             }
         }
     }
-}
 }
