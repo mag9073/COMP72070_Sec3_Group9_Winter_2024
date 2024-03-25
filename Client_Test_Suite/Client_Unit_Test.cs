@@ -1,4 +1,4 @@
-using LogiPark.MVVM.Model;
+//using Client;
 using LogiPark.MVVM.View;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Reflection;
@@ -471,6 +471,23 @@ namespace Client_Test_Suite
 
             //Assert
             Assert.AreEqual(expectedReview, review.Review);
+        }
+
+        [TestMethod]
+        public void UT_CL_UDM_001()
+        {
+            // Arrange
+            string expected = "hang";
+            // Act
+            UserDataManager.LoginData loginData = new UserDataManager.LoginData
+            {
+                username = "hang",
+                password = "1234"
+            };
+            string result = loginData.GetUserName();
+
+            // Assert
+            Assert.AreEqual(expected, result);
         }
     }
 }
