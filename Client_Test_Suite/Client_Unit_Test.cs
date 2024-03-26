@@ -9,6 +9,10 @@ using static System.Net.Mime.MediaTypeNames;
 using Application = System.Net.Mime.MediaTypeNames.Application;
 using System.Windows.Controls;
 using LogiPark.MVVM.Model;
+using System.Windows.Media.Imaging;
+using NUnit.Framework;
+using Moq;
+using System.Net.Sockets;
 
 namespace Client_Test_Suite
 {
@@ -37,7 +41,7 @@ namespace Client_Test_Suite
                 string result = park.GetParkName();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -58,7 +62,7 @@ namespace Client_Test_Suite
                 string result = park.GetParkAddress();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -79,7 +83,7 @@ namespace Client_Test_Suite
                 string result = park.GetParkDescription();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -100,7 +104,7 @@ namespace Client_Test_Suite
                 string result = park.GetParkHours();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -114,7 +118,7 @@ namespace Client_Test_Suite
                 parkData.SetParkName(expectedName);
 
                 //Assert
-                Assert.AreEqual(expectedName, parkData.parkName);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expectedName, parkData.parkName);
             }
 
             [TestMethod]
@@ -128,7 +132,7 @@ namespace Client_Test_Suite
                 parkData.SetParkAddress(expectedAddress);
 
                 //Assert
-                Assert.AreEqual(expectedAddress, parkData.parkAddress);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expectedAddress, parkData.parkAddress);
             }
 
             [TestMethod]
@@ -142,7 +146,7 @@ namespace Client_Test_Suite
                 parkData.SetParkDescription(expectedDescription);
 
                 //Assert
-                Assert.AreEqual(expectedDescription, parkData.parkDescription);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expectedDescription, parkData.parkDescription);
             }
 
             [TestMethod]
@@ -156,7 +160,7 @@ namespace Client_Test_Suite
                 parkData.SetParkHours(expectedHours);
 
                 //Assert
-                Assert.AreEqual(expectedHours, parkData.parkHours);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expectedHours, parkData.parkHours);
             }
 
             [TestMethod]
@@ -177,7 +181,7 @@ namespace Client_Test_Suite
                 string result = park.GetParkName();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
 
@@ -199,7 +203,7 @@ namespace Client_Test_Suite
                 string result = park.GetParkAddress();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
 
@@ -221,7 +225,7 @@ namespace Client_Test_Suite
                 string result = park.GetParkDescription();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
 
@@ -243,7 +247,7 @@ namespace Client_Test_Suite
                 string result = park.GetParkHours();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
         }
 
@@ -270,7 +274,7 @@ namespace Client_Test_Suite
                 string result = reviewData.GetUserName();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -292,7 +296,7 @@ namespace Client_Test_Suite
                 string result = reviewData.GetUserName();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
 
@@ -316,7 +320,7 @@ namespace Client_Test_Suite
                 var result = reviewData.GetParkRating();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -338,7 +342,7 @@ namespace Client_Test_Suite
                 var result = reviewData.GetParkRating();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -360,7 +364,7 @@ namespace Client_Test_Suite
                 var result = reviewData.GetDateOfPosting();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -382,7 +386,7 @@ namespace Client_Test_Suite
                 var result = reviewData.GetDateOfPosting();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -404,7 +408,7 @@ namespace Client_Test_Suite
                 string result = reviewData.GetReview();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -426,7 +430,7 @@ namespace Client_Test_Suite
                 string result = reviewData.GetReview();
 
                 //Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -439,7 +443,7 @@ namespace Client_Test_Suite
                 review.SetUserName(expectedName);
 
                 //Assert
-                Assert.AreEqual(expectedName, review.UserName);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expectedName, review.UserName);
             }
 
             [TestMethod]
@@ -452,7 +456,7 @@ namespace Client_Test_Suite
                 review.SetParkRating(expectedRating);
 
                 //Assert
-                Assert.AreEqual(expectedRating, review.Rating);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expectedRating, review.Rating);
             }
 
             [TestMethod]
@@ -465,7 +469,7 @@ namespace Client_Test_Suite
                 review.SetDateOfPosting(expectedTime);
 
                 //Assert
-                Assert.AreEqual(expectedTime, review.DateOfPosting);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expectedTime, review.DateOfPosting);
             }
 
             [TestMethod]
@@ -478,7 +482,7 @@ namespace Client_Test_Suite
                 review.SetReview(expectedReview);
 
                 //Assert
-                Assert.AreEqual(expectedReview, review.Review);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expectedReview, review.Review);
             }
         }
 
@@ -499,7 +503,7 @@ namespace Client_Test_Suite
                 string result = loginData.GetUserName();
 
                 // Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -516,7 +520,7 @@ namespace Client_Test_Suite
                 string result = loginData.GetPassword();
 
                 // Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -530,7 +534,7 @@ namespace Client_Test_Suite
                 string result = loginData.GetUserName();
 
                 // Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -544,7 +548,7 @@ namespace Client_Test_Suite
                 string result = loginData.GetPassword();
 
                 // Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -563,7 +567,7 @@ namespace Client_Test_Suite
                 string result = resultUser.GetUserName();
 
                 // Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -583,7 +587,7 @@ namespace Client_Test_Suite
                 string result = resultUser.GetUserName();
 
                 // Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -610,7 +614,7 @@ namespace Client_Test_Suite
                 string result = signData.GetUserName();
 
                 // Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -627,7 +631,7 @@ namespace Client_Test_Suite
                 string result = signData.GetPassword();
 
                 // Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -645,7 +649,7 @@ namespace Client_Test_Suite
                 string result = signData.GetUserName();
 
                 // Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -663,7 +667,7 @@ namespace Client_Test_Suite
                 string result = signData.GetPassword();
 
                 // Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -692,7 +696,7 @@ namespace Client_Test_Suite
                 string result = resultUser.GetUserName();
 
                 // Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
 
             [TestMethod]
@@ -712,10 +716,88 @@ namespace Client_Test_Suite
                 string result = resultUser.GetUserName();
 
                 // Assert
-                Assert.AreEqual(expected, result);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(expected, result);
             }
         }
 
-        
+        [TestClass]
+        public class Image_Manager_Tests
+        {
+            [TestMethod]
+            public void UT_CN_IT_001()
+            {
+               
+                // Arrange
+                string fileName = "background.png";
+                byte[] data = File.ReadAllBytes("background.png");
+
+                // Act
+                ImageManager imageManager = new ImageManager()
+                {
+                    FileName = fileName,
+                    Data = data
+                };
+
+                // Assert
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(fileName, imageManager.FileName);
+                CollectionAssert.AreEqual(data, imageManager.Data);
+            
+            }
+
+            [TestMethod]
+            public void UT_CN_IT_002()
+            {
+                // Arrange
+                string fileName = "background.png";
+                byte[] data = File.ReadAllBytes("background.png");
+                BitmapImage image = new BitmapImage();
+
+                // Act
+                ImageManager imageManager = new ImageManager()
+                {
+                    FileName = fileName,
+                    Data = data,
+                    Image = image
+                };
+
+                // Assert
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotNull(imageManager.Image);
+                //Assert.AreEqual(image, imageManager.Image);
+            }
+
+            [TestMethod]
+            public void UT_CN_IM_003()
+            {
+                // Arrange
+                string fileName = "background.png";
+                byte[] data = File.ReadAllBytes("background.png");
+
+                // Act
+                ImageManager imageManager = new ImageManager()
+                {
+                    FileName = fileName,
+                    Data = data,
+                    Image = null
+                };
+
+                // Assert
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNull(imageManager.Image);
+            }
+        }
+
+        [TestClass]
+        public class TCP_Connection_Manager_Tests
+        {
+            [TestMethod]
+            public void UT_CN_TCPCM_001()
+            {
+                // Arrange
+                var intance = TcpConnectionManager.Instance;
+
+                // Assert
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotNull(intance);
+            }
+        }
+            
     }
 }
