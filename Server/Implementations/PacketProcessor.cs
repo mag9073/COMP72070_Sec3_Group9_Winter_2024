@@ -440,7 +440,7 @@ namespace Server.Implementations
 
             try
             {
-                if (File.Exists(Constants.ParkImages_FilePath))
+                if (File.Exists(parkImagePath))
                 {
                     File.Delete($"{AppDomain.CurrentDomain.BaseDirectory + Constants.ParkImages_FilePath + parkName}.jpg");
                 }
