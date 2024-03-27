@@ -788,6 +788,7 @@ namespace Client_Test_Suite
         [TestClass]
         public class TCP_Connection_Manager_Tests
         {
+            
             [TestMethod]
             public void UT_CN_TCPCM_001()
             {
@@ -797,6 +798,34 @@ namespace Client_Test_Suite
                 // Assert
                 Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotNull(intance);
             }
+
+           /* [TestMethod]
+            public void UT_CN_TCPCM_002()
+            {
+                // Arrange
+                var TCPmanager = TcpConnectionManager.Instance;
+
+                // Act
+                //TCPmanager();
+
+                // Assert
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotNull(TCPmanager.client);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsTrue(TCPmanager.client.Connected);
+            }
+
+            [TestMethod]
+            public void UT_CN_TCPCM_003()
+            {
+                // Arrange
+                var TCPmanager = TcpConnectionManager.Instance;
+
+                // Act
+                TCPmanager.CloseConnection();
+
+                // Assert
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsFalse(TCPmanager.client.Connected);
+
+            }*/
         }
             
     }
