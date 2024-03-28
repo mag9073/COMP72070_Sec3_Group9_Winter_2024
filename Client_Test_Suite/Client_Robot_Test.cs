@@ -579,7 +579,7 @@ namespace Client_Test_Suite
             allWindowHandles = winDriver.WindowHandles;
             winDriver.SwitchTo().Window(allWindowHandles[OPENED_WINDOW]);
 
-            winDriver.FindElementByName("MINI OWEN").Click();
+            winDriver.FindElementByName("PFP").Click();
             winDriver.FindElementByName("Open").Click();
 
             winDriver.FindElementByAccessibilityId("ParkNameTextBox").SendKeys("Test");

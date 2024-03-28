@@ -323,17 +323,7 @@
     <Resource Include="Assets\Icons\star-rating-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\ParkImages\Clair Lake Park.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Images\NoImage.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\ParkImages\Bechtel Park.jpg" />
-    <Resource Include="Assets\ParkImages\Brewmeister Green Park.jpg" />
-    <Resource Include="Assets\ParkImages\Hillside Park.jpg" />
-    <Resource Include="Assets\ParkImages\Laurel Creek Conservation Area Park.jpeg" />
-    <Resource Include="Assets\ParkImages\Waterloo Park.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Logo.ico" />
