@@ -139,24 +139,24 @@ namespace LogiPark.MVVM.Model
             this.tail = new Tail();
         }
 
-        public Packet(byte[] data)
-        {
-            try
-            {
-                using (MemoryStream stream = new MemoryStream(data))
-                {
-                    Packet packet = Serializer.Deserialize<Packet>(stream);
-                    this.header = packet.header;
-                    this.body = packet.body;
-                    this.tail = packet.tail;
-                }
-            }
-            catch
-            {
-                // Log error
-                throw;
-            }
-        }
+        //public Packet(byte[] data)
+        //{
+        //    try
+        //    {
+        //        using (MemoryStream stream = new MemoryStream(data))
+        //        {
+        //            Packet packet = Serializer.Deserialize<Packet>(stream);
+        //            this.header = packet.header;
+        //            this.body = packet.body;
+        //            this.tail = packet.tail;
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        // Log error
+        //        throw;
+        //    }
+        //}
 
 
         // Set Head to the Packet
@@ -189,16 +189,16 @@ namespace LogiPark.MVVM.Model
             return this.body;
         }
 
-        public Tail GetTail()
-        {
-            return this.tail;
-        }
+        //public Tail GetTail()
+        //{
+        //    return this.tail;
+        //}
 
-        public byte[] getTailBuffer()
-        {
-            return this.tail.GetTailCRC();
+        //public byte[] getTailBuffer()
+        //{
+        //    return this.tail.GetTailCRC();
 
-        }
+        //}
 
         public byte[] SerializeToByteArray()
         {
@@ -209,13 +209,13 @@ namespace LogiPark.MVVM.Model
             }
         }
 
-        public static Packet DeserializeFromByteArray(byte[] data)
-        {
-            using (MemoryStream stream = new MemoryStream(data))
-            {
-                return Serializer.Deserialize<Packet>(stream);
-            }
-        }
+        //public static Packet DeserializeFromByteArray(byte[] data)
+        //{
+        //    using (MemoryStream stream = new MemoryStream(data))
+        //    {
+        //        return Serializer.Deserialize<Packet>(stream);
+        //    }
+        //}
 
     }
 }

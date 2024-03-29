@@ -152,6 +152,7 @@
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="MVVM\Model\ImageManager.cs" />
+    <Compile Include="MVVM\Model\Logger.cs" />
     <Compile Include="MVVM\Model\Packet.cs" />
     <Compile Include="MVVM\Model\ParkDataManager.cs" />
     <Compile Include="MVVM\Model\ParkReviewManager.cs" />

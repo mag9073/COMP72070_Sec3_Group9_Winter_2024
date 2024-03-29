@@ -1,6 +1,9 @@
 //using Client;
+using System.IO;
+using ProtoBuf;
 using LogiPark.MVVM.Model;
 using LogiPark.MVVM.View;
+using LogiPark.MVVM.ViewModel;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.ObjectModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Security.Cryptography.X509Certificates;
@@ -84,7 +87,7 @@ namespace Client_Test_Suite
         //        username = "hang",
         //        password = "1234"
         //    };
-        //    string result = "hang";
+            
 
         //    // Assert
         //    Assert.AreEqual(expected, result);
@@ -129,15 +132,15 @@ namespace Client_Test_Suite
             Assert.AreEqual(expected, result);
         }
 
-        [TestMethod]
-        public void UT_CL_UDM_008()
-        {
-            // Arrange
+        //[TestMethod]
+        //public void UT_CL_UDM_008()
+        //{
+        //    // Arrange
             
-            // Act
+        //    // Act
 
-            // Assert
-        }
+        //    // Assert
+        //}
 
         [TestMethod]
         public void UT_CL_UDM_009()
@@ -209,15 +212,15 @@ namespace Client_Test_Suite
             Assert.AreEqual(expected, result);
         }
 
-        [TestMethod]
-        public void UT_CL_UDM_013()
-        {
-            // Arrange
+        //[TestMethod]
+        //public void UT_CL_UDM_013()
+        //{
+        //    // Arrange
 
-            // Act
+        //    // Act
 
-            // Assert
-        }
+        //    // Assert
+        //}
 
         [TestMethod]
         public void UT_CL_UDM_014()
@@ -258,15 +261,15 @@ namespace Client_Test_Suite
             Assert.AreEqual(expected, result);
         }
 
-        [TestMethod]
-        public void UT_CL_UDM_016()
-        {
-            // Arrange
+        //[TestMethod]
+        //public void UT_CL_UDM_016()
+        //{
+        //    // Arrange
 
-            // Act
+        //    // Act
 
-            // Assert
-        }
+        //    // Assert
+        //}
 
 
         [TestMethod]
@@ -547,6 +550,53 @@ namespace Client_Test_Suite
 
             //Assert
             Assert.AreEqual(expectedReview, review.Review);
+        }
+    }
+
+    [TestClass]
+    public class Client_Packet_Unit_Tests
+    {
+        [TestMethod]
+        public void UT_Packet_001()
+        {
+            // Arrange
+            Packet pkt = new Packet();
+
+            // Act
+
+            // Assert
+            Assert.IsNotNull(pkt);
+        }
+
+        [TestMethod]
+        public void UT_Packet_002()
+        {
+            // Arrange
+            Packet pkt = new Packet();
+
+            // Act
+            pkt.SetPacketHead(1, 2, Types.login);
+            Header tempHead = pkt.GetPacketHeader();
+            Types type = tempHead.GetType();
+
+            // Assert
+            Assert.AreEqual(Types.login, type);
+        }
+
+        [TestMethod]
+        public void UT_Packet_003()
+        {
+            // Arrange
+            Packet pkt = new Packet();
+
+            // Act
+            byte[] tempByte = { (byte)'a', (byte)'b', (byte)'c' };
+            pkt.SetPacketBody(tempByte, 3);
+            Body tempBody = pkt.GetBody();
+            byte[] result = tempBody.GetBodyBuffer();
+
+            // Assert
+            Assert.AreEqual(tempByte, result);
         }
 
     }
