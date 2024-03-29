@@ -36,16 +36,27 @@ namespace Server.Implementations
             _tcpListener.Start();
             Console.WriteLine($"Server started on port {port}.");
 
+            ServerStateManager.SetCurrentState(ServerState.Connected);
+
             _ = ThreadPool.QueueUserWorkItem(new WaitCallback(AcceptClients));
         }
 
         private static void AcceptClients(object state)
         {
-            while (true)
+            while (ServerStateManager.GetCurrentState() == ServerState.Connected
+                || ServerStateManager.GetCurrentState() == ServerState.Idle)
             {
                 TcpClient client = _tcpListener.AcceptTcpClient();
-                clients.Add(client);
-                ThreadPool.QueueUserWorkItem(new WaitCallback(HandleClient), client);
+
+                if (ServerStateManager.GetCurrentState() == ServerState.Connected)
+                {
+                    clients.Add(client);
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(HandleClient), client);
+                } else
+                {
+                    client.Close();
+                }
+
             }
         }
 
