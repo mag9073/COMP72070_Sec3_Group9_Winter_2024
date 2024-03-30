@@ -18,9 +18,10 @@ namespace Server.Implementations
         private static UserDataManager userDataManager = new UserDataManager();
         private static ParkDataManager parkDataManager = new ParkDataManager();
         private static ParkReviewManager parkReviewManager = new ParkReviewManager();
+        private static ServerStateManager serverStateManager = new ServerStateManager();
         private static Logger logger = new Logger("log.txt"); 
         private static ImageManager imageManager = new ImageManager();
-        private static PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+        private static PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
         private static List<TcpClient> clients = new List<TcpClient>();     // To store client connections in a list of pool 
 
         public Server()
@@ -36,19 +37,19 @@ namespace Server.Implementations
             _tcpListener.Start();
             Console.WriteLine($"Server started on port {port}.");
 
-            ServerStateManager.SetCurrentState(ServerState.Connected);
+            serverStateManager.SetCurrentState(ServerState.Connected);
 
             _ = ThreadPool.QueueUserWorkItem(new WaitCallback(AcceptClients));
         }
 
         private static void AcceptClients(object state)
         {
-            while (ServerStateManager.GetCurrentState() == ServerState.Connected
-                || ServerStateManager.GetCurrentState() == ServerState.Idle)
+            while (serverStateManager.GetCurrentState() == ServerState.Connected
+                || serverStateManager.GetCurrentState() == ServerState.Idle)
             {
                 TcpClient client = _tcpListener.AcceptTcpClient();
 
-                if (ServerStateManager.GetCurrentState() == ServerState.Connected)
+                if (serverStateManager.GetCurrentState() == ServerState.Connected)
                 {
                     clients.Add(client);
                     ThreadPool.QueueUserWorkItem(new WaitCallback(HandleClient), client);

@@ -12,6 +12,7 @@ using Header = Server.DataStructure.PacketData.Header;
 using Body = Server.DataStructure.PacketData.Body;
 using System.Text;
 using static Server.DataStructure.PacketData;
+using ServerStateManager = Server.Implementations.ServerStateManager;
 namespace Server_Test_Suite
 {
     [TestClass]
@@ -1056,7 +1057,7 @@ namespace Server_Test_Suite
 
 
 
-                // Arrange
+                // Assert
                 Assert.AreEqual(expectedPacketData.GetPacketHeader().sourceID, actualPacketData.GetPacketHeader().sourceID);
                 Assert.AreEqual(expectedPacketData.GetPacketHeader().destinationID, actualPacketData.GetPacketHeader().destinationID);
                 Assert.AreEqual(expectedPacketData.GetPacketHeader().sequenceNumber, actualPacketData.GetPacketHeader().sequenceNumber);
@@ -1087,9 +1088,154 @@ namespace Server_Test_Suite
 
                 Thread.Sleep(1000);
 
+                // Assert
                 Assert.IsTrue(expectedState);
 
                 server.StopServer();
+            }
+        }
+
+        [TestClass]
+        public class ServerStateManager
+        {
+            [TestMethod]
+            public void UT_SVR_096_SetCurrentState_Starting_Return_StartingState()
+            {
+                // Arrange
+                Server.Implementations.ServerStateManager serverStateManager = new Server.Implementations.ServerStateManager();
+
+                ServerState expectedState = ServerState.Starting;
+
+                ServerState actualState;
+
+                // Act
+                serverStateManager.SetCurrentState(expectedState);
+
+                actualState = serverStateManager.GetCurrentState();           
+                
+                
+                // Assert
+                Assert.AreEqual(expectedState, actualState);
+
+
+
+            }
+
+            [TestMethod]
+            public void UT_SVR_097_SetCurrentState_Login_Return_LoginState()
+            {
+                // Arrange
+                Server.Implementations.ServerStateManager serverStateManager = new Server.Implementations.ServerStateManager();
+
+                ServerState expectedState = ServerState.Login;
+
+                ServerState actualState;
+
+                // Act
+                serverStateManager.SetCurrentState(ServerState.Login);
+
+                actualState = serverStateManager.GetCurrentState();
+
+
+                // Assert
+                Assert.AreEqual(expectedState, actualState);
+            }
+
+            [TestMethod]
+            public void UT_SVR_098_SetCurrentState_AllParkData_Return_AllParkDataState()
+            {
+                // Arrange
+                Server.Implementations.ServerStateManager serverStateManager = new Server.Implementations.ServerStateManager();
+
+                ServerState expectedState = ServerState.AllParkData;
+
+                ServerState actualState;
+
+                // Act
+                serverStateManager.SetCurrentState(ServerState.AllParkData);
+
+                actualState = serverStateManager.GetCurrentState();
+
+
+                // Assert
+                Assert.AreEqual(expectedState, actualState);
+            }
+
+            [TestMethod]
+            public void UT_SVR_099_SetCurrentState_Connected_Return_ConnectedState()
+            {
+                // Arrange
+                Server.Implementations.ServerStateManager serverStateManager = new Server.Implementations.ServerStateManager();
+
+                ServerState expectedState = ServerState.Connected;
+
+                ServerState actualState;
+
+                // Act
+                serverStateManager.SetCurrentState(expectedState);
+
+                actualState = serverStateManager.GetCurrentState();
+
+
+                // Assert
+                Assert.AreEqual(expectedState, actualState);
+
+
+
+            }
+
+            [TestMethod]
+            public void UT_SVR_100_SetCurrentState_Idle_Return_IdleState()
+            {
+                // Arrange
+                Server.Implementations.ServerStateManager serverStateManager = new Server.Implementations.ServerStateManager();
+
+                ServerState expectedState = ServerState.Idle;
+
+                ServerState actualState;
+
+                // Act
+                serverStateManager.SetCurrentState(expectedState);
+
+                actualState = serverStateManager.GetCurrentState();
+
+
+                // Assert
+                Assert.AreEqual(expectedState, actualState);
+
+
+
+            }
+
+            [TestMethod]
+            public void UT_SVR_101_SetCurrentState_Idle_OneParkImage_Return_Idle_OneParkImage_State()
+            {
+                // Arrange
+                Server.Implementations.ServerStateManager serverStateManager = new Server.Implementations.ServerStateManager();
+
+                ServerState expectedState_One = ServerState.Idle;
+
+                ServerState actualState_One;
+
+                ServerState expectedState_Two = ServerState.ParkReview;
+
+                ServerState actualState_Two;
+
+                // Act
+                serverStateManager.SetCurrentState(expectedState_One);
+
+                actualState_One = serverStateManager.GetCurrentState();
+
+                serverStateManager.SetCurrentState(expectedState_Two);
+
+                actualState_Two = serverStateManager.GetCurrentState();
+
+
+                // Assert
+                Assert.AreEqual(expectedState_One, actualState_One);
+                Assert.AreEqual(expectedState_Two, actualState_Two);
+
+
             }
         }
     }

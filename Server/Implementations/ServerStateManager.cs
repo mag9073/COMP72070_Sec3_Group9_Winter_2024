@@ -12,14 +12,14 @@ namespace Server.Implementations
     }
     public class ServerStateManager
     {
-        private static ServerState currentState = ServerState.Starting;
+        private ServerState currentState = ServerState.Starting;
 
-        public static ServerState GetCurrentState()
+        public ServerState GetCurrentState()
         {
             return currentState;
         }
 
-        public static void SetCurrentState(ServerState newState)
+        public void SetCurrentState(ServerState newState)
         {
             Console.WriteLine($"Server state changing from {currentState} to {newState}.");
             currentState = newState;

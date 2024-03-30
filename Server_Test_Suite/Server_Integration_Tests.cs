@@ -102,10 +102,11 @@ namespace Server_Test_Suite
                 ParkDataManager parkDataManager = new ParkDataManager();
                 ParkReviewManager parkReviewManager = new ParkReviewManager();
                 ImageManager imageManager = new ImageManager();
+                ServerStateManager serverStateManager = new ServerStateManager();
                 string expectedAcknowledgementMessage = "Username and password are Correct!!! \\o/";
 
 
-                PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+                PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
                 UserDataManager.LoginData loginData = new UserDataManager.LoginData
                 {
                     username = "hang",
@@ -140,10 +141,11 @@ namespace Server_Test_Suite
                 ParkDataManager parkDataManager = new ParkDataManager();
                 ParkReviewManager parkReviewManager = new ParkReviewManager();
                 ImageManager imageManager = new ImageManager();
-                string expectedAcknowledgementMessage = "Please enter username to register!!!! \\o/";
+                ServerStateManager serverStateManager = new ServerStateManager();
+                string expectedAcknowledgementMessage = "Successfully Sign Up \\o/";
 
 
-                PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+                PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
                 UserDataManager.SignUpData signUpData = new UserDataManager.SignUpData
                 {
                     username = "hangg",
@@ -179,10 +181,11 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
             string expectedAcknowledgementMessage = "Please enter username to register!!!! \\o/";
 
 
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
             UserDataManager.SignUpData signUpData = new UserDataManager.SignUpData
             {
                 username = "",
@@ -215,10 +218,11 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
             string expectedAcknowledgementMessage = "Username and password are Correct!!! \\o/";
 
 
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
             UserDataManager.LoginData loginData = new UserDataManager.LoginData
             {
                 username = "admin",
@@ -254,6 +258,7 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
 
             List<ParkData> expectedParkData = new List<ParkData>
             {
@@ -275,7 +280,7 @@ namespace Server_Test_Suite
 
             List<ParkData> actualParkData = new List<ParkData> ();
 
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
 
             // Act
             PacketData.Packet packet = new PacketData.Packet();
@@ -299,7 +304,8 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+            ServerStateManager serverStateManager = new ServerStateManager();
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
             string targetParkName = "Waterloo Park";
 
             ParkData expectedParkData = new ParkData
@@ -342,6 +348,7 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
 
             // Act
 
@@ -364,6 +371,7 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
 
             // Act
 
@@ -386,6 +394,7 @@ namespace Server_Test_Suite
             UserDataManager userDataManager = new UserDataManager();
             ParkDataManager parkDataManager = new ParkDataManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
 
             ParkReviewManager parkReviewManager = new ParkReviewManager
             {
@@ -414,6 +423,7 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
             string targetParkName = "Waterloo Park";
 
             ParkReviewData expectedParkReviewData = new ParkReviewData
@@ -427,7 +437,7 @@ namespace Server_Test_Suite
 
             ParkReviewData actualParkReviewData = new ParkReviewData();
             PacketData.Packet sendPacket = new PacketData.Packet();
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
 
 
             // Act
@@ -457,6 +467,7 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
 
             // Act
 
@@ -479,6 +490,7 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
             string targetParkName = "Clair Lake Park";
 
             ParkReviewData parkReviewData = new ParkReviewData
@@ -491,7 +503,7 @@ namespace Server_Test_Suite
             };
 
             PacketData.Packet sendPacket = new PacketData.Packet();
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
 
             // Act
             sendPacket.SetPacketHead(1, 2, Server.DataStructure.PacketData.Types.delete_review);
@@ -522,10 +534,11 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
             string targetParkName = "Hillside Park";
 
             PacketData.Packet sendPacket = new PacketData.Packet();
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
 
 
             // Act
@@ -557,6 +570,7 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
 
             ParkReviewData expectedParkReviewData = new ParkReviewData
             {
@@ -568,7 +582,7 @@ namespace Server_Test_Suite
             };
 
             PacketData.Packet sendPacket = new PacketData.Packet();
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
             ParkReviewData actualParkReviewData = new ParkReviewData();
 
             // Act
@@ -607,6 +621,7 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
 
             UserDataManager.LoginData loginData = new UserDataManager.LoginData
             {

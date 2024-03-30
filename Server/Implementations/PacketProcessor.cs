@@ -19,18 +19,20 @@ namespace Server.Implementations
         private UserDataManager _userDataManager;
         private ParkDataManager _parkDataManager;
         private ParkReviewManager _parkReviewManager;
+        private ServerStateManager _serverStateManager;
         //private Logger _logger;
         private ImageManager _imageManager;
         private static ServerState currentState;
 
         private Action _stopServerCallback;
 
-        public PacketProcessor(UserDataManager userDataManager, ParkDataManager parkDataManager, ParkReviewManager parkReviewManager, ImageManager imageManager)
+        public PacketProcessor(UserDataManager userDataManager, ParkDataManager parkDataManager, ParkReviewManager parkReviewManager, ImageManager imageManager, ServerStateManager serverStateManager)
         {
             _userDataManager = userDataManager;
             _parkDataManager = parkDataManager;
             _parkReviewManager = parkReviewManager;
             _imageManager = imageManager;
+            _serverStateManager = serverStateManager;
         }
 
         public void ProcessPacket(Packet packet, ICommunicationChannel stream, TcpClient client)
@@ -124,7 +126,7 @@ namespace Server.Implementations
         /*** Process Packet Type -> Login ***/
         public void ProcessLoginPacket(Packet packet, ICommunicationChannel stream, TcpClient client)
         {
-            ServerStateManager.SetCurrentState(ServerState.Login);
+            _serverStateManager.SetCurrentState(ServerState.Login);
 
             byte[] buffer = packet.GetBody().buffer;
             if (buffer != null && buffer.Length > 0)
@@ -137,7 +139,7 @@ namespace Server.Implementations
 
                 if (message == "Username and password are Correct!!! \\o/")
                 {
-                    ServerStateManager.SetCurrentState(ServerState.Idle);
+                    _serverStateManager.SetCurrentState(ServerState.Idle);
                 }
 
 
@@ -153,7 +155,7 @@ namespace Server.Implementations
         /*** Process Packet Type -> Admin Login ***/
         private void ProcessLoginAdminPacket(Packet packet, ICommunicationChannel stream, TcpClient client)
         {
-            ServerStateManager.SetCurrentState(ServerState.AdminLogin);
+            _serverStateManager.SetCurrentState(ServerState.AdminLogin);
 
             byte[] buffer = packet.GetBody().buffer;
             if (buffer != null && buffer.Length > 0)
@@ -166,7 +168,7 @@ namespace Server.Implementations
 
                 if (message == "Username and password are Correct!!! \\o/")
                 {
-                    ServerStateManager.SetCurrentState(ServerState.Idle);
+                    _serverStateManager.SetCurrentState(ServerState.Idle);
                 }
 
 
@@ -182,7 +184,7 @@ namespace Server.Implementations
         /*** Process Packet Type -> Sign Up ***/
         private void ProcessSignUpPacket(Packet packet, ICommunicationChannel stream, TcpClient client)
         {
-            ServerStateManager.SetCurrentState(ServerState.SignUp);
+            _serverStateManager.SetCurrentState(ServerState.SignUp);
 
             byte[] buffer = packet.GetBody().buffer;
             if (buffer != null && buffer.Length > 0)
@@ -195,7 +197,7 @@ namespace Server.Implementations
 
                 if (message == "Please enter username to register!!!! \\o/")
                 {
-                    ServerStateManager.SetCurrentState(ServerState.Idle);
+                    _serverStateManager.SetCurrentState(ServerState.Idle);
                 }
             }
             else
@@ -210,7 +212,7 @@ namespace Server.Implementations
         private void ProcessAllParkDataPacket(ICommunicationChannel stream)
         {
 
-            ServerStateManager.SetCurrentState(ServerState.AllParkData);
+            _serverStateManager.SetCurrentState(ServerState.AllParkData);
 
             ParkData[] allParkData = _parkDataManager.ReadAllParkDataFromFile(Constants.ParkData_FilePath);
 
@@ -230,13 +232,13 @@ namespace Server.Implementations
             }
             Console.WriteLine("All park data sent to client");
 
-            ServerStateManager.SetCurrentState(ServerState.Idle);
+            _serverStateManager.SetCurrentState(ServerState.Idle);
         }
 
         /*** Process Packet Type -> Individual Park Data ***/
         private void ProcessOneParkDataPacket(ICommunicationChannel stream, Packet receivedPacket)
         {
-            ServerStateManager.SetCurrentState(ServerState.OneParkData);
+            _serverStateManager.SetCurrentState(ServerState.OneParkData);
 
             string parkName = Encoding.UTF8.GetString(receivedPacket.GetBody().buffer);
             ParkData? parkData = _parkDataManager.ReadOneParkDataFromFile(Constants.ParkData_FilePath, parkName);
@@ -260,7 +262,7 @@ namespace Server.Implementations
                 Console.WriteLine($"Park data for {parkName} not found.");
             }
 
-            ServerStateManager.SetCurrentState(ServerState.Idle);
+            _serverStateManager.SetCurrentState(ServerState.Idle);
         }
 
         static List<string> GetImages(string imgdir)
@@ -286,9 +288,9 @@ namespace Server.Implementations
 
 
         /*** Process Packet Type -> All Park Image ***/
-        private static void ProcessAllParkImagesPacket(ICommunicationChannel stream)
+        private void ProcessAllParkImagesPacket(ICommunicationChannel stream)
         {
-            ServerStateManager.SetCurrentState(ServerState.AllParkImages);
+            _serverStateManager.SetCurrentState(ServerState.AllParkImages);
 
             // Get the image path
             string imageFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "../../../Assets/ParkImages/");
@@ -309,7 +311,6 @@ namespace Server.Implementations
             byte[] nameBytes = System.Text.Encoding.UTF8.GetBytes(buffer);
             stream.WriteAsync(nameBytes, 0, nameBytes.Length);
 
-            ServerStateManager.SetCurrentState(ServerState.Idle);
         }
 
 
@@ -331,9 +332,9 @@ namespace Server.Implementations
 
         /*** Process Packet Type -> Individual Park Image ***/
 
-        private static void ProcessOneParkImagePacket(ICommunicationChannel stream, Packet receivedPacket)
+        private void ProcessOneParkImagePacket(ICommunicationChannel stream, Packet receivedPacket)
         {
-            ServerStateManager.SetCurrentState(ServerState.OneParkImage);
+            _serverStateManager.SetCurrentState(ServerState.OneParkImage);
 
             string parkName = Encoding.UTF8.GetString(receivedPacket.GetBody().buffer);
             string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + "../../../Assets/ParkImages/" + parkName + ".jpg"); // Only .jpg file will work!!!
@@ -359,7 +360,7 @@ namespace Server.Implementations
                 Console.WriteLine($"Image for park {parkName} cannot be found");
             }
 
-            ServerStateManager.SetCurrentState(ServerState.Idle);
+            _serverStateManager.SetCurrentState(ServerState.Idle);
         }
 
 
@@ -367,7 +368,7 @@ namespace Server.Implementations
         private void ProcessAllReviewsPacket(ICommunicationChannel stream)
         {
 
-            ServerStateManager.SetCurrentState(ServerState.AllReviews);
+            _serverStateManager.SetCurrentState(ServerState.AllReviews);
 
             List<ParkReviewData> allReviews = _parkReviewManager.ReadAllParkReviewsFromFile(Constants.ParkReviews_FilePath);
 
@@ -390,7 +391,7 @@ namespace Server.Implementations
                 stream.Write(reviewBuffer, 0, reviewBuffer.Length);
             }
 
-            ServerStateManager.SetCurrentState(ServerState.Idle);
+            _serverStateManager.SetCurrentState(ServerState.Idle);
 
         }
 
@@ -398,7 +399,7 @@ namespace Server.Implementations
         /*** Process Packet Type -> Individual Park Reviews ***/
         private void ProcessParkReviewPacket(ICommunicationChannel stream, Packet receivedPacket)
         {
-            ServerStateManager.SetCurrentState(ServerState.ParkReview);
+            _serverStateManager.SetCurrentState(ServerState.ParkReview);
 
             // Deserialize the packet body to get the park name
             string parkName = Encoding.UTF8.GetString(receivedPacket.GetBody().buffer);
@@ -428,14 +429,14 @@ namespace Server.Implementations
                 stream.Write(reviewBuffer, 0, reviewBuffer.Length);
             }
 
-            ServerStateManager.SetCurrentState(ServerState.Idle);
+            _serverStateManager.SetCurrentState(ServerState.Idle);
         }
 
         /*** Process Packet Type -> Delete Park Review ***/
         private void ProcessDeleteParkReviewPacket(ICommunicationChannel stream, Packet receivedPacket)
         {
 
-            ServerStateManager.SetCurrentState(ServerState.DeleteParkReview);
+            _serverStateManager.SetCurrentState(ServerState.DeleteParkReview);
 
             // First, we need to deserialize the packet into ParkReviewData object form
             ParkReviewData reviewDataToDelete = new ParkReviewData().deserializeParkReviewData(receivedPacket.GetBody().buffer);
@@ -473,7 +474,7 @@ namespace Server.Implementations
             // Send an acknowledgement message to the client whether the deletion process was successful
             SendAcknowledgement(stream, message);
 
-            ServerStateManager.SetCurrentState(ServerState.Idle);
+            _serverStateManager.SetCurrentState(ServerState.Idle);
         }
 
         private ParkReviewManager Get_parkReviewManager()
@@ -485,7 +486,7 @@ namespace Server.Implementations
         public void ProcessDeleteAParkPacket(ICommunicationChannel stream, Packet receivedPacket, ParkReviewManager _parkReviewManager)
         {
 
-            ServerStateManager.SetCurrentState(ServerState.DeleteAPark);
+            _serverStateManager.SetCurrentState(ServerState.DeleteAPark);
 
             string parkName = Encoding.UTF8.GetString(receivedPacket.GetBody().buffer);
 
@@ -517,14 +518,14 @@ namespace Server.Implementations
                 SendAcknowledgement(stream, $"Failed to delete park: {ex.Message}");
             }
 
-            ServerStateManager.SetCurrentState(ServerState.Idle);
+            _serverStateManager.SetCurrentState(ServerState.Idle);
 
         }
 
         /*** Process Packet Type -> Add a Park ***/
         public void ProcessAddAParkPacket(ICommunicationChannel stream, Packet receivedPacket)
         {
-            ServerStateManager.SetCurrentState(ServerState.AddAPark);
+            _serverStateManager.SetCurrentState(ServerState.AddAPark);
 
             try
             {
@@ -545,7 +546,7 @@ namespace Server.Implementations
                 Console.WriteLine("Something went wrong while adding park data /o\\" + ex.ToString());
             }
 
-            ServerStateManager.SetCurrentState(ServerState.Idle);
+            _serverStateManager.SetCurrentState(ServerState.Idle);
 
         }
 
@@ -553,7 +554,7 @@ namespace Server.Implementations
         public void ProcessAddAParkReviewPacket(ICommunicationChannel stream, Packet receivedPacket)
         {
 
-            ServerStateManager.SetCurrentState(ServerState.AddAParkReview);
+            _serverStateManager.SetCurrentState(ServerState.AddAParkReview);
 
             try
             {
@@ -568,13 +569,13 @@ namespace Server.Implementations
                 Console.WriteLine(ex.ToString());
             }
 
-            ServerStateManager.SetCurrentState(ServerState.Idle);
+            _serverStateManager.SetCurrentState(ServerState.Idle);
 
         }
 
         public void ProcessEditAParkInfoPacket(ICommunicationChannel stream, Packet receivedPacket)
         {
-            ServerStateManager.SetCurrentState(ServerState.EditAParkInfo);
+            _serverStateManager.SetCurrentState(ServerState.EditAParkInfo);
 
             try
             {
@@ -596,7 +597,7 @@ namespace Server.Implementations
                 Console.WriteLine("Something went wrong while adding park data /o\\" + ex.ToString());
             }
 
-            ServerStateManager.SetCurrentState(ServerState.Idle);
+            _serverStateManager.SetCurrentState(ServerState.Idle);
         }
 
 
