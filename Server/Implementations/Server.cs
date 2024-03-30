@@ -78,7 +78,7 @@ namespace Server.Implementations
                         {
                             packet = Serializer.Deserialize<Packet>(ms);
                         }
-
+                        logger.LogPacket("Recieve", packet);
                         packetProcessor.ProcessPacket(packet, stream, client);
                     }
                 
