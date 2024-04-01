@@ -18,9 +18,11 @@ namespace Server.Implementations
         private static UserDataManager userDataManager = new UserDataManager();
         private static ParkDataManager parkDataManager = new ParkDataManager();
         private static ParkReviewManager parkReviewManager = new ParkReviewManager();
+        private static ServerStateManager serverStateManager = new ServerStateManager();
+        private static UserDataManager.LoginData loginDataManager = new UserDataManager.LoginData();
         private static Logger logger = new Logger("../../../Database/log.txt"); 
         private static ImageManager imageManager = new ImageManager();
-        private static PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+        private static PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
         private static List<TcpClient> clients = new List<TcpClient>();     // To store client connections in a list of pool 
 
         public Server()
@@ -35,6 +37,8 @@ namespace Server.Implementations
             _tcpListener = new TcpListener(IPAddress.Loopback, port);
             _tcpListener.Start();
             Console.WriteLine($"Server started on port {port}.");
+
+            serverStateManager.SetCurrentState(ServerState.Connected);
 
             _ = ThreadPool.QueueUserWorkItem(new WaitCallback(AcceptClients));
         }
@@ -67,7 +71,7 @@ namespace Server.Implementations
                         {
                             packet = Serializer.Deserialize<Packet>(ms);
                         }
-                        logger.LogPacket("Receive", packet);
+                        logger.LogPacket("Receive", packet, serverStateManager, loginDataManager);
 
                         packetProcessor.ProcessPacket(packet, stream, client);
                     }

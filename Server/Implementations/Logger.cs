@@ -28,13 +28,13 @@ namespace Server.Implementations
             return true;
         }
 
-        public bool LogPacket(string direction, PacketData.Packet pkt)
+        public bool LogPacket(string direction, PacketData.Packet pkt, ServerStateManager serverState, UserDataManager.LoginData loginDataManager)
         {
             timeOfTransmission = getTime();
             string type = pkt.GetPacketHeader().GetType().ToString();
             using (StreamWriter writer = File.AppendText(logFilePath))
             {
-                writer.WriteLine(timeOfTransmission.ToString() + ": " + direction + ", " + type);
+                writer.WriteLine(timeOfTransmission.ToString() + ": " + direction + ", " + type + ", " + serverState.GetCurrentState() + ", " + loginDataManager.GetUserName());
             }
             return true;
         }

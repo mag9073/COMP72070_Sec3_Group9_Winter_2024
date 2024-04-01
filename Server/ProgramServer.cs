@@ -20,9 +20,10 @@ namespace Server
         private static UserDataManager userDataManager = new UserDataManager();
         private static ParkDataManager parkDataManager = new ParkDataManager();
         private static ParkReviewManager parkReviewManager = new ParkReviewManager();
+        private static ServerStateManager serverStateManager = new ServerStateManager();
         private static Logger logger = new Logger("log.txt"); // Adjust the path as necessary
         private static ImageManager imageManager = new ImageManager();
-        private static PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+        private static PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
 
         static void Main(string[] args)
         {
