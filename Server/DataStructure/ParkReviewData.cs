@@ -78,7 +78,21 @@ namespace Server.DataStructure
         {
             using (MemoryStream memStream = new MemoryStream(buffer))
             {
+                memStream.Position = 0;
                 return Serializer.Deserialize<ParkReviewData>(memStream);
+            }
+        }
+
+        public void deserializeParkReviewData(byte[] data, int offset, int size)
+        {
+            using (MemoryStream ms = new MemoryStream(data, offset, size))
+            {
+                ParkReviewData deserializedData = Serializer.Deserialize<ParkReviewData>(ms);
+                this.ParkName = deserializedData.ParkName;
+                this.UserName = deserializedData.UserName;
+                this.DateOfPosting = deserializedData.DateOfPosting;
+                this.Rating = deserializedData.Rating;
+                this.Review = deserializedData.Review;
             }
         }
 

@@ -1,11 +1,12 @@
 ﻿using System;
-using Server.DataStructure;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server.Implementations
+namespace LogiPark.MVVM.Model
 {
     public class Logger
     {
@@ -28,13 +29,22 @@ namespace Server.Implementations
             return true;
         }
 
-        public bool LogPacket(string direction, PacketData.Packet pkt, ServerStateManager serverState, UserDataManager.LoginData loginDataManager)
+        public bool LogPacket(string direction, Packet pkt)
         {
             timeOfTransmission = getTime();
             string type = pkt.GetPacketHeader().GetType().ToString();
             using (StreamWriter writer = File.AppendText(logFilePath))
             {
-                writer.WriteLine(timeOfTransmission.ToString() + ": " + direction + ", " + type + ", " + serverState.GetCurrentState() + ", " + loginDataManager.GetUserName());
+                writer.WriteLine(timeOfTransmission.ToString() + ": " + direction + ", " + type);
+            }
+            return true;
+        }
+        public bool LogResponse(string response)
+        {
+            timeOfTransmission = getTime();
+            using (StreamWriter writer = File.AppendText(logFilePath))
+            {
+                writer.WriteLine(timeOfTransmission.ToString() + ": " + response);
             }
             return true;
         }

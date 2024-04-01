@@ -52,5 +52,14 @@ namespace LogiPark.MVVM.View
 
             this.Close();
         }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            ClientHomeView clientHomeView = new ClientHomeView();
+
+            clientHomeView.Show();
+
+            this.Close();
+        }
     }
 }
