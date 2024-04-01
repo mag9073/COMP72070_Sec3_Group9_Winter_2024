@@ -10,7 +10,7 @@ namespace LogiPark.MVVM.Model
 {
     public enum Types
     {
-        login, register, send, recv, log
+        login, login_admin, register, log, allparkdata, a_park, allparkimages, an_image, all_reviews, review, delete_review, delete_park, add_review, add_park, edit_park
     }
 
     /********** Head of the Packet **********/
@@ -19,14 +19,19 @@ namespace LogiPark.MVVM.Model
     {
         [ProtoMember(1)]
         public byte sourceID;
+
         [ProtoMember(2)]
         public byte destinationID;
+
         [ProtoMember(3)]
         public uint sequenceNumber;
+
         [ProtoMember(4)]
         public uint bodyLength;
+
         [ProtoMember(5)]
         public Types type;
+
 
         public void SetHeaderSourceID(byte sourceID)
         {
@@ -138,7 +143,7 @@ namespace LogiPark.MVVM.Model
         {
             try
             {
-                using (var stream = new MemoryStream(data))
+                using (MemoryStream stream = new MemoryStream(data))
                 {
                     Packet packet = Serializer.Deserialize<Packet>(stream);
                     this.header = packet.header;
@@ -197,7 +202,7 @@ namespace LogiPark.MVVM.Model
 
         public byte[] SerializeToByteArray()
         {
-            using (var stream = new MemoryStream())
+            using (MemoryStream stream = new MemoryStream())
             {
                 Serializer.Serialize(stream, this);
                 return stream.ToArray();
@@ -206,7 +211,7 @@ namespace LogiPark.MVVM.Model
 
         public static Packet DeserializeFromByteArray(byte[] data)
         {
-            using (var stream = new MemoryStream(data))
+            using (MemoryStream stream = new MemoryStream(data))
             {
                 return Serializer.Deserialize<Packet>(stream);
             }

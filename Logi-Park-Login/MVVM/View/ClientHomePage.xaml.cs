@@ -21,13 +21,17 @@ namespace LogiPark.MVVM.View
     public partial class ClientHomeView : Window
     {
         // not sure if this is necessary but may removed once park data manager is implemented
-        private ProgramClient client;
         //private string address = "127.0.0.1";
         //private int portnumber = 13000;
+        private ProgramClient client;
+        private string _username;
         public ClientHomeView()
         {
             this.client = new ProgramClient();
             InitializeComponent();
+
+            if (UserSession.currentUsername != "")
+                this.Title = "ClientHomeView (" + UserSession.currentUsername + ")";
         }
 
         private void MapRadioButton_Checked(object sender, RoutedEventArgs e)
@@ -44,8 +48,16 @@ namespace LogiPark.MVVM.View
         {
             // Handle back to main menu label clicked
             LoginView loginView = new LoginView();
-
             loginView.Show();
+
+            this.Close();
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            ClientHomeView clientHomeView = new ClientHomeView();
+
+            clientHomeView.Show();
 
             this.Close();
         }

@@ -8,7 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentFTP" Version="49.0.2" />
     <PackageReference Include="protobuf-net" Version="3.2.30" />
+	<Reference Include="PresentationCore">
+      <HintPath>bin\Debug\net8.0\PresentationCore.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

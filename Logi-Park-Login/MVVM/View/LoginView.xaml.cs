@@ -1,8 +1,11 @@
 ﻿using LogiPark.MVVM.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,16 +19,25 @@ namespace LogiPark.MVVM.View
     /// </summary>
     public partial class LoginView : Window
     {
-        private ProgramClient client;
-        //private string address = "127.0.0.1";
-        //private int portnumber = 13000;
-        private int attempts = 0;
         const int maxAttempts = 3;
+        private BackgroundWorker backgroundWorker;
+        private ProgramClient client;
+        private int attempts = 0;
+        private bool bImageLoaded = false;
 
         public LoginView()
         {
+            CreateParkImageFolder();
+
             this.client = new ProgramClient();
             InitializeComponent();
+
+            // https://stackoverflow.com/questions/1862590/how-to-update-gui-with-backgroundworker
+            // helps update GUI in the background
+            backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += BackgroundWorker_DoWork;
+            backgroundWorker.RunWorkerCompleted += BackgroundWorker_RunWorkerCompleted;
+            backgroundWorker.RunWorkerAsync();
         }
 
         private void UsernameTextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -68,8 +80,9 @@ namespace LogiPark.MVVM.View
             }
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+
             if (attempts >= maxAttempts)
             {
                 messageTextBlock.Text = "Maximum login attempts exceeded.";
@@ -83,8 +96,7 @@ namespace LogiPark.MVVM.View
             bool isValid = ValidateCredentials(username, password);
             if (isValid)
             {
-                attempts++;
-                SendCredentials(username, password); 
+                await Task.Run(() => SendCredentials(username, password));
             }
         }
 
@@ -131,9 +143,7 @@ namespace LogiPark.MVVM.View
                     messageTextBlock.Text = "Login Successful";
                     messageTextBlock.Foreground = Brushes.Green;
 
-                    //AdminHomeView adminHomeView = new AdminHomeView();
-                    //adminHomeView.Show();
-                    //this.Close();
+                    UserSession.currentUsername = username;
 
                     ClientHomeView clientHomeView = new ClientHomeView();
                     clientHomeView.Show();
@@ -182,11 +192,43 @@ namespace LogiPark.MVVM.View
 
         private void AdminButton_Click(object sender, RoutedEventArgs e)
         {
-            AdminHomeView HomeView = new AdminHomeView();
-
-            HomeView.Show();
-
+            AdminLogin adminLogin = new AdminLogin();
+            adminLogin.Show();
             this.Close();
+        }
+
+        private void CreateParkImageFolder()
+        {
+            string imageFolder = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory + @"ParkImages");
+
+            // Check if the directory already exists
+            if (!Directory.Exists(imageFolder))
+            {
+                try
+                {
+                    Directory.CreateDirectory(imageFolder);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error creating directory: {ex.Message}");
+                }
+            }
+        }
+
+        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            // Send for all park images 
+            client.SendAllParkImagesRequest();
+            client.ReceiveParkImagesFromServer();
+        }
+
+        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // This method is called when the background work is completed
+            if (e.Error == null)
+            {
+                bImageLoaded = true;
+            }
         }
     }
 }

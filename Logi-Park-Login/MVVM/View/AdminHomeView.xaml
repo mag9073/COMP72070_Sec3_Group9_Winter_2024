@@ -9,7 +9,7 @@
         Title="AdminHomeView"
         Height="760" Width="1280"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize"
+        ResizeMode="CanResize"
         >
 
 
@@ -21,10 +21,8 @@
             CornerRadius="20">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="28*"/>
-                <ColumnDefinition Width="7*"/>
-                <ColumnDefinition Width="100*"/>
-                <ColumnDefinition Width="185*"/>
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition Width="577*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -32,8 +30,8 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-
-
+          
+            
             <!--// Background Color //-->
 
             <Grid.Background>
@@ -75,19 +73,25 @@
                            />
             </StackPanel>
 
-            <TextBox Width="545"
-                     Height="76"
-                     VerticalAlignment="Top"
-                     HorizontalAlignment="Left"
-                     Margin="281,30,0,0"
-                     Grid.Column="2"
-                     Style="{StaticResource ModernTextbox}" Grid.ColumnSpan="2" Grid.RowSpan="2"
+            <TextBox VerticalAlignment="Center"
+                     HorizontalAlignment="Center"
+                     Grid.Column="1"
+                     Style="{StaticResource ModernTextbox}"
                      />
 
+            <Button Grid.Column="1" Margin="100,0,0,0" HorizontalAlignment="Left" Background="LightBlue" Content="Refresh" Click="RefreshButton_Click" Width="100" Height="40" FontSize="20">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            
             <ContentControl Grid.Row="1"
-                            Grid.Column="2"
-                            Margin="59,43,92,42"
-                            Content="{Binding CurrentView}" Grid.ColumnSpan="2" 
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Content="{Binding CurrentView}" 
                             />
         </Grid>
     </Border>

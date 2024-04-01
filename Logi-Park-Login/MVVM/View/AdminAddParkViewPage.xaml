@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LogiPark.MVVM.View" xmlns:core="clr-namespace:LogiPark.Core" d:DataContext="{d:DesignInstance Type=core:ObservableObject}"
-             mc:Ignorable="d" Height="569" Width="1019"
+             mc:Ignorable="d" 
+             d:DesignWidth="850" d:DesignHeight="569" 
              >
 
     <Border Background="#D9D9D9" CornerRadius="10">
@@ -22,30 +23,30 @@
 
 
             <!-- Left Column Content -->
-            <StackPanel Grid.Column="0" Margin="20,20,20,20" RenderTransformOrigin="0.5,0.463">
+            <StackPanel VerticalAlignment="Center" Grid.Column="0" Margin="30">
 
                 <StackPanel>
-                    <TextBlock Text="Park Name" Margin="45,100,45,0" FontSize="20" FontWeight="Bold"/>
-                    <TextBox Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
+                    <TextBlock Text="Park Name" FontSize="20" FontWeight="Bold"/>
+                    <TextBox x:Name="ParkNameTextBox" Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
                 </StackPanel>
 
                 <StackPanel>
-                    <TextBlock Text="Park Address" Margin="45,0,45,0" FontSize="20" FontWeight="Bold"/>
-                    <TextBox Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
+                    <TextBlock Text="Park Address" Height="30" Width="350" FontSize="20" FontWeight="Bold"/>
+                    <TextBox x:Name="ParkAddressTextBox" Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
                 </StackPanel>
 
                 <StackPanel>
-                    <TextBlock Text="Park Number (If applicable)" Margin="45,0,45,0" FontSize="20" FontWeight="Bold"/>
-                    <TextBox Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
+                    <TextBlock Text="Park Descriptions" Height="30" Width="350" FontSize="20" FontWeight="Bold"/>
+                    <TextBox x:Name="ParkDescriptionsTextBox" Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
                 </StackPanel>
 
                 <StackPanel>
-                    <TextBlock Text="Open Hours (Eg. 7:00 am - 10:00pm)" Margin="45,0,45,0" FontSize="20" FontWeight="Bold"/>
-                    <TextBox Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
+                    <TextBlock Text="Open Hours (Eg. 7:00 am - 10:00pm)" Height="30" Width="350" FontSize="20" FontWeight="Bold"/>
+                    <TextBox x:Name="ParkHoursTextBox" Margin="0,0,0,20" Height="30" Width="350" FontSize="18"/>
                 </StackPanel>
 
                 <Border Margin="0,30,0,0">
-                    <Button Background="Green" Content="Save" Click="SaveButton_Click" Width="100" Height="50" FontSize="20">
+                    <Button x:Name="SaveButton" Background="Green" Content="Save" Click="SaveButton_Click" Width="100" Height="50" FontSize="20">
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="10"/>
@@ -57,17 +58,15 @@
             </StackPanel>
 
             <!-- Right Column Content -->
-            <StackPanel Grid.Column="1" Margin="20,20,20,20">
-                <Grid Width="465">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                </Grid>
+            <Grid VerticalAlignment="Center" Grid.Column="1" Margin="20">
 
-                <Image Source="../../Assets/Images/Clair-Lake-Park.jpg" Stretch="Fill" Height="345" Width="466" Margin="0,70,0,0"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
-                <Button Background="#00A3FF" Content="Upload Photo" HorizontalAlignment="Center" Margin="0,20,0,0"  Click="UplaodButton_Click" Padding="15" FontSize="20">
+                <Image x:Name="ParkImage" Source="../../Assets/Images/NoImage.png" Grid.Row="0" Height="370" />
+                <Button x:Name="UploadButton" Grid.Row="1" Background="#00A3FF" Content="Upload Photo" HorizontalAlignment="Center" Margin="0,20,0,0"  Click="UplaodButton_Click" Padding="15" FontSize="20">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="10"/>
@@ -75,7 +74,7 @@
                     </Button.Resources>
                 </Button>
 
-            </StackPanel>
+            </Grid>
         </Grid>
     </Border>
 </UserControl>

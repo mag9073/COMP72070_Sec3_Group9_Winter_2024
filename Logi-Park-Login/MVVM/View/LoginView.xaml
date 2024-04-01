@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LogiPark.MVVM.View"
         mc:Ignorable="d"
-        Title="LoginView" Height="720" Width="1280"
+        Title="Logi-Park" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize">
     <Window.Resources>
@@ -110,7 +110,7 @@
                        />
             </StackPanel>
 
-            <TextBlock Text="Log In" 
+            <TextBlock Text="Client Log In" 
                    FontSize="20" 
                    FontWeight="Bold" 
                    Foreground="#355B3E"
@@ -123,7 +123,7 @@
                    Margin="0,10,0,20" 
                    HorizontalAlignment="Left" />
 
-            <Label Content="Email" Style="{StaticResource LabelStyle}" Foreground="#FF2F3D4C" FontWeight="SemiBold" />
+            <Label Content="Username" Style="{StaticResource LabelStyle}" Foreground="#FF2F3D4C" FontWeight="SemiBold" />
             <TextBox x:Name="usernameTextBox"
                  Style="{StaticResource TextBoxStyle}"
                  Text="" Width="443" TextChanged="UsernameTextBox_TextChanged" />
@@ -132,7 +132,7 @@
             <StackPanel Orientation="Horizontal">
                 <TextBox x:Name="passwordTextBox" 
                      Style="{StaticResource TextBoxStyle}"
-                     Text="" Width="440" TextChanged="PasswordTextBox_TextChanged" />
+                     Text="" Width="443" TextChanged="PasswordTextBox_TextChanged" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,10,0,20">
@@ -148,7 +148,7 @@
                 <TextBlock Text="Don’t have an account? " Foreground="#FF58745E" VerticalAlignment="Center" Width="128" />
                 <TextBlock Text="Sign Up" Style="{StaticResource HyperlinkStyle}" Foreground="#FF2FB54C" VerticalAlignment="Center" Height="23" Width="59" FontSize="12" MouseLeftButtonDown="Signup_Handler"/>
             </StackPanel>
-            <Button Background="#FF61A9FF" Grid.Column="2" Content="Admin Mode" Margin="0,80,0,0" Click="AdminButton_Click" Width="100" Height="25">
+            <Button x:Name="adminModeButton" Background="#FF61A9FF" Grid.Column="2" Content="Admin Mode" Margin="0,80,0,0" Click="AdminButton_Click" Width="100" Height="25">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>
