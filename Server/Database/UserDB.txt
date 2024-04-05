@@ -2,5 +2,3 @@ hang
 1234
 mino
 12345
-Owen
-Jan82004
