@@ -19,6 +19,8 @@ namespace LogiPark.MVVM.View
     /// <summary>
     /// Interaction logic for AdminParkViewPage.xaml
     /// </summary>
+    /// 
+
     public partial class AdminParkViewPage : UserControl
     {
         private string _parkName;
@@ -83,7 +85,6 @@ namespace LogiPark.MVVM.View
                     Padding = new Thickness(10),
                     Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F0F0F0") as Color? ?? Colors.LightGray),
                     CornerRadius = new CornerRadius(5),
-                    Height = 150,
                     Margin = new Thickness(5)
                 };
 
@@ -167,10 +168,11 @@ namespace LogiPark.MVVM.View
                 Button deleteButton = new Button
                 {
                     Content = "Delete Review",
-                    Style = (Style)Resources["DeleteButtonStyle"],
-                    Width = 114,
+                    Style = (Style)this.FindResource("DeleteButtonStyle"),
+                    Width = 100,
+                    Height = 30,
                     CommandParameter = review,
-                    Margin = new Thickness(5, 0, 0, 0)
+                    Margin = new Thickness(0, 5, 0, 5)
                 };
 
                 deleteButton.Click += DeleteReviewButton_Click;

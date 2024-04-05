@@ -37,7 +37,7 @@ namespace Server.Implementations
                 foreach (Match match in Regex.Matches(reviewLines + "\n\n", reviewPattern, RegexOptions.Singleline))
                 {
                     // Add a specific part review post time format
-                    string dateFormat = "MM/dd/yyyy hh:mm:ss tt";
+                    string dateFormat = "MM-dd-yyyy hh:mm:ss tt";
 
                     reviews.Add(new ParkReviewData
                     {
@@ -67,7 +67,7 @@ namespace Server.Implementations
                 foreach (ParkReviewData? review in group)
                 {
                     fileContent.AppendLine($"ParkName: {group.Key}");
-                    fileContent.AppendLine($"Username: {review.UserName} | ParkRating: {review.Rating} | DateOfPosting: {review.DateOfPosting.ToString("MM/dd/yyyy hh:mm:ss tt")} | Review: {review.Review}\n");
+                    fileContent.AppendLine($"Username: {review.UserName} | ParkRating: {review.Rating} | DateOfPosting: {review.DateOfPosting.ToString("MM-dd-yyyy hh:mm:ss tt")} | Review: {review.Review}\n");
                 }
             }
 
@@ -75,7 +75,7 @@ namespace Server.Implementations
             File.WriteAllText(filePath, fileContent.ToString());
         }
 
-        public void DeleteParkReviews(string parkNameToDelete)
+        public void DeleteParkReviews(string parkNameToDelete, string filePath)
         {
             // https://stackoverflow.com/questions/29975219/reading-lines-from-text-file-and-add-to-liststring
 
@@ -83,7 +83,7 @@ namespace Server.Implementations
             bool isThisReviewATargetPark = false;
 
             // Read all the lines from the file and store it in the memory as list
-            string[] allLines = File.ReadAllLines(Constants.ParkReviews_FilePath);
+            string[] allLines = File.ReadAllLines(filePath);
             for (int i = 0; i < allLines.Length; i++)
             {
                 string line = allLines[i];
@@ -109,7 +109,7 @@ namespace Server.Implementations
             }
 
             // Write updated file without the file we park we deleted
-            File.WriteAllLines(Constants.ParkReviews_FilePath, updatedContent);
+            File.WriteAllLines(filePath, updatedContent);
         }
 
         public void AppendReviewDataToFile(string filePath, ParkReviewData parkReviewData)
@@ -120,7 +120,7 @@ namespace Server.Implementations
                 // Convert DateTime Format
                 StringBuilder reviewDataBuffer = new StringBuilder();
                 reviewDataBuffer.AppendLine($"ParkName: {parkReviewData.ParkName}");
-                reviewDataBuffer.AppendLine($"Username: {parkReviewData.UserName} | ParkRating: {parkReviewData.Rating} | DateOfPosting: {parkReviewData.DateOfPosting.ToString("MM/dd/yyyy hh:mm:ss tt")} | Review: {parkReviewData.Review}\n");
+                reviewDataBuffer.AppendLine($"Username: {parkReviewData.UserName} | ParkRating: {parkReviewData.Rating} | DateOfPosting: {parkReviewData.DateOfPosting.ToString("MM-dd-yyyy hh:mm:ss tt")} | Review: {parkReviewData.Review}\n");
 
                 File.AppendAllText(filePath, reviewDataBuffer.ToString());
             }

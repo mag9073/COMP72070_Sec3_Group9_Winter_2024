@@ -158,6 +158,7 @@
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="MVVM\Model\ImageManager.cs" />
+    <Compile Include="MVVM\Model\Logger.cs" />
     <Compile Include="MVVM\Model\Packet.cs" />
     <Compile Include="MVVM\Model\ParkDataManager.cs" />
     <Compile Include="MVVM\Model\ParkReviewManager.cs" />
@@ -220,10 +221,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MVVM\View\writeReview.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MVVM\View\SignupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -268,9 +265,6 @@
     </Compile>
     <Compile Include="MVVM\View\ParkViewPage.xaml.cs">
       <DependentUpon>ParkViewPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\View\writeReview.xaml.cs">
-      <DependentUpon>writeReview.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\View\SignupView.xaml.cs">
       <DependentUpon>SignupView.xaml</DependentUpon>
@@ -336,17 +330,7 @@
     <Resource Include="Assets\Icons\star-rating-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\ParkImages\Clair Lake Park.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\Images\NoImage.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\ParkImages\Bechtel Park.jpg" />
-    <Resource Include="Assets\ParkImages\Brewmeister Green Park.jpg" />
-    <Resource Include="Assets\ParkImages\Hillside Park.jpg" />
-    <Resource Include="Assets\ParkImages\Laurel Creek Conservation Area Park.jpeg" />
-    <Resource Include="Assets\ParkImages\Waterloo Park.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Logo.ico" />

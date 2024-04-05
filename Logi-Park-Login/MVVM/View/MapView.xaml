@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:LogiPark.MVVM.View"
         xmlns:viewModel="clr-namespace:LogiPark.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="Logi-Park" Height="760" Width="1280"
+        Title="MapView" Height="760" Width="1280"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         >

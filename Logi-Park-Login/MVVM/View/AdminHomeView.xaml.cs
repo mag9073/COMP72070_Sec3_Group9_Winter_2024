@@ -38,5 +38,14 @@ namespace LogiPark.MVVM.View
 
             this.Close();
         }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            AdminHomeView adminHomeView = new AdminHomeView();
+            
+            adminHomeView.Show();
+
+            this.Close();
+        }
     }
 }

@@ -144,11 +144,8 @@
 
             <TextBlock x:Name="messageTextBlock" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" Foreground="Red"/>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Center">
-                <TextBlock Text="Don’t have an account? " Foreground="#FF58745E" VerticalAlignment="Center" Width="128" />
-                <TextBlock Text="Sign Up" Style="{StaticResource HyperlinkStyle}" Foreground="#FF2FB54C" VerticalAlignment="Center" Height="23" Width="59" FontSize="12" MouseLeftButtonDown="Signup_Handler"/>
-            </StackPanel>
-            <Button Background="#FF61A9FF" Grid.Column="2" Content="Client Mode" Margin="0,80,0,0" Click="ClientButton_Click" Width="100" Height="25">
+            
+            <Button Background="#FF61A9FF" Grid.Column="2" Content="Client Mode" Margin="0,128,0,0" Click="ClientButton_Click" Width="100" Height="25">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="10"/>

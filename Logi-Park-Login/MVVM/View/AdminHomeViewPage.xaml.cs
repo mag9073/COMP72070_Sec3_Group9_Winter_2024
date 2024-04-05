@@ -127,7 +127,8 @@ namespace LogiPark.MVVM.View
                         {
                             Content = parkViewPage,
                             SizeToContent = SizeToContent.WidthAndHeight,
-                            WindowStartupLocation = WindowStartupLocation.CenterScreen
+                            WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                            MaxHeight = 800
                         };
                         window.Show();  // Right now, im creating this 
                     }
