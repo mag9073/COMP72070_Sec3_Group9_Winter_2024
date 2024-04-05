@@ -1,5 +1,6 @@
 //using Client;
 using LogiPark.MVVM.View;
+using LogiPark.MVVM.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
@@ -10,9 +11,8 @@ using Application = System.Net.Mime.MediaTypeNames.Application;
 using System.Windows.Controls;
 using LogiPark.MVVM.Model;
 using System.Windows.Media.Imaging;
-using NUnit.Framework;
-using Moq;
 using System.Net.Sockets;
+using NUnit.Framework;
 
 namespace Client_Test_Suite
 {
@@ -799,7 +799,7 @@ namespace Client_Test_Suite
                 Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotNull(intance);
             }
 
-           /* [TestMethod]
+            [TestMethod]
             public void UT_CN_TCPCM_002()
             {
                 // Arrange
@@ -825,8 +825,107 @@ namespace Client_Test_Suite
                 // Assert
                 Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsFalse(TCPmanager.client.Connected);
 
-            }*/
+            }
         }
-            
+
+        [TestClass]
+        public class Admin_Add_Park_View_Model_Tests
+        {
+            private bool IsPropertyRaised(AdminAddParkViewModel viewModel, string propertyName)
+            {
+                var eventRaised = false;
+                viewModel.PropertyChanged += (sender, e) =>
+                {
+                    if (e.PropertyName == propertyName)
+                    {
+                        eventRaised = true;
+                    }
+                };
+                return eventRaised;
+            }
+
+            [TestMethod]
+            public void UT_CN_AAPVM_001()
+            {
+                var viewModel = new AdminAddParkViewModel();
+
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotNull(viewModel.CurrentView);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsInstanceOfType<LogiPark.MVVM.View.AdminAddParkViewPage>(viewModel.CurrentView);
+            }
+
+            [TestMethod]
+            public void UT_CN_AAPVM_002()
+            {
+                var viewModel = new AdminAddParkViewModel();
+                var newParkVm = new AdminAddParkViewModel();
+                var propertyRaised = IsPropertyRaised(viewModel, nameof(AdminAddParkViewModel.ParkVm));
+
+                viewModel.ParkVm = newParkVm;
+
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsTrue(propertyRaised);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(newParkVm, viewModel.ParkVm);
+            }
+
+            [TestMethod]
+            public void UT_CN_AAPVM_003()
+            {
+                var viewModel = new AdminAddParkViewModel();
+                var newView = new object();
+                var propertyRaised = IsPropertyRaised(viewModel, nameof(AdminAddParkViewModel.CurrentView));
+
+                viewModel.CurrentView = newView;
+
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsTrue(propertyRaised);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(newView, viewModel.CurrentView);
+            }
+        }
+
+        [TestClass]
+        public class Admin_Home_View_Model_Tests
+        {
+            [SetUp]
+            public void SetUp()
+            {
+                Assembly.Load("PresentationCore, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35");
+
+                
+                // Assembly.Load("AnotherAssemblyName, Version=x.x.x.x, Culture=neutral, PublicKeyToken=yourPublicKeyTokenHere");
+            }
+            [TestMethod]
+            public void UT_CN_AHVM_001()
+            {
+                var viewModel = new AdminHomeViewModel();
+
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsNotNull(viewModel.CurrentView);
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsInstanceOfType<LogiPark.MVVM.View.AdminHomeViewPage>(viewModel.CurrentView);
+            }
+
+            [TestMethod]
+            public void UT_CN_AHNM_002()
+            {
+                //  var viewModel = new AdminHomeViewModel();
+                //  var testParkVm = new AdminHomeViewModel(); 
+
+                //  viewModel.ParkVm = testParkVm;
+
+                //  Microsoft.VisualStudio.TestTools.UnitTesting.Assert.AreEqual(testParkVm, viewModel.ParkVm);
+                // Arrange
+                var model = new AdminHomeViewModel();
+                bool propertyChangedWasRaised = false;
+
+               
+                model.PropertyChanged += (sender, args) =>
+                {
+                    if (args.PropertyName == nameof(model.CurrentView))
+                        propertyChangedWasRaised = true;
+                };
+
+                // Act
+                model.CurrentView = new object(); 
+
+                // Assert
+                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.IsTrue(propertyChangedWasRaised);
+            }
+        }
     }
 }

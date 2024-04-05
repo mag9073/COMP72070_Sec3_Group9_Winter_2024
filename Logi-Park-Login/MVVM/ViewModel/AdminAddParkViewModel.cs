@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LogiPark.MVVM.ViewModel
 {
-    internal class AdminAddParkViewModel : ObservableObject
+    public class AdminAddParkViewModel : ObservableObject
     {
         public AdminAddParkViewModel ParkVm { get; set; }
 

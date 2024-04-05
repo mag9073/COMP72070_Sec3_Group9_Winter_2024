@@ -9,12 +9,12 @@ namespace LogiPark.MVVM.ViewModel
 {
 
 
-    class AdminHomeViewModel : ObservableObject
+    public class AdminHomeViewModel : ObservableObject
     {
         public AdminHomeViewModel ParkVm { get; set; }
 
 
-        private object _currentView;
+        public object _currentView;
 
         public object CurrentView
         {
