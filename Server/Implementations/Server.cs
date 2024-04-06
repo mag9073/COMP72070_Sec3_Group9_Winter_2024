@@ -19,6 +19,7 @@ namespace Server.Implementations
         private static ParkDataManager parkDataManager = new ParkDataManager();
         private static ParkReviewManager parkReviewManager = new ParkReviewManager();
         private static ServerStateManager serverStateManager = new ServerStateManager();
+        private static UserDataManager.LoginData loginDataManager = new UserDataManager.LoginData();
         private static Logger logger = new Logger("log.txt"); 
         private static ImageManager imageManager = new ImageManager();
         private static PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
@@ -44,19 +45,12 @@ namespace Server.Implementations
 
         private static void AcceptClients(object state)
         {
-            while (serverStateManager.GetCurrentState() == ServerState.Connected
-                || serverStateManager.GetCurrentState() == ServerState.Idle)
+            while (true)
             {
                 TcpClient client = _tcpListener.AcceptTcpClient();
 
-                if (serverStateManager.GetCurrentState() == ServerState.Connected)
-                {
                     clients.Add(client);
                     ThreadPool.QueueUserWorkItem(new WaitCallback(HandleClient), client);
-                } else
-                {
-                    client.Close();
-                }
 
             }
         }
@@ -79,7 +73,7 @@ namespace Server.Implementations
                         {
                             packet = Serializer.Deserialize<Packet>(ms);
                         }
-                        logger.LogPacket("Recieve", packet);
+                        logger.LogPacket("Recieve", packet, serverStateManager);
                         packetProcessor.ProcessPacket(packet, stream, client);
                     }
                 

@@ -195,7 +195,7 @@ namespace Server.Implementations
                 string message = _userDataManager.PerformSignUp(signUpData);
                 SendAcknowledgement(stream, message);
 
-                if (message == "Please enter username to register!!!! \\o/")
+                if (message == "Successfully Sign Up \\o/")
                 {
                     _serverStateManager.SetCurrentState(ServerState.Idle);
                 }

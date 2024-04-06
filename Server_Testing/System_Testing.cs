@@ -151,7 +151,7 @@ namespace Server_Testing
 
                 winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("admin");
                 winDriver.FindElementByAccessibilityId("passwordTextBox").SendKeys("123");
-                winDriver.FindElementByName("Login").Click();
+                winDriver.FindElementByAccessibilityId("Login").Click();
 
                 // allows the windows to actually open before trying to access them
                 System.Threading.Thread.Sleep(800);
