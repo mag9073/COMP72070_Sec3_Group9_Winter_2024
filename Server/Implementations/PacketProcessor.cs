@@ -123,7 +123,6 @@ namespace Server.Implementations
          *                                              Process Packet Type                                           *
          * ************************************************************************************************************/
 
-        /*** Process Packet Type -> Login ***/
         public void ProcessLoginPacket(Packet packet, ICommunicationChannel stream, TcpClient client)
         {
             _serverStateManager.SetCurrentState(ServerState.Login);
@@ -141,8 +140,6 @@ namespace Server.Implementations
                 {
                     _serverStateManager.SetCurrentState(ServerState.Idle);
                 }
-
-
             }
             else
             {
@@ -400,7 +397,6 @@ namespace Server.Implementations
         private void ProcessParkReviewPacket(ICommunicationChannel stream, Packet receivedPacket)
         {
             _serverStateManager.SetCurrentState(ServerState.ParkReview);
-
             // Deserialize the packet body to get the park name
             string parkName = Encoding.UTF8.GetString(receivedPacket.GetBody().buffer);
 
@@ -428,7 +424,6 @@ namespace Server.Implementations
                 // Now send the review buffer itself
                 stream.Write(reviewBuffer, 0, reviewBuffer.Length);
             }
-
             _serverStateManager.SetCurrentState(ServerState.Idle);
         }
 
@@ -487,7 +482,6 @@ namespace Server.Implementations
         {
 
             _serverStateManager.SetCurrentState(ServerState.DeleteAPark);
-
             string parkName = Encoding.UTF8.GetString(receivedPacket.GetBody().buffer);
 
             string parkImagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory + Constants.ParkImages_FilePath + parkName + ".jpg");

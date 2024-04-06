@@ -83,7 +83,6 @@ namespace LogiPark.MVVM.View
                         Padding = new Thickness(10),
                         Background = new SolidColorBrush(ColorConverter.ConvertFromString("#F0F0F0") as Color? ?? Colors.LightGray),
                         CornerRadius = new CornerRadius(5),
-                        Height = 126,
                         Margin = new Thickness(5)
                     };
 
@@ -159,7 +158,6 @@ namespace LogiPark.MVVM.View
                     {
                         Text = review.Review,
                         TextWrapping = TextWrapping.Wrap,
-                        Width = 250,
                         Margin = new Thickness(0, 10, 0, 0)
                     };
 
@@ -257,9 +255,18 @@ namespace LogiPark.MVVM.View
 
         private void SubmitReview_Click(object sender, RoutedEventArgs e)
         {
-            string reviewText = userReviewTextBox.Text;
+            string reviewText = "";
+            int rating = 0;
+            if (userReviewTextBox.Text == null || string.IsNullOrWhiteSpace(userReviewTextBox.Text))
+            {
+                MessageBox.Show("Please enter information in the review message.", "Missing Information", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                reviewText = userReviewTextBox.Text;
+            }
 
-            int rating = 1;
+            
 
             if (RatingComboBox.SelectedItem is ComboBoxItem selectedRatingItem)
             {
@@ -268,28 +275,35 @@ namespace LogiPark.MVVM.View
                 // https://stackoverflow.com/questions/67107637/how-can-i-use-int-tryparse-in-comparison-instruction-c-sharp-wpf
                 // Parses the rating, defaults to 1 if it fails.
                 int.TryParse(ratingText[0].ToString(), out rating);
+
+            }
+            else
+            {
+                MessageBox.Show("Please Select a ratng for the park.", "Missing Information", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
 
-            ParkReviewManager.ParkReviewData parkReviewData = new ParkReviewManager.ParkReviewData
-            {
-                UserName = UserSession.currentUsername,
-                ParkName = _parkName,
-                Review = reviewText,
-                Rating = rating,
-                DateOfPosting = DateTime.Now
-            };
+            if (rating != 0 && userReviewTextBox.Text != null && !string.IsNullOrWhiteSpace(userReviewTextBox.Text)) {
+                ParkReviewManager.ParkReviewData parkReviewData = new ParkReviewManager.ParkReviewData
+                {
+                    UserName = UserSession.currentUsername,
+                    ParkName = _parkName,
+                    Review = reviewText,
+                    Rating = rating,
+                    DateOfPosting = DateTime.Now
+                };
 
-            _client.SendAddAParkReviewRequest(parkReviewData);
+                _client.SendAddAParkReviewRequest(parkReviewData);
 
-            ReviewInputGrid.Visibility = Visibility.Collapsed;
+                ReviewInputGrid.Visibility = Visibility.Collapsed;
 
-            // Close the current view page after the save button is clicked
-            Window parentWindow = Window.GetWindow(this);
-            if (parentWindow != null)
-            {
-                parentWindow.Close();
+                // Close the current view page after the save button is clicked
+                Window parentWindow = Window.GetWindow(this);
+                if (parentWindow != null)
+                {
+                    parentWindow.Close();
+                }
+                DisplayParkReviews();
             }
-            DisplayParkReviews();
         }
 
         private void CancelReview_Click(Object sender, RoutedEventArgs e)

@@ -37,7 +37,7 @@ namespace Server.Implementations
                 foreach (Match match in Regex.Matches(reviewLines + "\n\n", reviewPattern, RegexOptions.Singleline))
                 {
                     // Add a specific part review post time format
-                    string dateFormat = "MM/dd/yyyy hh:mm:ss tt";
+                    string dateFormat = "MM-dd-yyyy hh:mm:ss tt";
 
                     reviews.Add(new ParkReviewData
                     {
@@ -67,7 +67,7 @@ namespace Server.Implementations
                 foreach (ParkReviewData? review in group)
                 {
                     fileContent.AppendLine($"ParkName: {group.Key}");
-                    fileContent.AppendLine($"Username: {review.UserName} | ParkRating: {review.Rating} | DateOfPosting: {review.DateOfPosting.ToString("MM/dd/yyyy hh:mm:ss tt")} | Review: {review.Review}\n");
+                    fileContent.AppendLine($"Username: {review.UserName} | ParkRating: {review.Rating} | DateOfPosting: {review.DateOfPosting.ToString("MM-dd-yyyy hh:mm:ss tt")} | Review: {review.Review}\n");
                 }
             }
 
@@ -120,7 +120,7 @@ namespace Server.Implementations
                 // Convert DateTime Format
                 StringBuilder reviewDataBuffer = new StringBuilder();
                 reviewDataBuffer.AppendLine($"ParkName: {parkReviewData.ParkName}");
-                reviewDataBuffer.AppendLine($"Username: {parkReviewData.UserName} | ParkRating: {parkReviewData.Rating} | DateOfPosting: {parkReviewData.DateOfPosting.ToString("MM/dd/yyyy hh:mm:ss tt")} | Review: {parkReviewData.Review}\n");
+                reviewDataBuffer.AppendLine($"Username: {parkReviewData.UserName} | ParkRating: {parkReviewData.Rating} | DateOfPosting: {parkReviewData.DateOfPosting.ToString("MM-dd-yyyy hh:mm:ss tt")} | Review: {parkReviewData.Review}\n");
 
                 File.AppendAllText(filePath, reviewDataBuffer.ToString());
             }

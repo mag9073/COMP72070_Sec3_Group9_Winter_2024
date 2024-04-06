@@ -3,6 +3,7 @@ using Server.DataStructure;
 using Server.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -102,16 +103,11 @@ namespace Server.Implementations
             {
                 StringBuilder parkDataBuffer = new StringBuilder();
 
-
-                if (File.Exists(filePath) && new FileInfo(filePath).Length > 0)
-                {
-                    parkDataBuffer.AppendLine();
-                }
-
                 parkDataBuffer.AppendLine(parkData.parkName);
                 parkDataBuffer.AppendLine(parkData.parkAddress);
                 parkDataBuffer.AppendLine(parkData.parkDescription);
                 parkDataBuffer.Append(parkData.parkHours);
+                parkDataBuffer.AppendLine();
 
                 File.AppendAllText(filePath, parkDataBuffer.ToString());
             }
@@ -143,8 +139,8 @@ namespace Server.Implementations
                 }
                 else
                 {
-                    // If the current line is not part of the park to delete, we add them back to a line to be written back to our file
-                    remainLines.Add(lines[i]);
+                        // If the current line is not part of the park to delete, we add them back to a line to be written back to our file
+                        remainLines.Add(lines[i]);
                 }
             }
 

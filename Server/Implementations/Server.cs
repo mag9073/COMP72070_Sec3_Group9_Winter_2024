@@ -20,7 +20,7 @@ namespace Server.Implementations
         private static ParkReviewManager parkReviewManager = new ParkReviewManager();
         private static ServerStateManager serverStateManager = new ServerStateManager();
         private static UserDataManager.LoginData loginDataManager = new UserDataManager.LoginData();
-        private static Logger logger = new Logger("log.txt"); 
+        private static Logger logger = new Logger("../../../Database/log.txt"); 
         private static ImageManager imageManager = new ImageManager();
         private static PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
         private static List<TcpClient> clients = new List<TcpClient>();     // To store client connections in a list of pool 
@@ -73,7 +73,8 @@ namespace Server.Implementations
                         {
                             packet = Serializer.Deserialize<Packet>(ms);
                         }
-                        logger.LogPacket("Recieve", packet, serverStateManager);
+                        logger.LogPacket("Receive", packet, serverStateManager, loginDataManager);
+
                         packetProcessor.ProcessPacket(packet, stream, client);
                     }
                 

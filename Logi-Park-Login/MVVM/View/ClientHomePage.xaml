@@ -91,7 +91,7 @@
                     </Style>
                 </Button.Resources>
             </Button>
-
+            
             <ContentControl Grid.Row="1"
                             Grid.Column="1"
                             VerticalAlignment="Center"
