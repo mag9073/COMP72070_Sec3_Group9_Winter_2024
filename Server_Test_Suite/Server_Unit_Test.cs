@@ -114,19 +114,6 @@ namespace Server_Test_Suite
             }
 
             [TestMethod]
-            public void UT_SVR_045_ReadOneParkDataFromFile_NonExistentFile_CatchesException()
-            {
-                // Arrange
-                string parkName = "South Park";
-
-                // Act
-                ParkData? result;
-                result = _parkDataManager.ReadOneParkDataFromFile(_testNotValidFilePath, parkName);
-                // Assert within catch to ensure exception is caught and handled
-                Assert.IsNull(result, "Expected result to be null when exception is caught.");
-            }
-
-            [TestMethod]
             public void UT_SVR_043_ReadAllParkDataFromFile_ReturnsCorrectParkDataArray()
             {
                 // Arrange
@@ -148,6 +135,19 @@ namespace Server_Test_Suite
                 Assert.AreEqual(expectedResult.parkDescription, parks[0].parkDescription, "First park description does not match.");
                 Assert.AreEqual(expectedResult.parkHours, parks[0].parkHours, "First park hours does not match.");
 
+            }
+
+            [TestMethod]
+            public void UT_SVR_045_ReadOneParkDataFromFile_NonExistentFile_CatchesException()
+            {
+                // Arrange
+                string parkName = "South Park";
+
+                // Act
+                ParkData? result;
+                result = _parkDataManager.ReadOneParkDataFromFile(_testNotValidFilePath, parkName);
+                // Assert within catch to ensure exception is caught and handled
+                Assert.IsNull(result, "Expected result to be null when exception is caught.");
             }
 
             [TestMethod]
@@ -283,6 +283,187 @@ namespace Server_Test_Suite
                 Assert.AreEqual(requestToUpdateParkData.parkAddress, updatedPark.parkAddress, "Park address should be updated.");
                 Assert.AreEqual(requestToUpdateParkData.parkDescription, updatedPark.parkDescription, "Park description should be updated.");
                 Assert.AreEqual(requestToUpdateParkData.parkHours, updatedPark.parkHours, "Park hours should be updated.");
+            }
+
+
+        }
+
+        [TestClass]
+        public class ParkReviewsManagerTests
+        {
+            private string _tempFilePath;
+            private Server.Implementations.ParkReviewManager _parkReviewManager;
+
+            [TestInitialize]
+            public void TestInitializer()
+            {
+                _parkReviewManager = new Server.Implementations.ParkReviewManager();
+
+                // Create a temp file for testing
+                _tempFilePath = Path.GetTempFileName();
+
+                // Create the file to contain test data 
+                var testData = new StringBuilder();
+                testData.AppendLine("ParkName: Waterloo Park");
+                testData.AppendLine("Username: Katherine Slattery | ParkRating: 4 | DateOfPosting: 03/08/2024 12:43:08 AM | Review: I have many good memories walking through this park. I like the path around the lake and the trails through the woods. There are some nice flowering trees which are so peaceful to sit under in the summer.");
+                testData.AppendLine();
+                testData.AppendLine("ParkName: Neverland Park");
+                testData.AppendLine("Username: Tester123 | DateOfPosting: 03/08/2024 12:43:08 AM | Review: Great park!");
+                testData.AppendLine();
+
+                File.WriteAllText(_tempFilePath, testData.ToString());
+
+            }
+
+            [TestMethod]
+            public void UT_SVR_050_ReadAllParkReviewsFromFile_ReturnsCorrectReviews()
+            {
+                // Arrange
+                ParkReviewData[] expectedReviews = new ParkReviewData[]
+{
+                    new ParkReviewData
+                    {
+                        ParkName = "Waterloo Park",
+                        UserName = "Katherine Slattery",
+                        Rating = 4,
+                        Review = "I have many good memories walking through this park. I like the path around the lake and the trails through the woods. There are some nice flowering trees which are so peaceful to sit under in the summer.",
+
+                    },
+                    new ParkReviewData
+                    {
+                        ParkName = "Clair Lake Park",
+                        UserName = "Barry Smylie",
+                        Rating = 3,
+                        Review = "The trail doesn't follow the banks of the reservoir.  It is a sports park with swimming pool, tennis courts, and field sports.  There is one access to the water",
+                    }
+                };
+
+                // Act
+                List<ParkReviewData> actualReviews = _parkReviewManager.ReadAllParkReviewsFromFile("../../../Database/ParkReview.txt");
+
+                // Assert
+                Assert.IsNotNull(actualReviews);
+                Assert.AreEqual(7, actualReviews.Count);
+
+                // Correct first review
+                Assert.AreEqual(expectedReviews[0].ParkName, actualReviews[0].ParkName);
+                Assert.AreEqual(expectedReviews[0].UserName, actualReviews[0].UserName);
+                Assert.AreEqual(expectedReviews[0].Rating, actualReviews[0].Rating);
+                Assert.AreEqual(DateTime.ParseExact("03/08/2024 12:43:08 AM", "MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture), actualReviews[0].DateOfPosting);
+                Assert.AreEqual(expectedReviews[0].Review, actualReviews[0].Review);
+
+                // Correct second review
+                Assert.AreEqual(expectedReviews[1].ParkName, actualReviews[1].ParkName);
+                Assert.AreEqual(expectedReviews[1].UserName, actualReviews[1].UserName);
+                Assert.AreEqual(expectedReviews[1].Rating, actualReviews[1].Rating);
+                Assert.AreEqual(DateTime.ParseExact("03/08/2024 12:43:08 AM", "MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture), actualReviews[1].DateOfPosting);
+                Assert.AreEqual(expectedReviews[1].Review, actualReviews[1].Review);
+            }
+
+            [TestMethod]
+            public void UT_SVR_052_OverwritteAllParkReview_Return_OverwrittenDataInFile()
+            {
+                string tempFilePath = Path.GetTempFileName();
+
+                // Arrange
+                ParkReviewManager parkReviewManager = new ParkReviewManager();
+                List<ParkReviewData> expectedreviews = new List<ParkReviewData>
+                {
+                    new ParkReviewData
+                    {
+                        ParkName = "Lakeshore Park",
+                        UserName = "Trevor Heywood",
+                        Rating = 5,
+                        DateOfPosting = new DateTime(2021, 7, 4),
+                        Review = "Great little neighbourhood link with a dirt trail and a small creek. Lots of mature trees to provide shade in the summer."
+                    },
+                    new ParkReviewData
+                    {
+                        ParkName = "Twin Oaks Park",
+                        UserName = "Spongbob123",
+                        Rating = 5,
+                        DateOfPosting = new DateTime(2024, 9, 7),
+                        Review = "Great place to take my puppy for a walk."
+                    }
+                };
+
+                List<string> expectedLines = new List<string>
+                {
+                    "ParkName: Lakeshore Park",
+                    "Username: Trevor Heywood | ParkRating: 5 | DateOfPosting: 07/04/2021 12:00:00 AM | Review: Great little neighbourhood link with a dirt trail and a small creek. Lots of mature trees to provide shade in the summer.",
+                    "",
+                    "ParkName: Twin Oaks Park",
+                    "Username: Spongbob123 | ParkRating: 5 | DateOfPosting: 09/07/2024 12:00:00 AM | Review: Great place to take my puppy for a walk.",
+                    ""
+                };
+
+                // Act
+                parkReviewManager.OverwriteAllParkReviewsToFile(tempFilePath, expectedreviews);
+
+                // Assert
+                string[] actualLines = File.ReadAllLines(tempFilePath);
+                for (int i = 0; i < expectedLines.Count; i++)
+                {
+                    Assert.IsTrue(i < actualLines.Length, $"Missing line {i}: {expectedLines[i]}");
+                    Assert.AreEqual(expectedLines[i], actualLines[i], $"Line data {i} do not match.");
+                }
+            }
+
+            [TestMethod]
+            public void UT_SVR_053_DeleteAParkReviewTest()
+            {
+                // Arrange
+                string targetParkName = "Waterloo Park";
+                ParkReviewManager parkReviewManager = new ParkReviewManager();
+
+                // Act
+                parkReviewManager.DeleteParkReviews(targetParkName, _tempFilePath);
+
+                // Assert
+                string[] remainingReviews = File.ReadAllLines(_tempFilePath);
+
+                for (int i = 0; i < remainingReviews.Length; i++)
+                {
+                    Assert.IsFalse(remainingReviews[i].Contains(targetParkName));
+                }
+            }
+
+            [TestMethod]
+            public void UT_SVR_054_AppendParkReviewDataTest()
+            {
+                // Arrange
+                ParkReviewManager parkReviewManager = new ParkReviewManager();
+                ParkReviewData parkReviewData = new ParkReviewData
+                {
+                    ParkName = "Never Park",
+                    UserName = "Katherine Slattery",
+                    Rating = 4,
+                    DateOfPosting = new DateTime(2024, 2, 29, 10, 30, 50),
+                    Review = "The trail doesn't follow the banks of the reservoir. It is a sports park with swimming pool, tennis courts, and field sports. There is one access to the water",
+                };
+
+                // Convert them to usable format for assertion
+                List<string> expectedComponents = new List<string>
+                {
+                    $"ParkName: {parkReviewData.ParkName}",
+                    $"Username: {parkReviewData.UserName}",
+                    $"ParkRating: {parkReviewData.Rating}",
+                    $"DateOfPosting: {parkReviewData.DateOfPosting.ToString("MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture)}",
+                    $"Review: {parkReviewData.Review}"
+                };
+
+                // Act
+                parkReviewManager.AppendReviewDataToFile(_tempFilePath, parkReviewData);
+
+                // Assert
+                string fileContent = File.ReadAllText(_tempFilePath);
+
+                for (int i = 0; i < expectedComponents.Count; i++)
+                {
+                    Assert.IsTrue(fileContent.Contains(expectedComponents[i]));
+                }
+
+
             }
 
         }
@@ -421,7 +602,7 @@ namespace Server_Test_Suite
 
                 // Assert
                 Assert.IsNotNull(actualReviews);
-                Assert.AreEqual(5, actualReviews.Count);
+                Assert.AreEqual(6, actualReviews.Count);
 
                 // Correct first review
                 Assert.AreEqual(expectedReviews[0].ParkName, actualReviews[0].ParkName);
