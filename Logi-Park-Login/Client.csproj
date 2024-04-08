@@ -150,7 +150,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\ObservableObject.cs" />
-    <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="MVVM\Model\ImageManager.cs" />
     <Compile Include="MVVM\Model\Logger.cs" />
     <Compile Include="MVVM\Model\Packet.cs" />
@@ -164,9 +163,7 @@
     <Compile Include="MVVM\ViewModel\AdminParkEditViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AdminParkViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\MapViewModel.cs" />
     <Compile Include="MVVM\ViewModel\ParkViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\ReviewViewModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
