@@ -222,7 +222,7 @@ namespace Server.Implementations
 
             public string SignUpUser(string filePath)
             {
-                string signUpMessage = "Please enter username to register!!!! \\o/";
+                string signUpMessage = "Successfully Sign Up \\o/";
                 bool userNameExists = false;
                 try
                 {
