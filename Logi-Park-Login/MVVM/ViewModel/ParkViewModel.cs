@@ -11,9 +11,6 @@ namespace LogiPark.MVVM.ViewModel
 
     class ParkViewModel : ObservableObject
     {
-        public ParkViewModel ParkVm { get; set; }
-
-
         private object _currentView;
 
         public object CurrentView
