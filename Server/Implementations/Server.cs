@@ -48,8 +48,10 @@ namespace Server.Implementations
             while (true)
             {
                 TcpClient client = _tcpListener.AcceptTcpClient();
-                clients.Add(client);
-                ThreadPool.QueueUserWorkItem(new WaitCallback(HandleClient), client);
+
+                    clients.Add(client);
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(HandleClient), client);
+
             }
         }
 

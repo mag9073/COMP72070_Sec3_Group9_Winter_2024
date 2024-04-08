@@ -12,6 +12,7 @@ using Header = Server.DataStructure.PacketData.Header;
 using Body = Server.DataStructure.PacketData.Body;
 using System.Text;
 using static Server.DataStructure.PacketData;
+using ServerStateManager = Server.Implementations.ServerStateManager;
 namespace Server_Test_Suite
 {
     [TestClass]
@@ -93,7 +94,7 @@ namespace Server_Test_Suite
                 };
 
                 // Act
-                ParkData actualResult = _parkDataManager.ReadOneParkDataFromFile(_testGoodFilePath, "Kitchener Park");
+                ParkData? actualResult = _parkDataManager.ReadOneParkDataFromFile(_testGoodFilePath, "Kitchener Park");
 
                 // Assert
                 Assert.IsNotNull(actualResult, "Expected not null Park Data object");
@@ -106,23 +107,10 @@ namespace Server_Test_Suite
             public void UT_SVR_042_ReadOneParkDataFromFile_WithNoMatchingName_ReturnsNull()
             {
                 // Act
-                ParkData result = _parkDataManager.ReadOneParkDataFromFile(_testGoodFilePath, "South Park");
+                ParkData? result = _parkDataManager.ReadOneParkDataFromFile(_testGoodFilePath, "South Park");
 
                 // Assert
                 Assert.IsNull(result, "Expected a null result for a nonexistent park name");
-            }
-
-            [TestMethod]
-            public void UT_SVR_045_ReadOneParkDataFromFile_NonExistentFile_CatchesException()
-            {
-                // Arrange
-                string parkName = "South Park";
-
-                // Act
-                ParkData result;
-                result = _parkDataManager.ReadOneParkDataFromFile(_testNotValidFilePath, parkName);
-                // Assert within catch to ensure exception is caught and handled
-                Assert.IsNull(result, "Expected result to be null when exception is caught.");
             }
 
             [TestMethod]
@@ -147,6 +135,19 @@ namespace Server_Test_Suite
                 Assert.AreEqual(expectedResult.parkDescription, parks[0].parkDescription, "First park description does not match.");
                 Assert.AreEqual(expectedResult.parkHours, parks[0].parkHours, "First park hours does not match.");
 
+            }
+
+            [TestMethod]
+            public void UT_SVR_045_ReadOneParkDataFromFile_NonExistentFile_CatchesException()
+            {
+                // Arrange
+                string parkName = "South Park";
+
+                // Act
+                ParkData? result;
+                result = _parkDataManager.ReadOneParkDataFromFile(_testNotValidFilePath, parkName);
+                // Assert within catch to ensure exception is caught and handled
+                Assert.IsNull(result, "Expected result to be null when exception is caught.");
             }
 
             [TestMethod]
@@ -220,13 +221,13 @@ namespace Server_Test_Suite
                 string[] remainingLines = File.ReadAllLines("../../../Database/ParkData.txt");
                 Console.WriteLine(remainingLines);
                 Assert.IsFalse(remainingLines.Contains(targetParkName), $"{targetParkName} should be deleted.");
-                Assert.AreEqual(8, remainingLines.Length, "Expected number of lines after deletion is incorrect.");
+                Assert.AreEqual(12, remainingLines.Length, "Expected number of lines after deletion is incorrect.");
                 Assert.IsFalse(remainingLines.Contains(testData.parkName), "Associated Address should be deleted.");
                 Assert.IsFalse(remainingLines.Contains(testData.parkAddress), "Associated Description should be deleted.");
             }
 
             [TestMethod]
-            public void UT_SVR_049_EditAParkDataToFile_Rreturn_UpdatedParkData()
+            public void UT_SVR_049_EditAParkDataToFile_Return_UpdatedParkData()
             {
                 // Arrange
 
@@ -260,27 +261,209 @@ namespace Server_Test_Suite
                     testData.AppendLine(expectedParkData[i].parkHours);
                 }
 
+                File.WriteAllText(tempFilePath, testData.ToString());
+
 
                 ParkData requestToUpdateParkData = new ParkData
                 {
-                    parkName = "Cambridge Park",
-                    parkAddress = "123 Fountain St",
-                    parkDescription = "This is Loo Park",
-                    parkHours = "9:00 AM - 5:00 PM",
+                    parkName = "Kitchener Park",
+                    parkAddress = "123 Fanta St",
+                    parkDescription = "This is a Fantastic Park",
+                    parkHours = "Open 24 Hours",
                 };
 
                 // Act
                 _parkDataManager.EditAParkDataToFile(tempFilePath, requestToUpdateParkData);
 
                 ParkData[] updatedParks = _parkDataManager.ReadAllParkDataFromFile(tempFilePath);
-                ParkData? updatedPark = updatedParks.FirstOrDefault(p => p.parkName == requestToUpdateParkData.parkName);
+                ParkData updatedPark = updatedParks.FirstOrDefault(p => p.parkName == requestToUpdateParkData.parkName);
 
                 // Assert
-                Assert.IsNotNull(updatedPark, "Updated park should exist.");
-
+                Assert.IsNotNull(updatedPark, "The park was not updated or added correctly.");
                 Assert.AreEqual(requestToUpdateParkData.parkAddress, updatedPark.parkAddress, "Park address should be updated.");
                 Assert.AreEqual(requestToUpdateParkData.parkDescription, updatedPark.parkDescription, "Park description should be updated.");
                 Assert.AreEqual(requestToUpdateParkData.parkHours, updatedPark.parkHours, "Park hours should be updated.");
+            }
+
+
+        }
+
+        [TestClass]
+        public class ParkReviewsManagerTests
+        {
+            private string _tempFilePath;
+            private Server.Implementations.ParkReviewManager _parkReviewManager;
+
+            [TestInitialize]
+            public void TestInitializer()
+            {
+                _parkReviewManager = new Server.Implementations.ParkReviewManager();
+
+                // Create a temp file for testing
+                _tempFilePath = Path.GetTempFileName();
+
+                // Create the file to contain test data 
+                var testData = new StringBuilder();
+                testData.AppendLine("ParkName: Waterloo Park");
+                testData.AppendLine("Username: Katherine Slattery | ParkRating: 4 | DateOfPosting: 03/08/2024 12:43:08 AM | Review: I have many good memories walking through this park. I like the path around the lake and the trails through the woods. There are some nice flowering trees which are so peaceful to sit under in the summer.");
+                testData.AppendLine();
+                testData.AppendLine("ParkName: Neverland Park");
+                testData.AppendLine("Username: Tester123 | DateOfPosting: 03/08/2024 12:43:08 AM | Review: Great park!");
+                testData.AppendLine();
+
+                File.WriteAllText(_tempFilePath, testData.ToString());
+
+            }
+
+            [TestMethod]
+            public void UT_SVR_050_ReadAllParkReviewsFromFile_ReturnsCorrectReviews()
+            {
+                // Arrange
+                ParkReviewData[] expectedReviews = new ParkReviewData[]
+{
+                    new ParkReviewData
+                    {
+                        ParkName = "Waterloo Park",
+                        UserName = "Katherine Slattery",
+                        Rating = 4,
+                        Review = "I have many good memories walking through this park. I like the path around the lake and the trails through the woods. There are some nice flowering trees which are so peaceful to sit under in the summer.",
+
+                    },
+                    new ParkReviewData
+                    {
+                        ParkName = "Clair Lake Park",
+                        UserName = "Barry Smylie",
+                        Rating = 3,
+                        Review = "The trail doesn't follow the banks of the reservoir.  It is a sports park with swimming pool, tennis courts, and field sports.  There is one access to the water",
+                    }
+                };
+
+                // Act
+                List<ParkReviewData> actualReviews = _parkReviewManager.ReadAllParkReviewsFromFile("../../../Database/ParkReview.txt");
+
+                // Assert
+                Assert.IsNotNull(actualReviews);
+                Assert.AreEqual(7, actualReviews.Count);
+
+                // Correct first review
+                Assert.AreEqual(expectedReviews[0].ParkName, actualReviews[0].ParkName);
+                Assert.AreEqual(expectedReviews[0].UserName, actualReviews[0].UserName);
+                Assert.AreEqual(expectedReviews[0].Rating, actualReviews[0].Rating);
+                Assert.AreEqual(DateTime.ParseExact("03/08/2024 12:43:08 AM", "MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture), actualReviews[0].DateOfPosting);
+                Assert.AreEqual(expectedReviews[0].Review, actualReviews[0].Review);
+
+                // Correct second review
+                Assert.AreEqual(expectedReviews[1].ParkName, actualReviews[1].ParkName);
+                Assert.AreEqual(expectedReviews[1].UserName, actualReviews[1].UserName);
+                Assert.AreEqual(expectedReviews[1].Rating, actualReviews[1].Rating);
+                Assert.AreEqual(DateTime.ParseExact("03/08/2024 12:43:08 AM", "MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture), actualReviews[1].DateOfPosting);
+                Assert.AreEqual(expectedReviews[1].Review, actualReviews[1].Review);
+            }
+
+            [TestMethod]
+            public void UT_SVR_052_OverwritteAllParkReview_Return_OverwrittenDataInFile()
+            {
+                string tempFilePath = Path.GetTempFileName();
+
+                // Arrange
+                ParkReviewManager parkReviewManager = new ParkReviewManager();
+                List<ParkReviewData> expectedreviews = new List<ParkReviewData>
+                {
+                    new ParkReviewData
+                    {
+                        ParkName = "Lakeshore Park",
+                        UserName = "Trevor Heywood",
+                        Rating = 5,
+                        DateOfPosting = new DateTime(2021, 7, 4),
+                        Review = "Great little neighbourhood link with a dirt trail and a small creek. Lots of mature trees to provide shade in the summer."
+                    },
+                    new ParkReviewData
+                    {
+                        ParkName = "Twin Oaks Park",
+                        UserName = "Spongbob123",
+                        Rating = 5,
+                        DateOfPosting = new DateTime(2024, 9, 7),
+                        Review = "Great place to take my puppy for a walk."
+                    }
+                };
+
+                List<string> expectedLines = new List<string>
+                {
+                    "ParkName: Lakeshore Park",
+                    "Username: Trevor Heywood | ParkRating: 5 | DateOfPosting: 07/04/2021 12:00:00 AM | Review: Great little neighbourhood link with a dirt trail and a small creek. Lots of mature trees to provide shade in the summer.",
+                    "",
+                    "ParkName: Twin Oaks Park",
+                    "Username: Spongbob123 | ParkRating: 5 | DateOfPosting: 09/07/2024 12:00:00 AM | Review: Great place to take my puppy for a walk.",
+                    ""
+                };
+
+                // Act
+                parkReviewManager.OverwriteAllParkReviewsToFile(tempFilePath, expectedreviews);
+
+                // Assert
+                string[] actualLines = File.ReadAllLines(tempFilePath);
+                for (int i = 0; i < expectedLines.Count; i++)
+                {
+                    Assert.IsTrue(i < actualLines.Length, $"Missing line {i}: {expectedLines[i]}");
+                    Assert.AreEqual(expectedLines[i], actualLines[i], $"Line data {i} do not match.");
+                }
+            }
+
+            [TestMethod]
+            public void UT_SVR_053_DeleteAParkReviewTest()
+            {
+                // Arrange
+                string targetParkName = "Waterloo Park";
+                ParkReviewManager parkReviewManager = new ParkReviewManager();
+
+                // Act
+                parkReviewManager.DeleteParkReviews(targetParkName, _tempFilePath);
+
+                // Assert
+                string[] remainingReviews = File.ReadAllLines(_tempFilePath);
+
+                for (int i = 0; i < remainingReviews.Length; i++)
+                {
+                    Assert.IsFalse(remainingReviews[i].Contains(targetParkName));
+                }
+            }
+
+            [TestMethod]
+            public void UT_SVR_054_AppendParkReviewDataTest()
+            {
+                // Arrange
+                ParkReviewManager parkReviewManager = new ParkReviewManager();
+                ParkReviewData parkReviewData = new ParkReviewData
+                {
+                    ParkName = "Never Park",
+                    UserName = "Katherine Slattery",
+                    Rating = 4,
+                    DateOfPosting = new DateTime(2024, 2, 29, 10, 30, 50),
+                    Review = "The trail doesn't follow the banks of the reservoir. It is a sports park with swimming pool, tennis courts, and field sports. There is one access to the water",
+                };
+
+                // Convert them to usable format for assertion
+                List<string> expectedComponents = new List<string>
+                {
+                    $"ParkName: {parkReviewData.ParkName}",
+                    $"Username: {parkReviewData.UserName}",
+                    $"ParkRating: {parkReviewData.Rating}",
+                    $"DateOfPosting: {parkReviewData.DateOfPosting.ToString("MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture)}",
+                    $"Review: {parkReviewData.Review}"
+                };
+
+                // Act
+                parkReviewManager.AppendReviewDataToFile(_tempFilePath, parkReviewData);
+
+                // Assert
+                string fileContent = File.ReadAllText(_tempFilePath);
+
+                for (int i = 0; i < expectedComponents.Count; i++)
+                {
+                    Assert.IsTrue(fileContent.Contains(expectedComponents[i]));
+                }
+
+
             }
 
         }
@@ -419,7 +602,7 @@ namespace Server_Test_Suite
 
                 // Assert
                 Assert.IsNotNull(actualReviews);
-                Assert.AreEqual(2, actualReviews.Count);
+                Assert.AreEqual(6, actualReviews.Count);
 
                 // Correct first review
                 Assert.AreEqual(expectedReviews[0].ParkName, actualReviews[0].ParkName);
@@ -875,6 +1058,36 @@ namespace Server_Test_Suite
                 Assert.AreEqual(expectedHours, actualParkHours);
             }
 
+            [TestMethod]
+            public void UT_SVR_084_DeserializeParkData_Return_Valid_ParkData()
+            {
+                // Arrange
+                ParkData expectedParkData = new ParkData
+                {
+                    parkName = "Stanley Park",
+                    parkAddress = "123 Stan Ave, Vancouver, BC",
+                    parkDescription = "Stanley Park is a world renowned park and tourist attraction in Vancouver, Canada. ",
+                    parkHours = "Open 24 Hours",
+                };
+
+
+                // Act
+                byte[] serializedParkData = expectedParkData.SerializeToByteArray();
+
+
+                ParkData deserializedParkData = new ParkData().deserializeParkData(serializedParkData);
+
+
+                // Assert
+                Assert.IsNotNull(serializedParkData);
+                Assert.IsNotNull(deserializedParkData);
+
+                Assert.AreEqual(expectedParkData.parkName, deserializedParkData.parkName);
+                Assert.AreEqual(expectedParkData.parkAddress, deserializedParkData.parkAddress);
+                Assert.AreEqual(expectedParkData.parkDescription, deserializedParkData.parkDescription);
+                Assert.AreEqual(expectedParkData.parkHours, deserializedParkData.parkHours);
+            }
+
 
             [TestMethod]
             public void UT_SVR_086_SetUserName_Return_Valid_UserName()
@@ -939,6 +1152,40 @@ namespace Server_Test_Suite
             }
 
             [TestMethod]
+            public void UT_SVR_093_SerializeToByteArray_Return_ValidSerializeData()
+            {
+                // Arrange
+                ParkReviewData expectedReviewData = new ParkReviewData
+                {
+                    ParkName = "Cornerbrook Park",
+                    UserName = "Karen Freiburger",
+                    Rating = 5,
+                    DateOfPosting = new DateTime(2024, 2, 29, 10, 30, 50),
+                    Review = "For the winter it has a great little sledding hill and the skating rink is very well maintained! Also a newer play structure and swings for all seasons complete the fun!",
+                };
+
+                // Convert to ByteArray
+                byte[] serializeParkReviewData = expectedReviewData.SerializeToByteArray();
+
+
+                // Act
+                ParkReviewData actualReviewData = new ParkReviewData();
+
+                actualReviewData = actualReviewData.deserializeParkReviewData(serializeParkReviewData);
+
+                // Assert
+                Assert.IsNotNull(serializeParkReviewData);
+                Assert.IsNotNull(actualReviewData);
+                Assert.AreEqual(expectedReviewData.ParkName, actualReviewData.ParkName);
+                Assert.AreEqual(expectedReviewData.UserName, actualReviewData.UserName);
+                Assert.AreEqual(expectedReviewData.Rating, actualReviewData.Rating);
+                Assert.AreEqual(expectedReviewData.DateOfPosting, actualReviewData.DateOfPosting);
+                Assert.AreEqual(expectedReviewData.Review, actualReviewData.Review);
+
+
+            }
+
+            [TestMethod]
             public void UT_SVR_094_DeserializeParkReviewData_Return_Valid_ParkReviewData()
             {
 
@@ -991,7 +1238,7 @@ namespace Server_Test_Suite
 
 
 
-                // Arrange
+                // Assert
                 Assert.AreEqual(expectedPacketData.GetPacketHeader().sourceID, actualPacketData.GetPacketHeader().sourceID);
                 Assert.AreEqual(expectedPacketData.GetPacketHeader().destinationID, actualPacketData.GetPacketHeader().destinationID);
                 Assert.AreEqual(expectedPacketData.GetPacketHeader().sequenceNumber, actualPacketData.GetPacketHeader().sequenceNumber);
@@ -1022,9 +1269,154 @@ namespace Server_Test_Suite
 
                 Thread.Sleep(1000);
 
+                // Assert
                 Assert.IsTrue(expectedState);
 
                 server.StopServer();
+            }
+        }
+
+        [TestClass]
+        public class ServerStateManager
+        {
+            [TestMethod]
+            public void UT_SVR_096_SetCurrentState_Starting_Return_StartingState()
+            {
+                // Arrange
+                Server.Implementations.ServerStateManager serverStateManager = new Server.Implementations.ServerStateManager();
+
+                ServerState expectedState = ServerState.Starting;
+
+                ServerState actualState;
+
+                // Act
+                serverStateManager.SetCurrentState(expectedState);
+
+                actualState = serverStateManager.GetCurrentState();           
+                
+                
+                // Assert
+                Assert.AreEqual(expectedState, actualState);
+
+
+
+            }
+
+            [TestMethod]
+            public void UT_SVR_097_SetCurrentState_Login_Return_LoginState()
+            {
+                // Arrange
+                Server.Implementations.ServerStateManager serverStateManager = new Server.Implementations.ServerStateManager();
+
+                ServerState expectedState = ServerState.Login;
+
+                ServerState actualState;
+
+                // Act
+                serverStateManager.SetCurrentState(ServerState.Login);
+
+                actualState = serverStateManager.GetCurrentState();
+
+
+                // Assert
+                Assert.AreEqual(expectedState, actualState);
+            }
+
+            [TestMethod]
+            public void UT_SVR_098_SetCurrentState_AllParkData_Return_AllParkDataState()
+            {
+                // Arrange
+                Server.Implementations.ServerStateManager serverStateManager = new Server.Implementations.ServerStateManager();
+
+                ServerState expectedState = ServerState.AllParkData;
+
+                ServerState actualState;
+
+                // Act
+                serverStateManager.SetCurrentState(ServerState.AllParkData);
+
+                actualState = serverStateManager.GetCurrentState();
+
+
+                // Assert
+                Assert.AreEqual(expectedState, actualState);
+            }
+
+            [TestMethod]
+            public void UT_SVR_099_SetCurrentState_Connected_Return_ConnectedState()
+            {
+                // Arrange
+                Server.Implementations.ServerStateManager serverStateManager = new Server.Implementations.ServerStateManager();
+
+                ServerState expectedState = ServerState.Connected;
+
+                ServerState actualState;
+
+                // Act
+                serverStateManager.SetCurrentState(expectedState);
+
+                actualState = serverStateManager.GetCurrentState();
+
+
+                // Assert
+                Assert.AreEqual(expectedState, actualState);
+
+
+
+            }
+
+            [TestMethod]
+            public void UT_SVR_100_SetCurrentState_Idle_Return_IdleState()
+            {
+                // Arrange
+                Server.Implementations.ServerStateManager serverStateManager = new Server.Implementations.ServerStateManager();
+
+                ServerState expectedState = ServerState.Idle;
+
+                ServerState actualState;
+
+                // Act
+                serverStateManager.SetCurrentState(expectedState);
+
+                actualState = serverStateManager.GetCurrentState();
+
+
+                // Assert
+                Assert.AreEqual(expectedState, actualState);
+
+
+
+            }
+
+            [TestMethod]
+            public void UT_SVR_101_SetCurrentState_Idle_OneParkImage_Return_Idle_OneParkImage_State()
+            {
+                // Arrange
+                Server.Implementations.ServerStateManager serverStateManager = new Server.Implementations.ServerStateManager();
+
+                ServerState expectedState_One = ServerState.Idle;
+
+                ServerState actualState_One;
+
+                ServerState expectedState_Two = ServerState.ParkReview;
+
+                ServerState actualState_Two;
+
+                // Act
+                serverStateManager.SetCurrentState(expectedState_One);
+
+                actualState_One = serverStateManager.GetCurrentState();
+
+                serverStateManager.SetCurrentState(expectedState_Two);
+
+                actualState_Two = serverStateManager.GetCurrentState();
+
+
+                // Assert
+                Assert.AreEqual(expectedState_One, actualState_One);
+                Assert.AreEqual(expectedState_Two, actualState_Two);
+
+
             }
         }
     }

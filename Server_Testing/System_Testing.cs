@@ -48,7 +48,7 @@ namespace Server_Testing
         public void Performance_Test_001_WriteAReview()
         {
 
-            for(int i = 0; i < 2; i++)
+            for(int i = 0; i < 10; i++)
             {
                 var appiumOptions = new AppiumOptions();
                 appiumOptions.AddAdditionalCapability("app", @"C:\Users\Hangsihak Sin\Documents\Project-04\Logi-Park-Login\bin\Debug\LogiPark.exe");
@@ -151,7 +151,7 @@ namespace Server_Testing
 
                 winDriver.FindElementByAccessibilityId("usernameTextBox").SendKeys("admin");
                 winDriver.FindElementByAccessibilityId("passwordTextBox").SendKeys("123");
-                winDriver.FindElementByName("Login").Click();
+                winDriver.FindElementByAccessibilityId("Login").Click();
 
                 // allows the windows to actually open before trying to access them
                 System.Threading.Thread.Sleep(800);

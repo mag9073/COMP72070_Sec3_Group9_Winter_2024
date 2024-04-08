@@ -25,6 +25,7 @@ namespace LogiPark.MVVM.Model
         private UserDataManager.LoginData clientLoginData = new UserDataManager.LoginData();
         private ParkDataManager.ParkData clientParkData = new ParkDataManager.ParkData();
         private ParkReviewManager.ParkReviewData clientParkReviewData = new ParkReviewManager.ParkReviewData();
+        private Logger logger = new Logger("ClientLog.txt");
         private NetworkStream stream;
         private TcpConnectionManager connectionManager;
 
@@ -52,6 +53,7 @@ namespace LogiPark.MVVM.Model
             sendPacket.SetPacketBody(loginDataBuffer, (uint)loginDataBuffer.Length);
 
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            logger.LogPacket("Send", sendPacket);
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
@@ -67,6 +69,7 @@ namespace LogiPark.MVVM.Model
             sendPacket.SetPacketBody(loginDataBuffer, (uint)loginDataBuffer.Length);
 
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            logger.LogPacket("Send", sendPacket);
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
@@ -82,6 +85,7 @@ namespace LogiPark.MVVM.Model
             sendPacket.SetPacketBody(signUpDataBuffer, (uint)signUpDataBuffer.Length);
 
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            logger.LogPacket("Send", sendPacket);
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
@@ -102,6 +106,7 @@ namespace LogiPark.MVVM.Model
 
             // We dont need to send body in this request 
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            logger.LogPacket("Send", sendPacket);
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
@@ -116,6 +121,7 @@ namespace LogiPark.MVVM.Model
             sendPacket.SetPacketBody(parknameBuffer, (uint)parknameBuffer.Length);
 
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            logger.LogPacket("Send", sendPacket);
             stream.Write(packetBuffer, 0, packetBuffer.Length);
 
             Console.WriteLine("One Park Data sent from client");
@@ -138,6 +144,7 @@ namespace LogiPark.MVVM.Model
 
             // We dont need to send body in this request 
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            logger.LogPacket("Send", sendPacket);
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
@@ -152,6 +159,7 @@ namespace LogiPark.MVVM.Model
             sendPacket.SetPacketBody(parknameBuffer, (uint) parkname.Length);
 
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            logger.LogPacket("Send", sendPacket);
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
@@ -176,6 +184,7 @@ namespace LogiPark.MVVM.Model
 
             // Send the packet
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            logger.LogPacket("Send", sendPacket);
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
@@ -187,6 +196,7 @@ namespace LogiPark.MVVM.Model
 
             // We dont need to send body in this request 
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            logger.LogPacket("Send", sendPacket);
             stream.Write(packetBuffer, 0, packetBuffer.Length);
 
             Console.WriteLine("All reviews data request sent from client");
@@ -205,6 +215,7 @@ namespace LogiPark.MVVM.Model
             sendPacket.SetPacketBody(deleteReviewsDataBuffer, (uint)deleteReviewsDataBuffer.Length);
 
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            logger.LogPacket("Send", sendPacket);
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
@@ -220,6 +231,7 @@ namespace LogiPark.MVVM.Model
 
             // Send the packet
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            logger.LogPacket("Send", sendPacket);
             stream.Write(packetBuffer, 0, packetBuffer.Length);
         }
 
@@ -236,6 +248,7 @@ namespace LogiPark.MVVM.Model
             parkDataPacket.SetPacketBody(serializedParkData, (uint)serializedParkData.Length);
 
             byte[] parkDataBuffer = parkDataPacket.SerializeToByteArray();
+            logger.LogPacket("Send", parkDataPacket);
             stream.Write(parkDataBuffer, 0, parkDataBuffer.Length);
 
             if (string.IsNullOrEmpty(imagePath) != true)
@@ -273,6 +286,7 @@ namespace LogiPark.MVVM.Model
             sendPacket.SetPacketBody(parkReviewBuffer, (uint)parkReviewBuffer.Length);
 
             byte[] packetBuffer = sendPacket.SerializeToByteArray();
+            logger.LogPacket("Send", sendPacket);
             stream.Write(packetBuffer, 0, packetBuffer.Length);
 
         }
@@ -290,6 +304,7 @@ namespace LogiPark.MVVM.Model
             parkDataPacket.SetPacketBody(serializedParkData, (uint)serializedParkData.Length);
 
             byte[] parkDataBuffer = parkDataPacket.SerializeToByteArray();
+            logger.LogPacket("Send", parkDataPacket);
             stream.Write(parkDataBuffer, 0, parkDataBuffer.Length);
 
             // Basically reuse the same implmenetations as Add a Park Data -> Image part
@@ -330,6 +345,7 @@ namespace LogiPark.MVVM.Model
         {
             byte[] responseBuffer = new byte[1024];
             int bytesRead = stream.Read(responseBuffer, 0, responseBuffer.Length);
+            logger.LogResponse(Encoding.UTF8.GetString(responseBuffer, 0, bytesRead));
             return Encoding.UTF8.GetString(responseBuffer, 0, bytesRead);
         }
 
@@ -384,7 +400,6 @@ namespace LogiPark.MVVM.Model
                     parks[i] = Serializer.Deserialize<ParkDataManager.ParkData>(ms);
                 }
             }
-
             return parks;
         }
 
