@@ -22,7 +22,8 @@ namespace LogiPark.MVVM.View
     {
         private ProgramClient client;
         private int attempts = 0;
-        const int maxAttempts = 3;
+        private const int maxAttempts = 3;
+
         public AdminLogin()
         {
             this.client = new ProgramClient();
@@ -176,6 +177,5 @@ namespace LogiPark.MVVM.View
             loginView.Show();
             this.Close();
         }
-
     }
 }

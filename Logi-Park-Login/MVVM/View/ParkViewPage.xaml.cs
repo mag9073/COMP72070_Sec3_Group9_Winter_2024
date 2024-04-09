@@ -26,6 +26,7 @@ namespace LogiPark.MVVM.View
         private string _parkName;
         private ProgramClient _client;
         private float _averageRating = 0;
+
         public ParkViewPage()
         {
         }
@@ -197,7 +198,6 @@ namespace LogiPark.MVVM.View
                 });
             }
         }
-
 
         private void DisplayParkData()
         {

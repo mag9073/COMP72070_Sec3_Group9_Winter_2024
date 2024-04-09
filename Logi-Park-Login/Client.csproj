@@ -158,12 +158,8 @@
     <Compile Include="MVVM\Model\ProgramClient.cs" />
     <Compile Include="MVVM\Model\TCPConnectionManager.cs" />
     <Compile Include="MVVM\Model\UserDataManager.cs" />
-    <Compile Include="MVVM\ViewModel\AdminAddParkViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AdminHomeViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\AdminParkEditViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\AdminParkViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainViewModel.cs" />
-    <Compile Include="MVVM\ViewModel\ParkViewModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>

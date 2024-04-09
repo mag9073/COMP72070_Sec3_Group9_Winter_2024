@@ -19,7 +19,7 @@ namespace LogiPark.MVVM.View
     /// </summary>
     public partial class LoginView : Window
     {
-        const int maxAttempts = 3;
+        private const int maxAttempts = 3;
         private BackgroundWorker backgroundWorker;
         private ProgramClient client;
         private int attempts = 0;
@@ -185,6 +185,7 @@ namespace LogiPark.MVVM.View
         {
 
         }
+
         private void PasswordTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
