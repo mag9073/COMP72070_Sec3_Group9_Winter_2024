@@ -1,0 +1,16 @@
+2024-04-08 3:38:43 PM: Send, allparkdata
+2024-04-08 3:38:44 PM: Send, allparkdata
+2024-04-08 4:11:40 PM: Send, allparkdata
+2024-04-08 4:11:40 PM: Send, allparkdata
+2024-04-08 5:46:44 PM: Send, allparkdata
+2024-04-08 5:46:44 PM: Send, all_reviews
+2024-04-08 5:46:44 PM: Send, allparkdata
+2024-04-08 5:46:44 PM: Send, all_reviews
+2024-04-08 5:47:15 PM: Send, allparkdata
+2024-04-08 5:47:15 PM: Send, all_reviews
+2024-04-08 5:47:15 PM: Send, allparkdata
+2024-04-08 5:47:15 PM: Send, all_reviews
+2024-04-08 5:48:26 PM: Send, allparkdata
+2024-04-08 5:48:26 PM: Send, all_reviews
+2024-04-08 5:48:26 PM: Send, allparkdata
+2024-04-08 5:48:26 PM: Send, all_reviews

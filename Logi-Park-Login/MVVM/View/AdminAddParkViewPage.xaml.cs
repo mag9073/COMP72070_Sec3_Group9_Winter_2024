@@ -23,6 +23,7 @@ namespace LogiPark.MVVM.View
     {
         private string selectedImagePath;
         ProgramClient client;
+
         public AdminAddParkViewPage()
         {
             this.client = new ProgramClient();

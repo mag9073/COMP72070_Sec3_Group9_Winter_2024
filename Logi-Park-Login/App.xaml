@@ -14,29 +14,12 @@
             </ResourceDictionary.MergedDictionaries>
 
 
-
-            <DataTemplate DataType="{x:Type viewModel:AdminAddParkViewModel}">
-                <view:AdminAddParkViewPage/>
-            </DataTemplate>
-
             <DataTemplate DataType="{x:Type viewModel:AdminHomeViewModel}">
                 <view:AdminHomeViewPage/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewModel:AdminParkEditViewModel}">
-                <view:ParkEditViewPage/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type viewModel:AdminParkViewModel}">
-                <view:AdminParkViewPage/>
-            </DataTemplate>
-
             <DataTemplate DataType="{x:Type viewModel:MainViewModel}">
                 <view:HomeViewPage/>
-            </DataTemplate>
-
-            <DataTemplate DataType="{x:Type viewModel:ParkViewModel}">
-                <view:ParkViewPage/>
             </DataTemplate>
 
         </ResourceDictionary>

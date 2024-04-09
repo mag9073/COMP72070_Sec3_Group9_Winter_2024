@@ -45,7 +45,6 @@ namespace LogiPark.MVVM.View
             window.Show();  // Right now, im creating this
         }
 
-
         private void RequestAllParkData()
         {
             // send request to the server retrieve all the park data info - we send empty body with the header containing flag to get all park data

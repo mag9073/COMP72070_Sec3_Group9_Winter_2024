@@ -27,10 +27,12 @@ namespace LogiPark.MVVM.View
         private ParkDataManager.ParkData _parkData;
         private BitmapImage _parkImage;
         private string selectedImagePath;
+
         public ParkEditViewPage()
         {
 
         }
+
         public ParkEditViewPage(ParkDataManager.ParkData parkData, BitmapImage parkImage)
         {
             this.client = new ProgramClient();
@@ -161,8 +163,5 @@ namespace LogiPark.MVVM.View
             }
             return isValid;
         }
-
-
-
     }
 }

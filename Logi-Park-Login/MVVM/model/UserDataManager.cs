@@ -49,13 +49,13 @@ namespace LogiPark.MVVM.Model
                 }
             }
 
-            public LoginData deserializeLoginData(byte[] buffer)
-            {
-                using (var memStream = new MemoryStream(buffer))
-                {
-                    return Serializer.Deserialize<LoginData>(memStream);
-                }
-            }
+            //public LoginData deserializeLoginData(byte[] buffer)
+            //{
+            //    using (var memStream = new MemoryStream(buffer))
+            //    {
+            //        return Serializer.Deserialize<LoginData>(memStream);
+            //    }
+            //}
         }
 
         /************* Login *************/
@@ -79,41 +79,41 @@ namespace LogiPark.MVVM.Model
                 loginData.password = password;
             }
 
-            public string LoginUser(string filename)
-            {
-                string loginMessage = "Username or Password is incorrect. Please try again!!! /o\\";
-                try
-                {
-                    using (StreamReader streamReader = new StreamReader(filename))
-                    {
-                        string line1 = streamReader.ReadLine();
-                        string line2 = streamReader.ReadLine();
+            //public string LoginUser(string filename)
+            //{
+            //    string loginMessage = "Username or Password is incorrect. Please try again!!! /o\\";
+            //    try
+            //    {
+            //        using (StreamReader streamReader = new StreamReader(filename))
+            //        {
+            //            string line1 = streamReader.ReadLine();
+            //            string line2 = streamReader.ReadLine();
 
-                        while ((line1 != null) && (line2 != null))
-                        {
-                            if ((line1 == loginData.GetUserName()) && (line2 == loginData.GetPassword()))
-                            {
+            //            while ((line1 != null) && (line2 != null))
+            //            {
+            //                if ((line1 == loginData.GetUserName()) && (line2 == loginData.GetPassword()))
+            //                {
 
-                                loginMessage = "Username and password are Correct!!! \\o/";
-                                break;
-                            }
+            //                    loginMessage = "Username and password are Correct!!! \\o/";
+            //                    break;
+            //                }
 
-                            line1 = streamReader.ReadLine();
-                            line2 = streamReader.ReadLine();
-                        }
+            //                line1 = streamReader.ReadLine();
+            //                line2 = streamReader.ReadLine();
+            //            }
 
 
 
-                        streamReader.Close();
-                    }
-                }
-                catch (IOException e)
-                {
-                    Console.WriteLine(e.Message + "Error Signing in user");
-                }
+            //            streamReader.Close();
+            //        }
+            //    }
+            //    catch (IOException e)
+            //    {
+            //        Console.WriteLine(e.Message + "Error Signing in user");
+            //    }
 
-                return loginMessage;
-            }
+            //    return loginMessage;
+            //}
         }
 
 
@@ -157,13 +157,13 @@ namespace LogiPark.MVVM.Model
                 }
             }
 
-            public LoginData deserializeLoginData(byte[] buffer)
-            {
-                using (var memStream = new MemoryStream(buffer))
-                {
-                    return Serializer.Deserialize<LoginData>(memStream);
-                }
-            }
+            //public LoginData deserializeLoginData(byte[] buffer)
+            //{
+            //    using (var memStream = new MemoryStream(buffer))
+            //    {
+            //        return Serializer.Deserialize<LoginData>(memStream);
+            //    }
+            //}
         }
 
         // check if username already exists
@@ -194,57 +194,57 @@ namespace LogiPark.MVVM.Model
             // string signUpMessage = "Username already exists please try another again!!! /o\\ ";
             // }
 
-            public string SignUpUser(string filename)
-            {
-                string signUpMessage = "Please enter username to register!!!! \\o/";
-                try
-                {
-                    using (StreamReader streamReader = new StreamReader(filename))
-                    {
-                        string line1 = streamReader.ReadLine();
-                        // string line2 = streamReader.ReadLine();
+            //public string SignUpUser(string filename)
+            //{
+            //    string signUpMessage = "Please enter username to register!!!! \\o/";
+            //    try
+            //    {
+            //        using (StreamReader streamReader = new StreamReader(filename))
+            //        {
+            //            string line1 = streamReader.ReadLine();
+            //            // string line2 = streamReader.ReadLine();
 
-                        while ((line1 != null)) //  && (line2 != null))
-                        {
-                            if ((line1 == signUpData.GetUserName())) //  && (line2 == signUpData.GetPassword()))
-                            {
+            //            while ((line1 != null)) //  && (line2 != null))
+            //            {
+            //                if ((line1 == signUpData.GetUserName())) //  && (line2 == signUpData.GetPassword()))
+            //                {
 
-                                signUpMessage = "Username already exists please try another!!! /o\\";
-                                break;
-                            }
+            //                    signUpMessage = "Username already exists please try another!!! /o\\";
+            //                    break;
+            //                }
 
-                            line1 = streamReader.ReadLine();
-                            // line2 = streamReader.ReadLine();
-                        }
-
-
-
-                        streamReader.Close();
+            //                line1 = streamReader.ReadLine();
+            //                // line2 = streamReader.ReadLine();
+            //            }
 
 
-                        // another method to write username and password and append to userDB.txt file 
-                        // Append text to an existing file named "userDB.txt".
-                        // helper function should return string back if signup was successful to signUpUser()
 
-                        // public string SignUp(string filename)
-                        using (StreamWriter outputFile = new StreamWriter("userDB.txt", true))
-                        {
-                            outputFile.WriteLine(signUpData.GetUserName()); // will add the username to the text file
-                            outputFile.WriteLine(signUpData.GetPassword()); //will add the password to the text file
-                            outputFile.Close();
-                            // Console.WriteLine("Success registering user!!! \\o/"); // return success
+            //            streamReader.Close();
 
 
-                        }
-                    }
-                }
-                catch (IOException e)
-                {
-                    Console.WriteLine(e.Message + "Error registering user!!! /o\\");
-                }
+            //            // another method to write username and password and append to userDB.txt file 
+            //            // Append text to an existing file named "userDB.txt".
+            //            // helper function should return string back if signup was successful to signUpUser()
 
-                return signUpMessage;
-            }
+            //            // public string SignUp(string filename)
+            //            using (StreamWriter outputFile = new StreamWriter("userDB.txt", true))
+            //            {
+            //                outputFile.WriteLine(signUpData.GetUserName()); // will add the username to the text file
+            //                outputFile.WriteLine(signUpData.GetPassword()); //will add the password to the text file
+            //                outputFile.Close();
+            //                // Console.WriteLine("Success registering user!!! \\o/"); // return success
+
+
+            //            }
+            //        }
+            //    }
+            //    catch (IOException e)
+            //    {
+            //        Console.WriteLine(e.Message + "Error registering user!!! /o\\");
+            //    }
+
+            //    return signUpMessage;
+            //}
         }
     }
 }

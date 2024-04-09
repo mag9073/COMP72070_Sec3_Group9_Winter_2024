@@ -140,7 +140,7 @@
                 <TextBlock Text="Forgot password?" Style="{StaticResource HyperlinkStyle}" Width="112" VerticalAlignment="Center" TextAlignment="Center" RenderTransformOrigin="0.531,-0.072" Height="22" />
             </StackPanel>
 
-            <Button Content="Login" Style="{StaticResource LoginButtonStyle}" Width="436" Click="LoginButton_Click" />
+            <Button x:Name="Login" Content="Login" Style="{StaticResource LoginButtonStyle}" Width="436" Click="LoginButton_Click" />
 
             <TextBlock x:Name="messageTextBlock" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" Foreground="Red"/>
 

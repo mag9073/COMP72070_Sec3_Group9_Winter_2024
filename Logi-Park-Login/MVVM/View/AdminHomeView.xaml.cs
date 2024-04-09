@@ -24,9 +24,13 @@ namespace LogiPark.MVVM.View
             InitializeComponent();
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
+            AdminHomeView adminHomeView = new AdminHomeView();
 
+            adminHomeView.Show();
+
+            this.Close();
         }
 
         private void LogoutRadioButton_Checked(object sender, RoutedEventArgs e)
@@ -35,15 +39,6 @@ namespace LogiPark.MVVM.View
             LoginView loginView = new LoginView();
 
             loginView.Show();
-
-            this.Close();
-        }
-
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            AdminHomeView adminHomeView = new AdminHomeView();
-            
-            adminHomeView.Show();
 
             this.Close();
         }

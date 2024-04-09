@@ -153,7 +153,6 @@ namespace LogiPark.MVVM.View
             // its it is good then it can proceed, take them back to the login page and current view 
         }
 
-
         private void Login_Handler(object sender, MouseButtonEventArgs e)
         {
 
@@ -164,11 +163,6 @@ namespace LogiPark.MVVM.View
             loginView.Show();
 
             this.Close();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void UsernameTextBox_TextChanged(object sender, TextChangedEventArgs e)

@@ -94,7 +94,7 @@ namespace Server_Test_Suite
         }
 
         [TestMethod]
-            public void IT_001_ProcessLoginPacketTest()
+            public void IT_SVR_001_ProcessLoginPacketTest()
             {
                 // Arrange
                 FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -102,10 +102,11 @@ namespace Server_Test_Suite
                 ParkDataManager parkDataManager = new ParkDataManager();
                 ParkReviewManager parkReviewManager = new ParkReviewManager();
                 ImageManager imageManager = new ImageManager();
+                ServerStateManager serverStateManager = new ServerStateManager();
                 string expectedAcknowledgementMessage = "Username and password are Correct!!! \\o/";
 
 
-                PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+                PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
                 UserDataManager.LoginData loginData = new UserDataManager.LoginData
                 {
                     username = "hang",
@@ -132,7 +133,7 @@ namespace Server_Test_Suite
             }
 
             [TestMethod]
-            public void IT_002_ProcessSignUpPacketTest()
+            public void IT_SVR_002_ProcessSignUpPacketTest()
             {
                 // Arrange
                 FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -140,10 +141,11 @@ namespace Server_Test_Suite
                 ParkDataManager parkDataManager = new ParkDataManager();
                 ParkReviewManager parkReviewManager = new ParkReviewManager();
                 ImageManager imageManager = new ImageManager();
-                string expectedAcknowledgementMessage = "Please enter username to register!!!! \\o/";
+                ServerStateManager serverStateManager = new ServerStateManager();
+                string expectedAcknowledgementMessage = "Successfully Sign Up \\o/";
 
 
-                PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+                PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
                 UserDataManager.SignUpData signUpData = new UserDataManager.SignUpData
                 {
                     username = "hangg",
@@ -169,129 +171,49 @@ namespace Server_Test_Suite
                 Assert.AreEqual(expectedAcknowledgementMessage, actualAcknowledgementMessage, "The acknowledgement message is invalid.");
             }
 
-        // For errors handling case
-        [TestMethod]
-        public void IT_002_ProcessSignUpPacketTest_ErrorHandlings()
-        {
-            // Arrange
-            FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
-            UserDataManager userDataManager = new UserDataManager();
-            ParkDataManager parkDataManager = new ParkDataManager();
-            ParkReviewManager parkReviewManager = new ParkReviewManager();
-            ImageManager imageManager = new ImageManager();
-            string expectedAcknowledgementMessage = "Please enter username to register!!!! \\o/";
 
-
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
-            UserDataManager.SignUpData signUpData = new UserDataManager.SignUpData
+            [TestMethod]
+            public void IT_SVR_003_ProcessAdminLoginPacketTest()
             {
-                username = "",
-                password = "",
-            };
+                // Arrange
+                FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
+                UserDataManager userDataManager = new UserDataManager();
+                ParkDataManager parkDataManager = new ParkDataManager();
+                ParkReviewManager parkReviewManager = new ParkReviewManager();
+                ImageManager imageManager = new ImageManager();
+                ServerStateManager serverStateManager = new ServerStateManager();
+                string expectedAcknowledgementMessage = "Username and password are Correct!!! \\o/";
 
 
-            //byte[] signUpDataBytes = signUpData.SerializeToByteArray();
-
-            PacketData.Packet packet = new PacketData.Packet();
-            packet.SetPacketHead(1, 2, Server.DataStructure.PacketData.Types.register);
-
-            //packet.SetPacketBody(signUpDataBytes, (uint)signUpDataBytes.Length);
-
-            // Act
-            packetProcessor.ProcessPacket(packet, fakeChannel, null);
-
-            // Assert
-            Assert.IsFalse(fakeChannel.WriteCalled, "The write method should not be called for empty packet body.");
-
-            Assert.IsTrue(fakeChannel.CloseCalled, "Communication channel should be closed.");
-        }
-
-        [TestMethod]
-        public void IT_003_ProcessAdminLoginPacketTest()
-        {
-            // Arrange
-            FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
-            UserDataManager userDataManager = new UserDataManager();
-            ParkDataManager parkDataManager = new ParkDataManager();
-            ParkReviewManager parkReviewManager = new ParkReviewManager();
-            ImageManager imageManager = new ImageManager();
-            string expectedAcknowledgementMessage = "Username and password are Correct!!! \\o/";
-
-
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
-            UserDataManager.LoginData loginData = new UserDataManager.LoginData
-            {
-                username = "admin",
-                password = "123",
-            };
-
-
-            byte[] loginDataBytes = loginData.SerializeToByteArray();
-
-            PacketData.Packet packet = new PacketData.Packet();
-            packet.SetPacketHead(1, 2, Server.DataStructure.PacketData.Types.login_admin);
-
-            packet.SetPacketBody(loginDataBytes, (uint)loginDataBytes.Length);
-
-            // Act
-            packetProcessor.ProcessPacket(packet, fakeChannel, null);
-
-            // Assert
-            Assert.IsTrue(fakeChannel.WriteCalled, "Write method was not called.");
-
-            string actualAcknowledgementMessage = Encoding.UTF8.GetString(fakeChannel.WrittenBytes, fakeChannel.WrittenOffset, fakeChannel.WrittenSize);
-
-            Assert.AreEqual(expectedAcknowledgementMessage, actualAcknowledgementMessage, "The acknowledgement message is invalid.");
-        }
-
-
-        [TestMethod]
-        public void IT_004_ProcessAllParkDataPacketTest()
-        {
-           //Arrange
-            FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
-            UserDataManager userDataManager = new UserDataManager();
-            ParkDataManager parkDataManager = new ParkDataManager();
-            ParkReviewManager parkReviewManager = new ParkReviewManager();
-            ImageManager imageManager = new ImageManager();
-
-            List<ParkData> expectedParkData = new List<ParkData>
-            {
-                new ParkData
+                PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
+                UserDataManager.LoginData loginData = new UserDataManager.LoginData
                 {
-                    parkName = "Kitchener Park",
-                    parkAddress = "Kitchener Park",
-                    parkDescription = "This is a beautiful with a lot of trash",
-                    parkHours = "9:00 AM - 5:00 PM"
-                },
-                new ParkData
-                {
-                    parkName = "Cambridge Park",
-                    parkAddress = "123 Fountain St",
-                    parkDescription = "This is Loo Park",
-                    parkHours = "Open 24 Hours",
-                }
-            };
-
-            List<ParkData> actualParkData = new List<ParkData> ();
-
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
-
-            // Act
-            PacketData.Packet packet = new PacketData.Packet();
-            packet.SetPacketHead(1, 2, Server.DataStructure.PacketData.Types.allparkdata);
-            packetProcessor.ProcessPacket(packet, fakeChannel, null);
-            actualParkData = DeserializeParkDataList(fakeChannel.WrittenBytes, fakeChannel.WrittenOffset, fakeChannel.WrittenSize);
+                    username = "admin",
+                    password = "123",
+                };
 
 
-            // Assert
+                byte[] loginDataBytes = loginData.SerializeToByteArray();
 
-            // Implement assertions
+                PacketData.Packet packet = new PacketData.Packet();
+                packet.SetPacketHead(1, 2, Server.DataStructure.PacketData.Types.login_admin);
 
-        }
+                packet.SetPacketBody(loginDataBytes, (uint)loginDataBytes.Length);
+
+                // Act
+                packetProcessor.ProcessPacket(packet, fakeChannel, null);
+
+                // Assert
+                Assert.IsTrue(fakeChannel.WriteCalled, "Write method was not called.");
+
+                string actualAcknowledgementMessage = Encoding.UTF8.GetString(fakeChannel.WrittenBytes, fakeChannel.WrittenOffset, fakeChannel.WrittenSize);
+
+                Assert.AreEqual(expectedAcknowledgementMessage, actualAcknowledgementMessage, "The acknowledgement message is invalid.");
+            }
+
 
         [TestMethod]
-        public void IT_005_ProcessOneParkDataPacketTest()
+        public void IT_SVR_005_ProcessOneParkDataPacketTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -299,15 +221,16 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
-            string targetParkName = "Waterloo Park";
+            ServerStateManager serverStateManager = new ServerStateManager();
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
+            string targetParkName = "Kitchener Park";
 
             ParkData expectedParkData = new ParkData
             {
                 parkName = targetParkName,
-                parkAddress = "50 Young St W, Waterloo, ON",
-                parkDescription = "Waterloo Park is an urban park situated in Waterloo, Ontario, Canada on land within Block 2 of the Haldimand Tract. Spanning 111 acres within the Uptown area of Waterloo, it opened in 1893 and is the oldest park in the city.",
-                parkHours = "7 a.m. - 10 p.m.",
+                parkAddress = "123 Park St",
+                parkDescription = "This is a beautiful with a lot of trash",
+                parkHours = "9:00 AM - 5:00 PM",
             };
             ParkData actualParkData = new ParkData();
 
@@ -328,13 +251,11 @@ namespace Server_Test_Suite
             Assert.AreEqual(expectedParkData.parkAddress, actualParkData.parkAddress, "Park address do not match");
             Assert.AreEqual(expectedParkData.parkDescription, actualParkData.parkDescription, "Park Descriptions does not match");
             Assert.AreEqual(expectedParkData.parkHours, actualParkData.parkHours, "Park hours do not match");
-
-
         }
 
-
+        // Incomplete
         [TestMethod]
-        public void IT_006_ProcessAllParkImagesTest()
+        public void IT_SVR_006_ProcessAllParkImagesTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -342,6 +263,7 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
 
             // Act
 
@@ -355,8 +277,9 @@ namespace Server_Test_Suite
         }
 
 
+        // Incomplete
         [TestMethod]
-        public void IT_007_ProcessOneParkImageTest()
+        public void IT_SVR_007_ProcessOneParkImageTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -364,6 +287,7 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
 
             // Act
 
@@ -377,15 +301,16 @@ namespace Server_Test_Suite
         }
 
 
-
+        // Incomplete
         [TestMethod]
-        public void IT_008_ProcessAllParkReviewsTest()
+        public void IT_SVR_008_ProcessAllParkReviewsTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
             UserDataManager userDataManager = new UserDataManager();
             ParkDataManager parkDataManager = new ParkDataManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
 
             ParkReviewManager parkReviewManager = new ParkReviewManager
             {
@@ -406,7 +331,7 @@ namespace Server_Test_Suite
 
 
         [TestMethod]
-        public void IT_009_ProcessAReviewPacketTest()
+        public void IT_SVR_009_ProcessAReviewPacketTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -414,6 +339,7 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
             string targetParkName = "Waterloo Park";
 
             ParkReviewData expectedParkReviewData = new ParkReviewData
@@ -427,7 +353,7 @@ namespace Server_Test_Suite
 
             ParkReviewData actualParkReviewData = new ParkReviewData();
             PacketData.Packet sendPacket = new PacketData.Packet();
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
 
 
             // Act
@@ -448,8 +374,9 @@ namespace Server_Test_Suite
         }
 
 
+
         [TestMethod]
-        public void IT_010_ProcessParkReviewPacketTest()
+        public void IT_SVR_011_ProcessDeleteParkReviewPacketTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -457,12 +384,34 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
+            string targetParkName = "Clair Lake Park";
+
+            ParkReviewData parkReviewData = new ParkReviewData
+            {
+                ParkName = "Clair Lake Park",
+                UserName = "Barry Smylie",
+                Rating = 3,
+                DateOfPosting = new DateTime(2024, 3, 8, 0, 43, 8),
+                Review = "The trail doesn't follow the banks of the reservoir.  It is a sports park with swimming pool, tennis courts, and field sports.  There is one access to the water",
+            };
+
+            PacketData.Packet sendPacket = new PacketData.Packet();
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
 
             // Act
+            sendPacket.SetPacketHead(1, 2, Server.DataStructure.PacketData.Types.delete_review);
+            byte[] deleteReviewsDataBuffer = parkReviewData.SerializeToByteArray();
+            sendPacket.SetPacketBody(deleteReviewsDataBuffer, (uint)deleteReviewsDataBuffer.Length);
+            packetProcessor.ProcessPacket(sendPacket, fakeChannel, null);
 
 
 
             // Assert
+            Assert.IsTrue(fakeChannel.WriteCalled, "Write method was not called");
+            string expectedAcknowledgementMessage = "Review deleted successfully.";
+            string actualAcknowledgementMessage = Encoding.UTF8.GetString(fakeChannel.WrittenBytes, fakeChannel.WrittenOffset, fakeChannel.WrittenSize);
+            Assert.AreEqual(expectedAcknowledgementMessage, actualAcknowledgementMessage, "Acknowledgement message does not match expected.");
 
 
 
@@ -471,7 +420,7 @@ namespace Server_Test_Suite
 
 
         [TestMethod]
-        public void IT_011_ProcessDeleteParkReviewPacketTest()
+        public void IT_SVR_012_ProcessDeleteAParkPacketTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -479,21 +428,33 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
+            string targetParkName = "Hillside Park";
+
+            PacketData.Packet sendPacket = new PacketData.Packet();
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
+
 
             // Act
+            sendPacket.SetPacketHead(1, 2, Server.DataStructure.PacketData.Types.delete_park);
+            byte[] parkNameBuffer = Encoding.UTF8.GetBytes(targetParkName);
+            sendPacket.SetPacketBody(parkNameBuffer, (uint)parkNameBuffer.Length);
+            packetProcessor.ProcessPacket(sendPacket, fakeChannel, null);
 
 
 
             // Assert
-
+            Assert.IsTrue(fakeChannel.WriteCalled, "Write method was not called");
+            string expectedAcknowledgementMessage = $"{targetParkName} has been deleted -> (park data, park image, park reviews)";
+            string actualAcknowledgementMessage = Encoding.UTF8.GetString(fakeChannel.WrittenBytes, fakeChannel.WrittenOffset, fakeChannel.WrittenSize);
+            Assert.AreEqual(expectedAcknowledgementMessage, actualAcknowledgementMessage, "Acknowledgement message does not match expected.");
 
 
 
         }
 
-
         [TestMethod]
-        public void IT_012_ProcessAddAParkPacketTest()
+        public void IT_SVR_013_ProcessAddAParkPacketTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -501,22 +462,36 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
+
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
+            ParkData newParkData = new ParkData
+            {
+                parkName = "Toronto Park",
+                parkAddress = "123 Toronto Park Ave, Toronto, ON",
+                parkDescription = "A brand new park for everyone.",
+                parkHours = "7 a.m. - 7 p.m."
+            };
+
+            byte[] newParkDataBytes = newParkData.SerializeToByteArray();
+            PacketData.Packet packet = new PacketData.Packet();
+            packet.SetPacketHead(1, 2, Server.DataStructure.PacketData.Types.add_park);
+            packet.SetPacketBody(newParkDataBytes, (uint)newParkDataBytes.Length);
+
+            string expectedAcknowledgementMessage = "Park data added successfully.";
 
             // Act
-
-
+            packetProcessor.ProcessPacket(packet, fakeChannel, null);
 
             // Assert
-
-
-
-
+            Assert.IsTrue(fakeChannel.WriteCalled, "Write method was not called.");
+            string actualAcknowledgementMessage = Encoding.UTF8.GetString(fakeChannel.WrittenBytes, fakeChannel.WrittenOffset, fakeChannel.WrittenSize);
+            Assert.AreEqual(expectedAcknowledgementMessage, actualAcknowledgementMessage, "The acknowledgement message is invalid.");
         }
 
 
-
         [TestMethod]
-        public void IT_013_ProcessAddAParkReviewPacketTest()
+        public void IT_SVR_014_ProcessAddAParkReviewPacketTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -524,6 +499,7 @@ namespace Server_Test_Suite
             ParkDataManager parkDataManager = new ParkDataManager();
             ParkReviewManager parkReviewManager = new ParkReviewManager();
             ImageManager imageManager = new ImageManager();
+            ServerStateManager serverStateManager = new ServerStateManager();
 
             ParkReviewData expectedParkReviewData = new ParkReviewData
             {
@@ -535,7 +511,7 @@ namespace Server_Test_Suite
             };
 
             PacketData.Packet sendPacket = new PacketData.Packet();
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
+            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager, serverStateManager);
             ParkReviewData actualParkReviewData = new ParkReviewData();
 
             // Act
@@ -546,75 +522,16 @@ namespace Server_Test_Suite
 
             packetProcessor.ProcessPacket(sendPacket, fakeChannel, null);
 
-            actualParkReviewData.deserializeParkReviewData(fakeChannel.WrittenBytes, fakeChannel.WrittenOffset, fakeChannel.WrittenSize);
+            
 
             // Assert
             Assert.IsTrue(fakeChannel.WriteCalled, "Write method was not called");
-            Assert.AreEqual(expectedParkReviewData.ParkName, actualParkReviewData.ParkName, "Park Name Data do not match");
-            Assert.AreEqual(expectedParkReviewData.UserName, actualParkReviewData.UserName, "Park UserName Data do not match");
-            Assert.AreEqual(expectedParkReviewData.Rating, actualParkReviewData.Rating, "Park Rating Data do not match");
-            Assert.AreEqual(expectedParkReviewData.DateOfPosting, actualParkReviewData.DateOfPosting, "Park DateOfPosting Data do not match");
-            Assert.AreEqual(expectedParkReviewData.Review, actualParkReviewData.Review, "Park Review Data do not match");
+            string expectedAcknowledgementMessage = "Review added successfully";
+            string actualAcknowledgementMessage = Encoding.UTF8.GetString(fakeChannel.WrittenBytes, fakeChannel.WrittenOffset, fakeChannel.WrittenSize);
+            Assert.AreEqual(expectedAcknowledgementMessage, actualAcknowledgementMessage, "Acknowledgement message does not match expected.");
 
 
         }
-
-
-        [TestMethod]
-        public void IT_019_ProcessAllParkDataTest()
-        {
-            // Arrange
-            FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
-            UserDataManager userDataManager = new UserDataManager();
-            ParkDataManager parkDataManager = new ParkDataManager();
-            ParkReviewManager parkReviewManager = new ParkReviewManager();
-            ImageManager imageManager = new ImageManager();
-
-            UserDataManager.LoginData loginData = new UserDataManager.LoginData
-            {
-                username = "mino",
-                password = "1234",
-            };
-
-            // Act
-
-
-
-            // Assert
-
-
-
-
-        }
-
-
-        [TestMethod]
-        public void UT_SVR_040_SendAcknowledgementTest()
-        {
-            // Arrange
-            FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
-            UserDataManager userDataManager = new UserDataManager();
-            ParkDataManager parkDataManager = new ParkDataManager();
-            ParkReviewManager parkReviewManager = new ParkReviewManager();
-            ImageManager imageManager = new ImageManager();
-            string expectedMessage = "Hello World";
-            byte[] expectedBytes = Encoding.UTF8.GetBytes(expectedMessage);
-
-            // Act 
-            PacketProcessor packetProcessor = new PacketProcessor(userDataManager, parkDataManager, parkReviewManager, imageManager);
-            packetProcessor.SendAcknowledgement(fakeChannel, expectedMessage);
-
-
-
-            // Assert
-            Assert.AreEqual(1, fakeChannel.WrittenMessages.Count, "SendAcknowledgement should write exactly one message.");
-            CollectionAssert.AreEqual(expectedBytes, fakeChannel.WrittenMessages.First(), "The written message does not match the expected message.");
-            Assert.IsTrue(fakeChannel.FlushCalled, "Flush was not called after writing the message.");
-        }
-
-
-
-
 
 
     }

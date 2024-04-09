@@ -25,6 +25,7 @@ namespace LogiPark.MVVM.View
         //private int portnumber = 13000;
         private ProgramClient client;
         private string _username;
+
         public ClientHomeView()
         {
             this.client = new ProgramClient();
@@ -44,20 +45,20 @@ namespace LogiPark.MVVM.View
             this.Close();
         }
 
-        private void LogoutRadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            // Handle back to main menu label clicked
-            LoginView loginView = new LoginView();
-            loginView.Show();
-
-            this.Close();
-        }
-
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             ClientHomeView clientHomeView = new ClientHomeView();
 
             clientHomeView.Show();
+
+            this.Close();
+        }
+
+        private void LogoutRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            // Handle back to main menu label clicked
+            LoginView loginView = new LoginView();
+            loginView.Show();
 
             this.Close();
         }

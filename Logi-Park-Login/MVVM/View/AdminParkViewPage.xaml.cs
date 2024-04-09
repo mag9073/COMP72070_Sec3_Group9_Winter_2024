@@ -26,7 +26,7 @@ namespace LogiPark.MVVM.View
         private string _parkName;
         private ProgramClient _client;
         private float _averageRating = 0;
-        ParkDataManager.ParkData parkData;
+        private ParkDataManager.ParkData parkData;
         private BitmapImage _parkImage;
 
         public AdminParkViewPage()
@@ -207,7 +207,6 @@ namespace LogiPark.MVVM.View
             });
         }
 
-
         private void DisplayParkData()
         {
             this.Dispatcher.Invoke(() =>
@@ -251,12 +250,10 @@ namespace LogiPark.MVVM.View
             _averageRating = averageRating;
         }
 
-        public void SetParkImage(BitmapImage image)
+        private void SetParkImage(BitmapImage image)
         {
             ParkImage.Source = image;
         }
-
-
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
@@ -349,7 +346,5 @@ namespace LogiPark.MVVM.View
                 MessageBox.Show($"An error occurred while trying to delete the park: {ex.Message}", "Error");
             }
         }
-
-
     }
 }
