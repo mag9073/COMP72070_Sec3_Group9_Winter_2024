@@ -25,6 +25,7 @@ namespace LogiPark.MVVM.View
         //private int portnumber = 13000;
         private ProgramClient client;
         private string _username;
+
         public ClientHomeView()
         {
             this.client = new ProgramClient();
@@ -46,9 +47,9 @@ namespace LogiPark.MVVM.View
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            AdminHomeView adminHomeView = new AdminHomeView();
+            ClientHomeView clientHomeView = new ClientHomeView();
 
-            adminHomeView.Show();
+            clientHomeView.Show();
 
             this.Close();
         }

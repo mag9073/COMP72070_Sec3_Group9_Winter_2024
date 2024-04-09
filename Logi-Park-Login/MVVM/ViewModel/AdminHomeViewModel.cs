@@ -7,13 +7,8 @@ using LogiPark.Core;
 
 namespace LogiPark.MVVM.ViewModel
 {
-
-
     class AdminHomeViewModel : ObservableObject
     {
-        public AdminHomeViewModel ParkVm { get; set; }
-
-
         private object _currentView;
 
         public object CurrentView

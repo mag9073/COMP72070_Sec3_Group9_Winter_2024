@@ -10,9 +10,6 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         >
-    <Window.DataContext>
-        <viewModel:MainViewModel/>
-    </Window.DataContext>
 
     <Border Background="White"
             CornerRadius="20">
