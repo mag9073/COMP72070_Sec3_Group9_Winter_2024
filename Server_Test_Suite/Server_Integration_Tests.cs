@@ -213,7 +213,7 @@ namespace Server_Test_Suite
 
 
         [TestMethod]
-        public void IT_SVR_004_ProcessOneParkDataPacketTest()
+        public void IT_SVR_005_ProcessOneParkDataPacketTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -253,9 +253,9 @@ namespace Server_Test_Suite
             Assert.AreEqual(expectedParkData.parkHours, actualParkData.parkHours, "Park hours do not match");
         }
 
-
+        // Incomplete
         [TestMethod]
-        public void IT_SVR_005_ProcessAllParkImagesTest()
+        public void IT_SVR_006_ProcessAllParkImagesTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -279,7 +279,7 @@ namespace Server_Test_Suite
 
         // Incomplete
         [TestMethod]
-        public void IT_SVR_006_ProcessOneParkImageTest()
+        public void IT_SVR_007_ProcessOneParkImageTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -303,7 +303,7 @@ namespace Server_Test_Suite
 
         // Incomplete
         [TestMethod]
-        public void IT_SVR_007_ProcessAllParkReviewsTest()
+        public void IT_SVR_008_ProcessAllParkReviewsTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -331,7 +331,7 @@ namespace Server_Test_Suite
 
 
         [TestMethod]
-        public void IT_SVR_008_ProcessAReviewPacketTest()
+        public void IT_SVR_009_ProcessAReviewPacketTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -376,7 +376,7 @@ namespace Server_Test_Suite
 
 
         [TestMethod]
-        public void IT_SVR_009_ProcessDeleteParkReviewPacketTest()
+        public void IT_SVR_011_ProcessDeleteParkReviewPacketTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -420,7 +420,7 @@ namespace Server_Test_Suite
 
 
         [TestMethod]
-        public void IT_SVR_010_ProcessDeleteAParkPacketTest()
+        public void IT_SVR_012_ProcessDeleteAParkPacketTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -454,7 +454,7 @@ namespace Server_Test_Suite
         }
 
         [TestMethod]
-        public void IT_SVR_011_ProcessAddAParkPacketTest()
+        public void IT_SVR_013_ProcessAddAParkPacketTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -491,7 +491,7 @@ namespace Server_Test_Suite
 
 
         [TestMethod]
-        public void IT_SVR_012_ProcessAddAParkReviewPacketTest()
+        public void IT_SVR_014_ProcessAddAParkReviewPacketTest()
         {
             // Arrange
             FakeCommunicationChannel fakeChannel = new FakeCommunicationChannel();
@@ -532,12 +532,6 @@ namespace Server_Test_Suite
 
 
         }
-
-
-
-
-
-
 
 
     }
